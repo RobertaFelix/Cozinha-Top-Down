@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     private PlayerControls playerControls;
     private Vector2 movement;
+    private Vector2 lastMovement;
+
     private Rigidbody2D rb;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRender;
@@ -16,9 +18,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerControls = new PlayerControls();
+
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>();
+
+        // Começa olhando para baixo
+        lastMovement = Vector2.down;
     }
 
     private void OnEnable()
@@ -26,23 +32,26 @@ public class PlayerController : MonoBehaviour
         playerControls.Enable();
     }
 
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
+
     private void Update()
     {
         PlayerInput();
+        UpdateAnimation();
+        AdjustPlayerFacingDirection();
     }
 
     private void FixedUpdate()
     {
-        AdjustPlayerFacingDirection();
         Move();
     }
 
     private void PlayerInput()
     {
         movement = playerControls.Movement.Move.ReadValue<Vector2>();
-
-        myAnimator.SetFloat("moveX", movement.x);
-        myAnimator.SetFloat("moveY", movement.y);
     }
 
     private void Move()
@@ -52,19 +61,40 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    private void UpdateAnimation()
+    {
+        // Só atualiza a última direção quando o personagem estiver andando
+        if (movement != Vector2.zero)
+        {
+            lastMovement = movement;
+        }
+
+        // Envia a direção para o Animator
+        myAnimator.SetFloat("moveX", lastMovement.x);
+        myAnimator.SetFloat("moveY", lastMovement.y);
+
+        // Indica se o personagem está andando ou parado
+        myAnimator.SetFloat("speed", movement.magnitude);
+    }
+
     private void AdjustPlayerFacingDirection()
     {
         Vector3 mousePos = Mouse.current.position.ReadValue();
+
         Vector3 playerScreenPoint =
             Camera.main.WorldToScreenPoint(transform.position);
 
-        if (mousePos.x < playerScreenPoint.x)
+        // Só usamos flipX para a animação lateral
+        if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
         {
-            mySpriteRender.flipX = true;
-        }
-        else
-        {
-            mySpriteRender.flipX = false;
+            if (mousePos.x < playerScreenPoint.x)
+            {
+                mySpriteRender.flipX = true;
+            }
+            else
+            {
+                mySpriteRender.flipX = false;
+            }
         }
     }
 }
