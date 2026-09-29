@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5566793735861189852}
   - component: {fileID: 306329870847378089}
   m_Layer: 5
-  m_Name: Item
+  m_Name: tomato
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4807376839054484202, guid: 93a7227b231905a4e91c6721cd44a568, type: 3}
+  m_Sprite: {fileID: 52259711795602432, guid: d26af4509af8ab4479a6df76a43bcd21, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

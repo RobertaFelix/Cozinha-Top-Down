@@ -13,7 +13,7 @@ public class Refrigerator : MonoBehaviour
     {
         if (playerNearby && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            inventoryRefrigeratorController.OpenRefrigerator(items);
+            inventoryRefrigeratorController.ToggleRefrigerator(items);
         }
     }
 

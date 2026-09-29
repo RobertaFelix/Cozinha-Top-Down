@@ -10,8 +10,25 @@ public class InventoryRefrigeratorController : MonoBehaviour
     public int slotCount;
     public GameObject[] itemPrefabs;
 
+    // Abre ou fecha a geladeira
+    public void ToggleRefrigerator(InventoryItem[] items)
+    {
+        if (refrigeratorPanel.activeSelf)
+        {
+            CloseRefrigerator();
+        }
+        else
+        {
+            OpenRefrigerator(items);
+        }
+    }
+
+    // Abre a geladeira
     public void OpenRefrigerator(InventoryItem[] items)
     {
+        // Garante que não existam slots antigos
+        ClearRefrigeratorSlots();
+
         refrigeratorPanel.SetActive(true);
 
         for (int i = 0; i < items.Length; i++)
@@ -32,10 +49,23 @@ public class InventoryRefrigeratorController : MonoBehaviour
         }
     }
 
-
+    // Fecha a geladeira
     public void CloseRefrigerator()
     {
+        ClearRefrigeratorSlots();
+
         refrigeratorPanel.SetActive(false);
+    }
+
+    // Remove os slots que foram criados para a geladeira
+    private void ClearRefrigeratorSlots()
+    {
+        Slot[] slots = refrigeratorPanel.GetComponentsInChildren<Slot>(true);
+
+        foreach (Slot slot in slots)
+        {
+            Destroy(slot.gameObject);
+        }
     }
 
 }
