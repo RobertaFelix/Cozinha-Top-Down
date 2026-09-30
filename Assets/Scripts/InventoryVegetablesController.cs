@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryVegetablesController : MonoBehaviour
@@ -10,7 +8,7 @@ public class InventoryVegetablesController : MonoBehaviour
     public int slotCount;
     public GameObject[] itemPrefabs;
 
-    // Abre ou fecha a geladeira
+    // Abre ou fecha os vegetais
     public void ToggleVegetables(InventoryItem[] items)
     {
         if (vegetablesPanel.activeSelf)
@@ -23,7 +21,7 @@ public class InventoryVegetablesController : MonoBehaviour
         }
     }
 
-    // Abre a geladeira
+    // Abre os vegetais
     public void OpenVegetables(InventoryItem[] items)
     {
         // Garante que não existam slots antigos
@@ -33,23 +31,48 @@ public class InventoryVegetablesController : MonoBehaviour
 
         for (int i = 0; i < items.Length; i++)
         {
+            if (items[i] == null)
+                continue;
+
+            if (items[i].itemPrefab == null)
+                continue;
+
             Slot slot = Instantiate(
                 slotPrefab,
                 vegetablesPanel.transform
             ).GetComponent<Slot>();
 
+            // Cria o item visual
             GameObject item = Instantiate(
                 items[i].itemPrefab,
                 slot.transform
             );
 
-            item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            RectTransform rect =
+                item.GetComponent<RectTransform>();
 
+            if (rect != null)
+            {
+                rect.anchoredPosition =
+                    Vector2.zero;
+            }
+
+            // Guarda o objeto visual
             slot.currentItem = item;
+
+            // Guarda os dados do item
+            slot.inventoryItem =
+                new InventoryItem();
+
+            slot.inventoryItem.itemPrefab =
+                items[i].itemPrefab;
+
+            slot.inventoryItem.amount =
+                items[i].amount;
         }
     }
 
-    // Fecha a geladeira
+    // Fecha os vegetais
     public void CloseVegetables()
     {
         ClearVegetablesSlots();
@@ -57,15 +80,15 @@ public class InventoryVegetablesController : MonoBehaviour
         vegetablesPanel.SetActive(false);
     }
 
-    // Remove os slots que foram criados para a geladeira
+    // Remove os slots criados para os vegetais
     private void ClearVegetablesSlots()
     {
-        Slot[] slots = vegetablesPanel.GetComponentsInChildren<Slot>(true);
+        Slot[] slots =
+            vegetablesPanel.GetComponentsInChildren<Slot>(true);
 
         foreach (Slot slot in slots)
         {
             Destroy(slot.gameObject);
         }
     }
-
 }

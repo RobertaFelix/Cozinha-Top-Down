@@ -270,13 +270,13 @@ MonoBehaviour:
   inventoryFrizerController: {fileID: 1702130248}
   items:
   - itemPrefab: {fileID: 8008127976990012123, guid: e176689ad8ce85e468cd9e3050e8400a, type: 3}
-    amount: 10
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: d678233426423c04c8385190f34b838d, type: 3}
-    amount: 10
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: 8fd8318fb2316b4488c1cc4d08d81ca2, type: 3}
-    amount: 10
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: 47ba2dd8a6e1d2e49a7ea6b6b4f0805b, type: 3}
-    amount: 10
+    amount: 1
 --- !u!1 &259874622
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +477,6 @@ MonoBehaviour:
   - {fileID: 8008127976990012123, guid: e176689ad8ce85e468cd9e3050e8400a, type: 3}
   - {fileID: 8008127976990012123, guid: d678233426423c04c8385190f34b838d, type: 3}
   - {fileID: 8008127976990012123, guid: 79d1d234d188fce4e99c51dd1522117b, type: 3}
-  - {fileID: 8008127976990012123, guid: 7d87635eddc59f9479bdfd2f94e7b181, type: 3}
 --- !u!114 &443527095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3150,13 +3149,13 @@ MonoBehaviour:
   inventoryRefrigeratorController: {fileID: 2014663135}
   items:
   - itemPrefab: {fileID: 8008127976990012123, guid: 7d87635eddc59f9479bdfd2f94e7b181, type: 3}
-    amount: 10
-  - itemPrefab: {fileID: 8008127976990012123, guid: a8ea6afd398a0594e9023fc7c0c1aaa9, type: 3}
-    amount: 10
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: fcfb34ffa4ec4e140978596b466ebdd8, type: 3}
-    amount: 10
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: a8ea6afd398a0594e9023fc7c0c1aaa9, type: 3}
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: 2a2bc2d3e9086774a8062648718776ed, type: 3}
-    amount: 10
+    amount: 1
 --- !u!1 &1423710882
 GameObject:
   m_ObjectHideFlags: 0
@@ -5868,17 +5867,17 @@ MonoBehaviour:
   inventoryVegetablesController: {fileID: 259874624}
   items:
   - itemPrefab: {fileID: 8008127976990012123, guid: f41760a8dc1d29b4fb6afd92184c72b3, type: 3}
-    amount: 0
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: 79d1d234d188fce4e99c51dd1522117b, type: 3}
-    amount: 0
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: 3dd2344d3cb41b345bd79fc76be55c3b, type: 3}
-    amount: 0
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: ec6c3ea45b6507546a7d08136a289d1b, type: 3}
-    amount: 0
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: 3f20a16f2c691b1438c14d8133bbd0d8, type: 3}
-    amount: 0
+    amount: 1
   - itemPrefab: {fileID: 8008127976990012123, guid: ab6c0b457066db74f83dd8e4385ee0b2, type: 3}
-    amount: 0
+    amount: 1
 --- !u!1 &1528144184
 GameObject:
   m_ObjectHideFlags: 0
