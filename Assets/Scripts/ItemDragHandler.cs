@@ -1,74 +1,148 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemDragHandler : MonoBehaviour,
+    IBeginDragHandler,
+    IDragHandler,
+    IEndDragHandler
 {
-    Transform originalParent;
-    CanvasGroup canvasGroup;
+    private Transform originalParent;
+    private CanvasGroup canvasGroup;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        originalParent = transform.parent; // Save OG parent
-        transform.SetParent(transform.root); // Above other canvas
+        originalParent = transform.parent;
+
+        transform.SetParent(transform.root);
+
         canvasGroup.blocksRaycasts = false;
-        canvasGroup.alpha = 0.6f; // semi-transparent during drag
+        canvasGroup.alpha = 0.6f;
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position; // Follow the mouse
+        transform.position = eventData.position;
     }
+
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true; // Enables raycasts
-        canvasGroup.alpha = 1f; // No longer transparent
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
 
-        Slot dropSlot = eventData.pointerEnter?.GetComponent<Slot>(); // Slot where item dropped
-        if(dropSlot == null)
+        Slot originalSlot =
+            originalParent.GetComponent<Slot>();
+
+        Slot dropSlot =
+            eventData.pointerEnter?.GetComponent<Slot>();
+
+        if (dropSlot == null)
         {
-            GameObject item = eventData.pointerEnter;
-            if(item != null)
+            GameObject item =
+                eventData.pointerEnter;
+
+            if (item != null)
             {
-                dropSlot = item.GetComponentInParent<Slot>();
+                dropSlot =
+                    item.GetComponentInParent<Slot>();
             }
         }
 
-        Slot originalSlot = originalParent.GetComponent<Slot>();
 
-        if (dropSlot != null)
+        // ==========================================
+        // SOLTOU FORA DE UM SLOT
+        // ==========================================
+
+        if (dropSlot == null)
         {
-            // Is a slot under drop point
-            if (dropSlot.currentItem != null)
-            {
-                // Slot has an item - swap items
-                dropSlot.currentItem.transform.SetParent(originalSlot.transform);
-                originalSlot.currentItem = dropSlot.currentItem;
-                dropSlot.currentItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-            }
-            else
-            {
-                originalSlot.currentItem = null;
-            }
+            transform.SetParent(originalParent);
 
-            // Move item into drop slot
-            transform.SetParent(dropSlot.transform);
-            dropSlot.currentItem = gameObject;
+            GetComponent<RectTransform>()
+                .anchoredPosition = Vector2.zero;
+
+            return;
+        }
+
+
+        // ==========================================
+        // MESMO SLOT
+        // ==========================================
+
+        if (dropSlot == originalSlot)
+        {
+            transform.SetParent(originalSlot.transform);
+
+            GetComponent<RectTransform>()
+                .anchoredPosition = Vector2.zero;
+
+            return;
+        }
+
+
+        // Guarda o InventoryItem do item arrastado
+        InventoryItem draggedInventoryItem =
+            originalSlot.inventoryItem;
+
+
+        // ==========================================
+        // SLOT DE DESTINO JÁ TEM ITEM
+        // ==========================================
+
+        if (dropSlot.currentItem != null)
+        {
+            GameObject droppedItem =
+                dropSlot.currentItem;
+
+            InventoryItem droppedInventoryItem =
+                dropSlot.inventoryItem;
+
+
+            // Move o item antigo para o slot original
+            droppedItem.transform.SetParent(
+                originalSlot.transform
+            );
+
+            droppedItem.GetComponent<RectTransform>()
+                .anchoredPosition = Vector2.zero;
+
+
+            originalSlot.currentItem =
+                droppedItem;
+
+            originalSlot.inventoryItem =
+                droppedInventoryItem;
         }
         else
         {
-            // No slot under drop point
-            transform.SetParent(originalParent);
+            // Slot original fica vazio
+            originalSlot.currentItem = null;
+            originalSlot.inventoryItem = null;
         }
 
-        GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // Center
+
+        // ==========================================
+        // MOVE ITEM ARRASTADO
+        // ==========================================
+
+        transform.SetParent(
+            dropSlot.transform
+        );
+
+        GetComponent<RectTransform>()
+            .anchoredPosition = Vector2.zero;
+
+
+        dropSlot.currentItem =
+            gameObject;
+
+        dropSlot.inventoryItem =
+            draggedInventoryItem;
     }
 }

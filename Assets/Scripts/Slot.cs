@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Slot : MonoBehaviour
 {
-   public GameObject currentItem;
+    public GameObject currentItem;
+    public InventoryItem inventoryItem;
 }
