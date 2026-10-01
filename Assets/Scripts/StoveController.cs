@@ -3,8 +3,7 @@ using UnityEngine;
 public class StoveController : MonoBehaviour
 {
     [Header("Receitas")]
-    [SerializeField] private CookingRecipe[] recipes;
-
+    public CookingRecipe[] recipes;
 
     private CookingRecipe currentRecipe;
 
@@ -14,236 +13,153 @@ public class StoveController : MonoBehaviour
 
     private bool finished;
 
+    private bool panWasUsed;
+
+    private bool potWasUsed;
 
     public bool IsCooking
     {
-        get { return cooking; }
+        get
+        {
+            return cooking;
+        }
     }
-
 
     public bool CookingFinished
     {
-        get { return finished; }
+        get
+        {
+            return finished;
+        }
     }
 
+    public bool PanWasUsed
+    {
+        get
+        {
+            return panWasUsed;
+        }
+    }
 
-    // ==========================================
-    // UPDATE
-    // ==========================================
+    public bool PotWasUsed
+    {
+        get
+        {
+            return potWasUsed;
+        }
+    }
 
     private void Update()
     {
         if (!cooking)
             return;
 
-
         timer += Time.deltaTime;
-
 
         if (timer >= currentRecipe.cookingTime)
         {
+            timer = currentRecipe.cookingTime;
+
             cooking = false;
+
             finished = true;
 
             Debug.Log(
-                "COZIMENTO TERMINADO!"
+                "RECEITA TERMINOU DE COZINHAR!"
             );
         }
     }
 
-
-public CookingRecipe FindRecipe(InventoryItem[] inventory)
-{
-    Debug.Log("========== VERIFICANDO RECEITAS ==========");
-
-    Debug.Log("Itens no inventário: " + inventory.Length);
-
-    foreach (InventoryItem item in inventory)
+    public CookingRecipe FindRecipe(
+        InventoryItem[] stoveItems)
     {
-        if (item == null)
+        if (stoveItems == null)
+            return null;
+
+        foreach (CookingRecipe recipe in recipes)
         {
-            Debug.Log("Inventário contém item NULL");
-            continue;
+            if (recipe == null)
+                continue;
+
+            if (recipe.ingredients == null)
+                continue;
+
+            if (RecipeCanBeMade(
+                recipe,
+                stoveItems))
+            {
+                return recipe;
+            }
         }
-
-        if (item.itemPrefab == null)
-        {
-            Debug.Log("InventoryItem sem itemPrefab");
-            continue;
-        }
-
-        Debug.Log(
-            "Inventário: " +
-            item.itemPrefab.name
-        );
-    }
-
-
-    if (recipes == null || recipes.Length == 0)
-    {
-        Debug.LogError(
-            "O StoveController NÃO possui receitas configuradas."
-        );
 
         return null;
     }
 
-
-    foreach (CookingRecipe recipe in recipes)
+    private bool RecipeCanBeMade(
+        CookingRecipe recipe,
+        InventoryItem[] stoveItems)
     {
-        if (recipe == null)
-            continue;
+        bool[] used =
+            new bool[stoveItems.Length];
 
-        Debug.Log(
-            "--------------------------------------"
-        );
-
-        Debug.Log(
-            "Verificando receita: " +
-            recipe.result.itemPrefab.name
-        );
-
-
-        foreach (InventoryItem ingredient
+        foreach (
+            InventoryItem required
             in recipe.ingredients)
         {
-            if (ingredient == null)
-            {
-                Debug.Log(
-                    "Ingrediente NULL"
-                );
+            if (required == null)
+                return false;
 
-                continue;
+            if (required.itemPrefab == null)
+                return false;
+
+            bool found = false;
+
+            for (
+                int i = 0;
+                i < stoveItems.Length;
+                i++)
+            {
+                if (used[i])
+                    continue;
+
+                if (stoveItems[i] == null)
+                    continue;
+
+                if (stoveItems[i].itemPrefab == null)
+                    continue;
+
+                if (
+                    stoveItems[i].itemPrefab ==
+                    required.itemPrefab)
+                {
+                    used[i] = true;
+
+                    found = true;
+
+                    break;
+                }
             }
 
-            if (ingredient.itemPrefab == null)
-            {
-                Debug.Log(
-                    "Ingrediente sem itemPrefab"
-                );
-
-                continue;
-            }
-
-            Debug.Log(
-                "Ingrediente necessário: " +
-                ingredient.itemPrefab.name
-            );
+            if (!found)
+                return false;
         }
 
-
-        if (RecipeCanBeMade(
-            recipe,
-            inventory))
-        {
-            Debug.Log(
-                ">>> RECEITA ENCONTRADA <<<"
-            );
-
-            return recipe;
-        }
+        return true;
     }
 
-
-    Debug.Log(
-        "========== NENHUMA RECEITA =========="
-    );
-
-    return null;
-    }
-
-
-    private bool RecipeCanBeMade(
-    CookingRecipe recipe,
-    InventoryItem[] inventory)
+    public void StartCooking(
+        CookingRecipe recipe,
+        bool usedPan,
+        bool usedPot)
     {
-    bool[] used =
-        new bool[inventory.Length];
-
-
-    foreach (InventoryItem required
-        in recipe.ingredients)
-    {
-        if (required == null)
-            return false;
-
-        if (required.itemPrefab == null)
-            return false;
-
-
-        bool found = false;
-
-
-        for (int i = 0;
-             i < inventory.Length;
-             i++)
-        {
-            if (used[i])
-                continue;
-
-            if (inventory[i] == null)
-                continue;
-
-            if (inventory[i].itemPrefab == null)
-                continue;
-
-
-            Debug.Log(
-                "Comparando: " +
-                inventory[i].itemPrefab.name +
-                " VS " +
-                required.itemPrefab.name
-            );
-
-
-            if (inventory[i].itemPrefab ==
-                required.itemPrefab)
-            {
-                used[i] = true;
-
-                found = true;
-
-                break;
-            }
-        }
-
-
-        if (!found)
-        {
-            Debug.Log(
-                "Ingrediente não encontrado: " +
-                required.itemPrefab.name
-            );
-
-            return false;
-        }
-    }
-
-
-    return true;
-    }
-
-
-    // ==========================================
-    // COMEÇAR
-    // ==========================================
-
-    public bool StartCooking(
-        CookingRecipe recipe)
-    {
-        if (cooking)
-            return false;
-
-
-        if (finished)
-            return false;
-
-
         if (recipe == null)
-            return false;
-
+            return;
 
         currentRecipe = recipe;
+
+        panWasUsed = usedPan;
+
+        potWasUsed = usedPot;
 
         timer = 0f;
 
@@ -251,14 +167,10 @@ public CookingRecipe FindRecipe(InventoryItem[] inventory)
 
         finished = false;
 
-
         Debug.Log(
             "COMEÇOU A COZINHAR: " +
             recipe.result.itemPrefab.name
         );
-
-
-        return true;
     }
 
     public InventoryItem GetCookedFood()
@@ -275,7 +187,13 @@ public CookingRecipe FindRecipe(InventoryItem[] inventory)
     public void ClearCookedFood()
     {
         currentRecipe = null;
+
         finished = false;
+
         timer = 0f;
+
+        panWasUsed = false;
+
+        potWasUsed = false;
     }
 }

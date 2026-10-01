@@ -77,53 +77,79 @@ public class HotbarController : MonoBehaviour
         return false;
     }
 
-    public bool AddItem(InventoryItem item)
+public bool AddItem(InventoryItem item)
+{
+    if (item == null)
+        return false;
+
+    if (item.itemPrefab == null)
+        return false;
+
+    Debug.Log(
+        "ADICIONANDO ITEM: " +
+        item.itemPrefab.name
+    );
+
+    Debug.Log(
+        "PREFAB POSIÇÃO: " +
+        item.itemPrefab.transform.position
+    );
+
+    Debug.Log(
+        "PREFAB COMPONENTES: " +
+        item.itemPrefab.GetComponent<RectTransform>()
+    );
+
+    Slot[] slots =
+        hotbarPanel.GetComponentsInChildren<Slot>(true);
+
+    foreach (Slot slot in slots)
     {
-        if (item == null)
-            return false;
+        if (slot.currentItem != null)
+            continue;
 
-        if (item.itemPrefab == null)
-            return false;
+        Debug.Log(
+            "ADICIONANDO NO SLOT: " +
+            slot.name
+        );
 
-        Slot[] slots =
-            hotbarPanel.GetComponentsInChildren<Slot>(true);
+        GameObject newItem =
+            Instantiate(
+                item.itemPrefab,
+                slot.transform
+            );
 
-        foreach (Slot slot in slots)
+        Debug.Log(
+            "OBJETO CRIADO: " +
+            newItem.name
+        );
+
+        RectTransform rect =
+            newItem.GetComponent<RectTransform>();
+
+        if (rect != null)
         {
-            if (slot.currentItem != null)
-                continue;
-
-            GameObject newItem =
-                Instantiate(
-                    item.itemPrefab,
-                    slot.transform
-                );
-
-            RectTransform rect =
-                newItem.GetComponent<RectTransform>();
-
-            if (rect != null)
-            {
-                rect.anchoredPosition =
-                    Vector2.zero;
-            }
-
-            slot.currentItem = newItem;
-
-            slot.inventoryItem =
-                new InventoryItem();
-
-            slot.inventoryItem.itemPrefab =
-                item.itemPrefab;
-
-            slot.inventoryItem.amount =
-                item.amount;
-
-            return true;
+            rect.anchoredPosition =
+                Vector2.zero;
         }
 
-        Debug.Log("Hotbar cheia.");
+        slot.currentItem =
+            newItem;
 
-        return false;
+        slot.inventoryItem =
+            new InventoryItem();
+
+        slot.inventoryItem.itemPrefab =
+            item.itemPrefab;
+
+        slot.inventoryItem.amount =
+            item.amount;
+
+        return true;
     }
+
+    Debug.Log("Hotbar cheia.");
+
+    return false;
+}
 }

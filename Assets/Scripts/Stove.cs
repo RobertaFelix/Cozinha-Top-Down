@@ -1,14 +1,14 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Stove : MonoBehaviour
 {
+    [Header("Controllers")]
     [SerializeField]
     private StoveController stoveController;
 
     [SerializeField]
-    private InventoryController inventoryController;
+    private StoveInventoryController stoveInventoryController;
 
     [SerializeField]
     private HotbarController hotbarController;
@@ -31,11 +31,20 @@ public class Stove : MonoBehaviour
 
     private void Interact()
     {
+        // ==========================================
+        // RECEITA PRONTA
+        // ==========================================
+
         if (stoveController.CookingFinished)
         {
             CollectFood();
+
             return;
         }
+
+        // ==========================================
+        // AINDA COZINHANDO
+        // ==========================================
 
         if (stoveController.IsCooking)
         {
@@ -46,124 +55,178 @@ public class Stove : MonoBehaviour
             return;
         }
 
-        StartCooking();
+        // ==========================================
+        // INTERFACE JÁ ESTÁ ABERTA
+        // SEGUNDO E
+        // ==========================================
+
+        if (stoveInventoryController.IsOpen)
+        {
+            StartCooking();
+
+            return;
+        }
+
+        // ==========================================
+        // PRIMEIRO E
+        // ABRIR INTERFACE
+        // ==========================================
+
+        stoveInventoryController
+            .OpenStoveInventory();
+
+        Debug.Log(
+            "Interface do fogão aberta."
+        );
     }
 
     private void StartCooking()
     {
-        List<InventoryItem> allItems =
-            new List<InventoryItem>();
-
-        // Itens do inventário grande
-        InventoryItem[] inventoryItems =
-            inventoryController.GetInventoryItems();
-
-        // Itens da hotbar
-        InventoryItem[] hotbarItems =
-            hotbarController.GetHotbarItems();
-
-        allItems.AddRange(inventoryItems);
-        allItems.AddRange(hotbarItems);
-
-        InventoryItem[] combinedInventory =
-            allItems.ToArray();
+        InventoryItem[] stoveItems =
+            stoveInventoryController
+                .GetStoveItems();
 
         Debug.Log(
-            "Itens disponíveis para cozinhar: " +
-            combinedInventory.Length
+            "Itens colocados no fogão: " +
+            stoveItems.Length
         );
+
+        // ==========================================
+        // VERIFICAR SE A PANELA FOI USADA
+        // ==========================================
+
+        bool panWasUsed =
+            Pan.WasUsedInRecipe(stoveItems);
+
+        // ==========================================
+        // VERIFICAR SE O POT FOI USADO
+        // ==========================================
+
+        bool potWasUsed =
+            Pot.WasUsedInRecipe(stoveItems);
+
+        // ==========================================
+        // PROCURAR RECEITA
+        // ==========================================
 
         CookingRecipe recipe =
             stoveController.FindRecipe(
-                combinedInventory
+                stoveItems
             );
+
+        // ==========================================
+        // NÃO ENCONTROU RECEITA
+        // ==========================================
 
         if (recipe == null)
         {
             Debug.Log(
-                "NENHUMA RECEITA DISPONÍVEL."
+                "NENHUMA RECEITA DISPONÍVEL COM OS ITENS DO FOGÃO."
             );
 
             return;
         }
 
+        // ==========================================
+        // RECEITA ENCONTRADA
+        // ==========================================
+
         Debug.Log(
             "RECEITA ENCONTRADA!"
         );
 
-        // Remove os ingredientes.
-        foreach (
-            InventoryItem ingredient
-            in recipe.ingredients)
-        {
-            bool removed =
-                RemoveIngredient(
-                    ingredient
-                );
+        // ==========================================
+        // REMOVER INGREDIENTES
+        // ==========================================
 
-            if (!removed)
-            {
-                Debug.LogError(
-                    "Não conseguiu remover: " +
-                    ingredient.itemPrefab.name
-                );
+        stoveInventoryController
+            .ClearIngredients();
 
-                return;
-            }
-        }
+        // ==========================================
+        // FECHAR INTERFACE
+        // ==========================================
 
-        stoveController.StartCooking(recipe);
-    }
+        stoveInventoryController
+            .CloseStoveInventory();
 
-    private bool RemoveIngredient(
-        InventoryItem ingredient)
-    {
-        // Primeiro tenta remover da Hotbar
-        if (hotbarController.RemoveItem(
-                ingredient))
-        {
-            return true;
-        }
+        // ==========================================
+        // COMEÇAR RECEITA
+        // ==========================================
 
-        // Depois tenta remover do inventário
-        if (inventoryController.RemoveItem(
-                ingredient))
-        {
-            return true;
-        }
-
-        return false;
+        stoveController.StartCooking(
+            recipe,
+            panWasUsed,
+            potWasUsed
+        );
     }
 
     private void CollectFood()
     {
-    InventoryItem food =
-        stoveController.GetCookedFood();
+        InventoryItem food =
+            stoveController.GetCookedFood();
 
-    if (food == null)
-        return;
+        if (food == null)
+            return;
 
-    // Tenta colocar na Hotbar ANTES
-    // de retirar a comida do fogão.
-    bool added =
-        hotbarController.AddItem(food);
+        // ==========================================
+        // VERIFICAR UTENSÍLIOS USADOS
+        // ==========================================
 
-    if (!added)
-    {
+        bool panWasUsed =
+            stoveController.PanWasUsed;
+
+        bool potWasUsed =
+            stoveController.PotWasUsed;
+
+        // ==========================================
+        // TENTAR COLOCAR NA HOTBAR
+        // ==========================================
+
+        bool added =
+            hotbarController.AddItem(food);
+
+        // ==========================================
+        // HOTBAR CHEIA
+        // ==========================================
+
+        if (!added)
+        {
+            Debug.Log(
+                "Hotbar cheia. Não foi possível pegar a comida."
+            );
+
+            return;
+        }
+
+        // ==========================================
+        // COMIDA PEGADA
+        // ==========================================
+
+        stoveController.ClearCookedFood();
+
+        // ==========================================
+        // DEVOLVER A PANELA
+        // ==========================================
+
+        if (panWasUsed)
+        {
+            Pan.ReturnToCounter();
+        }
+
+        // ==========================================
+        // DEVOLVER O POT
+        // ==========================================
+
+        if (potWasUsed)
+        {
+            Pot.ReturnToCounter();
+        }
+
         Debug.Log(
-            "Hotbar cheia. Não foi possível pegar a comida."
+            "COMIDA ADICIONADA À HOTBAR: " +
+            food.itemPrefab.name
         );
-
-        return;
     }
-
-    stoveController.ClearCookedFood();
-
-    Debug.Log(
-        "COMIDA ADICIONADA À HOTBAR: " +
-        food.itemPrefab.name
-    );
-}
 
     private void OnTriggerEnter2D(
         Collider2D collision)
