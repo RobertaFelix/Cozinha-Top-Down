@@ -1,0 +1,44 @@
+using UnityEngine;
+
+public class InteractionPromptTrigger : MonoBehaviour
+{
+    [Header("Objeto que o E deve acompanhar")]
+    [SerializeField]
+    private Transform target;
+
+    private void Awake()
+    {
+        if (target == null)
+        {
+            target = transform;
+        }
+    }
+
+    private void OnTriggerEnter2D(
+        Collider2D collision)
+    {
+        if (!collision.CompareTag("Player"))
+            return;
+
+        if (InteractionPromptManager.Instance == null)
+            return;
+
+        InteractionPromptManager.Instance.Show(
+            target
+        );
+    }
+
+    private void OnTriggerExit2D(
+        Collider2D collision)
+    {
+        if (!collision.CompareTag("Player"))
+            return;
+
+        if (InteractionPromptManager.Instance == null)
+            return;
+
+        InteractionPromptManager.Instance.Hide(
+            target
+        );
+    }
+}
