@@ -6,9 +6,16 @@ public class StoveController : MonoBehaviour
     [Header("Receitas")]
     public CookingRecipe[] recipes;
 
+
     [Header("UI do cozimento")]
     [SerializeField]
     private CookingProgressUI cookingProgressUI;
+
+
+    [Header("Livro de Receitas")]
+    [SerializeField]
+    private RecipeBookController recipeBookController;
+
 
     private CookingRecipe currentRecipe;
 
@@ -19,6 +26,7 @@ public class StoveController : MonoBehaviour
 
     private bool panWasUsed;
     private bool potWasUsed;
+
 
     public bool IsCooking => cooking;
 
@@ -34,20 +42,25 @@ public class StoveController : MonoBehaviour
         if (!cooking)
             return;
 
+
         if (currentRecipe == null)
             return;
 
+
         timer += Time.deltaTime;
+
 
         // Calcula o progresso entre 0 e 1
         float progress =
             timer / currentRecipe.cookingTime;
+
 
         // Atualiza a barra verde
         if (cookingProgressUI != null)
         {
             cookingProgressUI.SetProgress(progress);
         }
+
 
         // Verifica se terminou
         if (timer >= currentRecipe.cookingTime)
@@ -57,11 +70,13 @@ public class StoveController : MonoBehaviour
             cooking = false;
             finished = true;
 
+
             // Garante que fique 100% preenchido
             if (cookingProgressUI != null)
             {
                 cookingProgressUI.SetProgress(1f);
             }
+
 
             Debug.Log(
                 "RECEITA TERMINOU DE COZINHAR!"
@@ -76,13 +91,17 @@ public class StoveController : MonoBehaviour
         if (stoveItems == null)
             return null;
 
-        foreach (CookingRecipe recipe in recipes)
+
+        foreach (CookingRecipe recipe
+                 in recipes)
         {
             if (recipe == null)
                 continue;
 
+
             if (recipe.ingredients == null)
                 continue;
+
 
             if (RecipeCanBeMade(
                 recipe,
@@ -91,6 +110,7 @@ public class StoveController : MonoBehaviour
                 return recipe;
             }
         }
+
 
         return null;
     }
@@ -103,16 +123,20 @@ public class StoveController : MonoBehaviour
         bool[] used =
             new bool[stoveItems.Length];
 
+
         foreach (InventoryItem required
                  in recipe.ingredients)
         {
             if (required == null)
                 return false;
 
+
             if (required.itemPrefab == null)
                 return false;
 
+
             bool found = false;
+
 
             for (int i = 0;
                  i < stoveItems.Length;
@@ -121,11 +145,14 @@ public class StoveController : MonoBehaviour
                 if (used[i])
                     continue;
 
+
                 if (stoveItems[i] == null)
                     continue;
 
+
                 if (stoveItems[i].itemPrefab == null)
                     continue;
+
 
                 if (stoveItems[i].itemPrefab ==
                     required.itemPrefab)
@@ -138,9 +165,11 @@ public class StoveController : MonoBehaviour
                 }
             }
 
+
             if (!found)
                 return false;
         }
+
 
         return true;
     }
@@ -154,6 +183,7 @@ public class StoveController : MonoBehaviour
         if (recipe == null)
             return;
 
+
         if (recipe.result == null)
         {
             Debug.LogError(
@@ -163,6 +193,7 @@ public class StoveController : MonoBehaviour
             return;
         }
 
+
         if (recipe.result.itemPrefab == null)
         {
             Debug.LogError(
@@ -171,6 +202,7 @@ public class StoveController : MonoBehaviour
 
             return;
         }
+
 
         currentRecipe = recipe;
 
@@ -192,6 +224,7 @@ public class StoveController : MonoBehaviour
                 GetFoodSprite(
                     recipe.result.itemPrefab
                 );
+
 
             cookingProgressUI.Show(
                 foodSprite,
@@ -219,6 +252,7 @@ public class StoveController : MonoBehaviour
         Image image =
             foodPrefab.GetComponent<Image>();
 
+
         if (image != null)
         {
             return image.sprite;
@@ -230,6 +264,7 @@ public class StoveController : MonoBehaviour
         SpriteRenderer spriteRenderer =
             foodPrefab.GetComponent<SpriteRenderer>();
 
+
         if (spriteRenderer != null)
         {
             return spriteRenderer.sprite;
@@ -240,6 +275,7 @@ public class StoveController : MonoBehaviour
         spriteRenderer =
             foodPrefab.GetComponentInChildren<SpriteRenderer>();
 
+
         if (spriteRenderer != null)
         {
             return spriteRenderer.sprite;
@@ -249,6 +285,7 @@ public class StoveController : MonoBehaviour
         // Caso o Image esteja em um filho.
         image =
             foodPrefab.GetComponentInChildren<Image>();
+
 
         if (image != null)
         {
@@ -261,6 +298,7 @@ public class StoveController : MonoBehaviour
             foodPrefab.name
         );
 
+
         return null;
     }
 
@@ -270,10 +308,40 @@ public class StoveController : MonoBehaviour
         if (!finished)
             return null;
 
+
         if (currentRecipe == null)
             return null;
 
+
         return currentRecipe.result;
+    }
+
+
+    public void UnlockCurrentRecipe()
+    {
+        if (currentRecipe == null)
+        {
+            Debug.LogWarning(
+                "StoveController: Não existe receita atual para desbloquear."
+            );
+
+            return;
+        }
+
+
+        if (recipeBookController == null)
+        {
+            Debug.LogWarning(
+                "StoveController: RecipeBookController não foi configurado."
+            );
+
+            return;
+        }
+
+
+        recipeBookController.UnlockRecipe(
+            currentRecipe
+        );
     }
 
 
