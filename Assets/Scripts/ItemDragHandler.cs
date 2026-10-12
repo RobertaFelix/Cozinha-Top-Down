@@ -7,56 +7,37 @@ public class ItemDragHandler : MonoBehaviour,
     IEndDragHandler
 {
     private Transform originalParent;
-
     private CanvasGroup canvasGroup;
 
     private void Start()
     {
-        canvasGroup =
-            GetComponent<CanvasGroup>();
+        canvasGroup = GetComponent<CanvasGroup>();
 
         if (canvasGroup == null)
-        {
-            canvasGroup =
-                gameObject.AddComponent<CanvasGroup>();
-        }
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
     }
 
-    public void OnBeginDrag(
-        PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        originalParent =
-            transform.parent;
+        originalParent = transform.parent;
 
-        transform.SetParent(
-            transform.root
-        );
+        transform.SetParent(transform.root);
 
-        canvasGroup.blocksRaycasts =
-            false;
-
-        canvasGroup.alpha =
-            0.6f;
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.alpha = 0.6f;
     }
 
-    public void OnDrag(
-        PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
-        transform.position =
-            eventData.position;
+        transform.position = eventData.position;
     }
 
-    public void OnEndDrag(
-        PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts =
-            true;
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
 
-        canvasGroup.alpha =
-            1f;
-
-        Slot originalSlot =
-            originalParent.GetComponent<Slot>();
+        Slot originalSlot = originalParent.GetComponent<Slot>();
 
         if (originalSlot == null)
         {
@@ -64,17 +45,15 @@ public class ItemDragHandler : MonoBehaviour,
             return;
         }
 
-        Slot dropSlot = FindDropSlot(
-            eventData
-        );
-
-        if (dropSlot == null)
-        {
-            ReturnToOriginalPosition();
+        // Primeiro, tenta entregar o prato a um NPC.
+        if (TryDeliverToNPC(eventData, originalSlot))
             return;
-        }
 
-        if (dropSlot == originalSlot)
+        // Se não foi uma entrega, mantém o comportamento normal
+        // de arrastar e soltar entre slots.
+        Slot dropSlot = FindDropSlot(eventData);
+
+        if (dropSlot == null || dropSlot == originalSlot)
         {
             ReturnToOriginalPosition();
             return;
@@ -83,136 +62,161 @@ public class ItemDragHandler : MonoBehaviour,
         InventoryItem draggedInventoryItem =
             originalSlot.inventoryItem;
 
-        // ==========================================
-        // DESTINO POSSUI ITEM
-        // ==========================================
+        if (draggedInventoryItem == null)
+        {
+            ReturnToOriginalPosition();
+            return;
+        }
 
         if (dropSlot.currentItem != null)
         {
-            GameObject droppedItem =
-                dropSlot.currentItem;
+            GameObject droppedItem = dropSlot.currentItem;
 
             InventoryItem droppedInventoryItem =
                 dropSlot.inventoryItem;
 
-            droppedItem.transform.SetParent(
-                originalSlot.transform
-            );
+            droppedItem.transform.SetParent(originalSlot.transform);
 
             RectTransform droppedRect =
                 droppedItem.GetComponent<RectTransform>();
 
             if (droppedRect != null)
-            {
-                droppedRect.anchoredPosition =
-                    Vector2.zero;
-            }
+                droppedRect.anchoredPosition = Vector2.zero;
 
-            originalSlot.currentItem =
-                droppedItem;
-
-            originalSlot.inventoryItem =
-                droppedInventoryItem;
+            originalSlot.currentItem = droppedItem;
+            originalSlot.inventoryItem = droppedInventoryItem;
         }
         else
         {
-            // ==========================================
-            // DESTINO VAZIO
-            // ==========================================
-
-            originalSlot.currentItem =
-                null;
-
-            originalSlot.inventoryItem =
-                null;
+            originalSlot.currentItem = null;
+            originalSlot.inventoryItem = null;
         }
 
-        // ==========================================
-        // MOVER ITEM PARA O NOVO SLOT
-        // ==========================================
+        transform.SetParent(dropSlot.transform);
 
-        transform.SetParent(
-            dropSlot.transform
-        );
-
-        RectTransform rect =
-            GetComponent<RectTransform>();
+        RectTransform rect = GetComponent<RectTransform>();
 
         if (rect != null)
+            rect.anchoredPosition = Vector2.zero;
+
+        dropSlot.currentItem = gameObject;
+        dropSlot.inventoryItem = draggedInventoryItem;
+    }
+
+    private bool TryDeliverToNPC(
+        PointerEventData eventData,
+        Slot originalSlot)
+    {
+        if (originalSlot == null ||
+            originalSlot.inventoryItem == null ||
+            originalSlot.inventoryItem.itemPrefab == null)
         {
-            rect.anchoredPosition =
-                Vector2.zero;
+            return false;
         }
 
-        dropSlot.currentItem =
-            gameObject;
+        Camera cam = Camera.main;
 
-        dropSlot.inventoryItem =
-            draggedInventoryItem;
-    }
+        if (cam == null)
+        {
+            Debug.LogError(
+                "ItemDragHandler: nenhuma câmera com a tag MainCamera foi encontrada."
+            );
 
-private Slot FindDropSlot(
-    PointerEventData eventData)
-{
-    if (eventData.pointerEnter == null)
-    {
-        Debug.Log("DROP: pointerEnter = NULL");
-        return null;
-    }
+            return false;
+        }
 
-    Debug.Log(
-        "DROP: pointerEnter = " +
-        eventData.pointerEnter.name
-    );
+        // Converte a posição do cursor na tela para o mundo 2D.
+        float distance = -cam.transform.position.z;
 
-    Slot slot =
-        eventData.pointerEnter
-            .GetComponent<Slot>();
-
-    if (slot != null)
-    {
-        Debug.Log(
-            "DROP: SLOT ENCONTRADO = " +
-            slot.name
+        Vector3 screenPosition = new Vector3(
+            eventData.position.x,
+            eventData.position.y,
+            distance
         );
+
+        Vector3 worldPosition =
+            cam.ScreenToWorldPoint(screenPosition);
+
+        // Detecta colliders na posição em que o item foi solto.
+        Collider2D[] hits =
+            Physics2D.OverlapPointAll(worldPosition);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit == null)
+                continue;
+
+            CustomerOrderController customerOrder =
+                hit.GetComponentInParent<CustomerOrderController>();
+
+            if (customerOrder == null)
+                continue;
+
+            InventoryItem offeredItem =
+                originalSlot.inventoryItem;
+
+            // TryServe retorna true somente se o prato for correto.
+            if (!customerOrder.TryServe(offeredItem))
+            {
+                Debug.Log(
+                    "Prato incorreto ou pedido já concluído."
+                );
+
+                ReturnToOriginalPosition();
+                return true;
+            }
+
+            // Pedido aceito: remove o item da hotbar.
+            originalSlot.currentItem = null;
+            originalSlot.inventoryItem = null;
+
+            Destroy(gameObject);
+
+            Debug.Log(
+                "Prato entregue ao NPC com sucesso!"
+            );
+
+            return true;
+        }
+
+        // Nenhum NPC foi encontrado: continua o fluxo normal.
+        return false;
+    }
+
+    private Slot FindDropSlot(PointerEventData eventData)
+    {
+        if (eventData.pointerEnter == null)
+        {
+            Debug.Log("DROP: pointerEnter = NULL");
+            return null;
+        }
+
+        Slot slot =
+            eventData.pointerEnter.GetComponent<Slot>();
+
+        if (slot != null)
+            return slot;
+
+        slot =
+            eventData.pointerEnter.GetComponentInParent<Slot>();
+
+        if (slot == null)
+        {
+            Debug.Log(
+                "DROP: nenhum Slot encontrado no destino."
+            );
+        }
 
         return slot;
     }
 
-    slot =
-        eventData.pointerEnter
-            .GetComponentInParent<Slot>();
-
-    if (slot != null)
-    {
-        Debug.Log(
-            "DROP: SLOT PAI ENCONTRADO = " +
-            slot.name
-        );
-    }
-    else
-    {
-        Debug.Log(
-            "DROP: NENHUM SLOT ENCONTRADO"
-        );
-    }
-
-    return slot;
-}
-
     private void ReturnToOriginalPosition()
     {
-        transform.SetParent(
-            originalParent
-        );
+        transform.SetParent(originalParent);
 
-        RectTransform rect =
-            GetComponent<RectTransform>();
+        RectTransform rect = GetComponent<RectTransform>();
 
         if (rect != null)
-        {
-            rect.anchoredPosition =
-                Vector2.zero;
-        }
+            rect.anchoredPosition = Vector2.zero;
     }
 }

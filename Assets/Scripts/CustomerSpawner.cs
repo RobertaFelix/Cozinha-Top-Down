@@ -4,12 +4,13 @@ using UnityEngine;
 public class CustomerSpawner : MonoBehaviour
 {
     [Header("NPC")]
-    [SerializeField]
-    private GameObject customerPrefab;
+    [SerializeField] private GameObject customerPrefab;
+
+    [Header("Fogão")]
+    [SerializeField] private StoveController stoveController;
 
     [Header("Mesas disponíveis")]
-    [SerializeField]
-    private Table[] tables;
+    [SerializeField] private Table[] tables;
 
     private void Start()
     {
@@ -23,12 +24,18 @@ public class CustomerSpawner : MonoBehaviour
             Debug.LogError(
                 "Customer Prefab não foi configurado."
             );
-
             return;
         }
 
-        List<Table> availableTables =
-            new List<Table>();
+        if (stoveController == null)
+        {
+            Debug.LogError(
+                "StoveController não foi configurado no CustomerSpawner."
+            );
+            return;
+        }
+
+        List<Table> availableTables = new List<Table>();
 
         foreach (Table table in tables)
         {
@@ -36,9 +43,7 @@ public class CustomerSpawner : MonoBehaviour
                 continue;
 
             if (table.HasFreeChair())
-            {
                 availableTables.Add(table);
-            }
         }
 
         if (availableTables.Count == 0)
@@ -46,35 +51,26 @@ public class CustomerSpawner : MonoBehaviour
             Debug.Log(
                 "Não há cadeiras disponíveis em nenhuma mesa."
             );
-
             return;
         }
 
         int randomTableIndex =
-            Random.Range(
-                0,
-                availableTables.Count
-            );
+            Random.Range(0, availableTables.Count);
 
         Table selectedTable =
             availableTables[randomTableIndex];
 
-        Transform chair =
-            selectedTable.GetRandomFreeChair();
+        Transform chair = selectedTable.GetRandomFreeChair();
 
         if (chair == null)
         {
             Debug.LogError(
                 "A mesa selecionada não possui cadeira livre."
             );
-
             return;
         }
 
-        GameObject customer =
-            Instantiate(
-                customerPrefab
-            );
+        GameObject customer = Instantiate(customerPrefab);
 
         CustomerNPC customerNPC =
             customer.GetComponent<CustomerNPC>();
@@ -89,13 +85,25 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
-        customerNPC.SitAt(
-            selectedTable,
-            chair
-        );
+        customerNPC.SitAt(selectedTable, chair);
+
+        CustomerOrderController orderController =
+            customer.GetComponent<CustomerOrderController>();
+
+        if (orderController == null)
+        {
+            Debug.LogError(
+                "O NPC não possui CustomerOrderController."
+            );
+
+            Destroy(customer);
+            return;
+        }
+
+        orderController.Initialize(stoveController);
 
         Debug.Log(
-            "NPC sentou em uma cadeira disponível."
+            "NPC sentou e recebeu um pedido aleatório."
         );
     }
 }
