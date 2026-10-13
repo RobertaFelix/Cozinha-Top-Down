@@ -1,25 +1,26 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StoveController : MonoBehaviour
 {
     [Header("Receitas")]
     public CookingRecipe[] recipes;
 
-
-    [Header("UI do cozimento")]
+    [Header("Interface de cozimento")]
     [SerializeField]
     private CookingProgressUI cookingProgressUI;
 
-
-    [Header("Livro de Receitas")]
+    [Header("Livro de receitas")]
     [SerializeField]
     private RecipeBookController recipeBookController;
 
+    [Header("Tempo para queimar")]
+    [SerializeField]
+    private float burnDuration = 18f;
 
     private CookingRecipe currentRecipe;
 
     private float timer;
+    private float burnTimer;
 
     private bool cooking;
     private bool finished;
@@ -27,342 +28,354 @@ public class StoveController : MonoBehaviour
     private bool panWasUsed;
     private bool potWasUsed;
 
-
     public bool IsCooking => cooking;
-
     public bool CookingFinished => finished;
-
     public bool PanWasUsed => panWasUsed;
-
     public bool PotWasUsed => potWasUsed;
 
+    public CookingRecipe CurrentRecipe => currentRecipe;
 
     private void Update()
     {
-        if (!cooking)
-            return;
-
-
         if (currentRecipe == null)
             return;
 
-
-        timer += Time.deltaTime;
-
-
-        // Calcula o progresso entre 0 e 1
-        float progress =
-            timer / currentRecipe.cookingTime;
-
-
-        // Atualiza a barra verde
-        if (cookingProgressUI != null)
+        // Cozimento normal: a barra verde aumenta.
+        if (cooking)
         {
-            cookingProgressUI.SetProgress(progress);
-        }
+            timer += Time.deltaTime;
 
+            float progress = Mathf.Clamp01(
+                timer / currentRecipe.cookingTime
+            );
 
-        // Verifica se terminou
-        if (timer >= currentRecipe.cookingTime)
-        {
-            timer = currentRecipe.cookingTime;
-
-            cooking = false;
-            finished = true;
-
-
-            // Garante que fique 100% preenchido
             if (cookingProgressUI != null)
             {
-                cookingProgressUI.SetProgress(1f);
+                cookingProgressUI.SetProgress(progress);
             }
 
+            if (timer >= currentRecipe.cookingTime)
+            {
+                cooking = false;
+                finished = true;
 
-            Debug.Log(
-                "RECEITA TERMINOU DE COZINHAR!"
+                timer = currentRecipe.cookingTime;
+                burnTimer = 0f;
+
+                if (cookingProgressUI != null)
+                {
+                    cookingProgressUI.SetProgress(1f);
+                    cookingProgressUI.SetBurnProgress(0f);
+                }
+
+                Debug.Log(
+                    "Comida pronta! Você tem " +
+                    burnDuration +
+                    " segundos para recolhê-la."
+                );
+            }
+
+            return;
+        }
+
+        // Comida pronta: a barra vermelha aumenta até queimar.
+        if (finished)
+        {
+            burnTimer += Time.deltaTime;
+
+            float burnProgress = Mathf.Clamp01(
+                burnTimer / burnDuration
             );
+
+            if (cookingProgressUI != null)
+            {
+                cookingProgressUI.SetBurnProgress(burnProgress);
+            }
+
+            if (burnTimer >= burnDuration)
+            {
+                BurnCurrentFood();
+            }
         }
     }
 
-
-    public CookingRecipe FindRecipe(
-        InventoryItem[] stoveItems)
+    // Procura uma receita que corresponda aos itens do fogão.
+    public CookingRecipe FindRecipe(InventoryItem[] stoveItems)
     {
-        if (stoveItems == null)
+        if (stoveItems == null || recipes == null)
             return null;
 
+        // Conta os itens presentes nos slots do fogão.
+        int itemCount = 0;
 
-        foreach (CookingRecipe recipe
-                 in recipes)
+        foreach (InventoryItem item in stoveItems)
         {
-            if (recipe == null)
+            if (item != null && item.itemPrefab != null)
+            {
+                itemCount++;
+            }
+        }
+
+        foreach (CookingRecipe recipe in recipes)
+        {
+            if (recipe == null || recipe.ingredients == null)
                 continue;
 
-
-            if (recipe.ingredients == null)
+            // Cada ingrediente da receita precisa de um item correspondente.
+            if (recipe.ingredients.Length != itemCount)
                 continue;
 
+            bool[] usedItems = new bool[stoveItems.Length];
+            bool allIngredientsFound = true;
 
-            if (RecipeCanBeMade(
-                recipe,
-                stoveItems))
+            foreach (InventoryItem ingredient in recipe.ingredients)
+            {
+                if (ingredient == null || ingredient.itemPrefab == null)
+                {
+                    allIngredientsFound = false;
+                    break;
+                }
+
+                bool found = false;
+
+                for (int i = 0; i < stoveItems.Length; i++)
+                {
+                    InventoryItem stoveItem = stoveItems[i];
+
+                    if (usedItems[i] ||
+                        stoveItem == null ||
+                        stoveItem.itemPrefab == null)
+                    {
+                        continue;
+                    }
+
+                    if (stoveItem.itemPrefab == ingredient.itemPrefab)
+                    {
+                        usedItems[i] = true;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    allIngredientsFound = false;
+                    break;
+                }
+            }
+
+            if (allIngredientsFound)
             {
                 return recipe;
             }
         }
 
-
         return null;
     }
 
-
-    private bool RecipeCanBeMade(
-        CookingRecipe recipe,
-        InventoryItem[] stoveItems)
-    {
-        bool[] used =
-            new bool[stoveItems.Length];
-
-
-        foreach (InventoryItem required
-                 in recipe.ingredients)
-        {
-            if (required == null)
-                return false;
-
-
-            if (required.itemPrefab == null)
-                return false;
-
-
-            bool found = false;
-
-
-            for (int i = 0;
-                 i < stoveItems.Length;
-                 i++)
-            {
-                if (used[i])
-                    continue;
-
-
-                if (stoveItems[i] == null)
-                    continue;
-
-
-                if (stoveItems[i].itemPrefab == null)
-                    continue;
-
-
-                if (stoveItems[i].itemPrefab ==
-                    required.itemPrefab)
-                {
-                    used[i] = true;
-
-                    found = true;
-
-                    break;
-                }
-            }
-
-
-            if (!found)
-                return false;
-        }
-
-
-        return true;
-    }
-
-
+    // Inicia o preparo da receita.
     public void StartCooking(
         CookingRecipe recipe,
         bool usedPan,
-        bool usedPot)
+        bool usedPot
+    )
     {
         if (recipe == null)
-            return;
-
-
-        if (recipe.result == null)
         {
-            Debug.LogError(
-                "A receita não possui resultado."
-            );
-
+            Debug.LogWarning("Receita não encontrada.");
             return;
         }
 
-
-        if (recipe.result.itemPrefab == null)
+        if (recipe.result == null ||
+            recipe.result.itemPrefab == null)
         {
-            Debug.LogError(
-                "O resultado da receita não possui itemPrefab."
+            Debug.LogWarning(
+                "A receita não possui um resultado configurado."
             );
-
             return;
         }
 
+        if (cooking || finished)
+        {
+            Debug.Log("O fogão já está ocupado.");
+            return;
+        }
+
+        if (recipe.cookingTime <= 0f)
+        {
+            Debug.LogWarning(
+                "O tempo de cozimento precisa ser maior que zero."
+            );
+            return;
+        }
+
+        if (burnDuration <= 0f)
+        {
+            Debug.LogWarning(
+                "O tempo para queimar precisa ser maior que zero."
+            );
+            return;
+        }
 
         currentRecipe = recipe;
 
-        panWasUsed = usedPan;
-
-        potWasUsed = usedPot;
-
         timer = 0f;
+        burnTimer = 0f;
 
         cooking = true;
-
         finished = false;
 
+        panWasUsed = usedPan;
+        potWasUsed = usedPot;
 
-        // Mostra a UI de cozimento
+        Sprite foodSprite = GetFoodSprite(recipe);
+        Debug.Log(
+            foodSprite == null
+                ? "ERRO: sprite do prato não encontrado."
+                : "Sprite do prato encontrado: "
+        );
+
         if (cookingProgressUI != null)
         {
-            Sprite foodSprite =
-                GetFoodSprite(
-                    recipe.result.itemPrefab
-                );
-
-
-            cookingProgressUI.Show(
-                foodSprite,
-                0f
-            );
+            // Sua versão de Show exige Sprite e progresso.
+            cookingProgressUI.Show(foodSprite, 0f);
+            cookingProgressUI.SetProgress(0f);
+            cookingProgressUI.SetBurnProgress(0f);
         }
 
-
-        Debug.Log(
-            "COMEÇOU A COZINHAR: " +
-            recipe.result.itemPrefab.name
-        );
+        Debug.Log("Iniciando o preparo da receita.");
     }
 
-
-    private Sprite GetFoodSprite(
-        GameObject foodPrefab)
+    // Obtém o sprite do prato.
+    private Sprite GetFoodSprite(CookingRecipe recipe)
     {
-        if (foodPrefab == null)
+        if (recipe == null ||
+            recipe.result == null ||
+            recipe.result.itemPrefab == null)
+        {
+            Debug.LogError(
+                "A receita ou o prefab do resultado não está configurado."
+            );
+
             return null;
-
-
-        // Primeiro tenta encontrar um Image
-        // caso o item seja um prefab de UI.
-        Image image =
-            foodPrefab.GetComponent<Image>();
-
-
-        if (image != null)
-        {
-            return image.sprite;
         }
 
+        GameObject foodPrefab = recipe.result.itemPrefab;
 
-        // Caso seja um objeto do mundo
-        // com SpriteRenderer.
+        // Primeiro, procura um SpriteRenderer.
         SpriteRenderer spriteRenderer =
-            foodPrefab.GetComponent<SpriteRenderer>();
+            foodPrefab.GetComponentInChildren<SpriteRenderer>(true);
 
-
-        if (spriteRenderer != null)
+        if (spriteRenderer != null && spriteRenderer.sprite != null)
         {
+            Debug.Log(
+                "Sprite encontrado no SpriteRenderer "
+            );
+
             return spriteRenderer.sprite;
         }
 
+        // Se não houver SpriteRenderer, procura uma Image de UI.
+        UnityEngine.UI.Image foodImage =
+            foodPrefab.GetComponentInChildren<UnityEngine.UI.Image>(true);
 
-        // Caso o SpriteRenderer esteja em um filho.
-        spriteRenderer =
-            foodPrefab.GetComponentInChildren<SpriteRenderer>();
-
-
-        if (spriteRenderer != null)
+        if (foodImage != null && foodImage.sprite != null)
         {
-            return spriteRenderer.sprite;
+            Debug.Log(
+                "Sprite encontrado no componente Image"
+            );
+
+            return foodImage.sprite;
         }
 
-
-        // Caso o Image esteja em um filho.
-        image =
-            foodPrefab.GetComponentInChildren<Image>();
-
-
-        if (image != null)
-        {
-            return image.sprite;
-        }
-
-
-        Debug.LogWarning(
-            "Não foi possível encontrar a imagem da comida: " +
-            foodPrefab.name
+        Debug.LogError(
+            "O prefab não possui SpriteRenderer ou Image com sprite atribuído."
         );
-
 
         return null;
     }
 
-
+    // Retorna a comida somente quando estiver pronta.
     public InventoryItem GetCookedFood()
     {
-        if (!finished)
+        if (!finished || currentRecipe == null)
             return null;
-
-
-        if (currentRecipe == null)
-            return null;
-
 
         return currentRecipe.result;
     }
 
-
+    // Desbloqueia a receita no livro.
     public void UnlockCurrentRecipe()
     {
         if (currentRecipe == null)
-        {
-            Debug.LogWarning(
-                "StoveController: Não existe receita atual para desbloquear."
-            );
-
             return;
-        }
 
-
-        if (recipeBookController == null)
+        if (recipeBookController != null)
         {
-            Debug.LogWarning(
-                "StoveController: RecipeBookController não foi configurado."
-            );
-
-            return;
+            // O método do livro recebe CookingRecipe.
+            recipeBookController.UnlockRecipe(currentRecipe);
         }
-
-
-        recipeBookController.UnlockRecipe(
-            currentRecipe
-        );
     }
 
-
+    // Libera o fogão depois que a comida é recolhida.
     public void ClearCookedFood()
     {
         currentRecipe = null;
 
+        timer = 0f;
+        burnTimer = 0f;
+
+        cooking = false;
         finished = false;
 
-        timer = 0f;
-
         panWasUsed = false;
-
         potWasUsed = false;
 
-
-        // Esconde a UI depois que
-        // a comida foi coletada.
         if (cookingProgressUI != null)
         {
             cookingProgressUI.Hide();
+        }
+
+        Debug.Log("Fogão liberado para uma nova receita.");
+    }
+
+    // Queima a comida e devolve os utensílios usados.
+    private void BurnCurrentFood()
+    {
+        if (currentRecipe == null || !finished)
+            return;
+
+        // Guardamos os estados antes de limpar a receita.
+        bool returnPan = panWasUsed;
+        bool returnPot = potWasUsed;
+
+        Debug.LogWarning("A comida queimou! A receita foi perdida.");
+
+        currentRecipe = null;
+
+        timer = 0f;
+        burnTimer = 0f;
+
+        cooking = false;
+        finished = false;
+
+        panWasUsed = false;
+        potWasUsed = false;
+
+        if (cookingProgressUI != null)
+        {
+            cookingProgressUI.Hide();
+        }
+
+        // ReturnToCounter é estático no seu projeto.
+        if (returnPan)
+        {
+            Pan.ReturnToCounter();
+        }
+
+        if (returnPot)
+        {
+            Pot.ReturnToCounter();
         }
     }
 }
