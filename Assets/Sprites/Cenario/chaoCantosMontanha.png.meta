@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 944071072ee8ffc4b9aa457ccd4f579b
+guid: 73412ab0672b0ff47898507131e0d145
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3558888403325136316
-    second: paredes_0
+      213: -4164742029639683918
+    second: chaoCantosMontanha_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: paredes_0
+      name: chaoCantosMontanha_0
       rect:
         serializedVersion: 2
         x: 0
@@ -130,14 +130,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cbda373a526b36130800000000000000
-      internalID: 3558888403325136316
+      spriteID: 2b0ff26903dd336c0800000000000000
+      internalID: -4164742029639683918
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: paredes_1
+      name: chaoCantosMontanha_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53f6c4dfe9003324195d4c72a793f5ae
+      internalID: 1100837168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chaoCantosMontanha_2
       rect:
         serializedVersion: 2
         x: 0
@@ -152,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7eaafc0747671ec4c82d20e1d4aebf73
-      internalID: -692565234
+      spriteID: 08fa73845abed50488126c78257fb0ea
+      internalID: -563346425
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: paredes_2
+      name: chaoCantosMontanha_3
       rect:
         serializedVersion: 2
         x: 16
@@ -174,8 +196,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 075cbfdd01a5ae742938e25fa6c38c18
-      internalID: -1427809440
+      spriteID: 6fff71b24cd163e4184a29292e067f4b
+      internalID: -1898987211
       vertices: []
       indices: 
       edges: []
@@ -184,7 +206,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 72408c60654c02447bbd065ed5413c5d
+    spriteID: 300797b74d149c0479ec692f031dc3fb
     internalID: 0
     vertices: []
     indices: 
@@ -196,9 +218,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      paredes_0: 3558888403325136316
-      paredes_1: -692565234
-      paredes_2: -1427809440
+      chaoCantosMontanha_0: -4164742029639683918
+      chaoCantosMontanha_1: 1100837168
+      chaoCantosMontanha_2: -563346425
+      chaoCantosMontanha_3: -1898987211
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
