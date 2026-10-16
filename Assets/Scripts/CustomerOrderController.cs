@@ -7,12 +7,40 @@ public class CustomerOrderController : MonoBehaviour
     [Header("Interface do pedido")]
     [SerializeField] private NPCOrderUI orderUI;
 
+    [Header("Paciência do NPC")]
+    [SerializeField] private float patienceDuration = 30f;
+
     private StoveController stoveController;
     private CookingRecipe requestedRecipe;
+
     private bool orderCompleted;
+    private bool orderExpired;
+    private bool patienceRunning;
+
+    private float patienceRemaining;
 
     public CookingRecipe RequestedRecipe => requestedRecipe;
     public bool OrderCompleted => orderCompleted;
+
+    private void Update()
+    {
+        if (!patienceRunning || orderCompleted || orderExpired)
+            return;
+
+        patienceRemaining -= Time.deltaTime;
+
+        // Começa em 0 e aumenta até 1.
+        float normalizedPatience =
+            1f - Mathf.Clamp01(
+                patienceRemaining / Mathf.Max(0.1f, patienceDuration)
+            );
+
+        if (orderUI != null)
+            orderUI.SetPatience(normalizedPatience);
+
+        if (patienceRemaining <= 0f)
+            ExpireOrder();
+    }
 
     public void Initialize(StoveController controller)
     {
@@ -26,6 +54,10 @@ public class CustomerOrderController : MonoBehaviour
             );
             return;
         }
+
+        orderCompleted = false;
+        orderExpired = false;
+        patienceRunning = false;
 
         ChooseRandomRecipe();
     }
@@ -64,7 +96,9 @@ public class CustomerOrderController : MonoBehaviour
             return;
         }
 
-        int randomIndex = Random.Range(0, validRecipes.Count);
+        int randomIndex =
+            Random.Range(0, validRecipes.Count);
+
         requestedRecipe = validRecipes[randomIndex];
 
         Sprite foodSprite = GetFoodSprite(
@@ -91,19 +125,34 @@ public class CustomerOrderController : MonoBehaviour
 
         orderUI.Show(foodSprite);
 
+        // A paciência começa quando o pedido aparece.
+        patienceRemaining = Mathf.Max(0.1f, patienceDuration);
+        patienceRunning = true;
+
         Debug.Log(
             "Pedido do NPC: " +
-            requestedRecipe.result.itemPrefab.name
+            requestedRecipe.result.itemPrefab.name +
+            ". Paciência: " +
+            patienceRemaining +
+            " segundos."
         );
     }
 
     public bool TryServe(InventoryItem offeredItem)
     {
         if (orderCompleted ||
+            orderExpired ||
             requestedRecipe == null ||
             offeredItem == null ||
             offeredItem.itemPrefab == null)
         {
+            return false;
+        }
+
+        // Evita aceitar um prato se o prazo já tiver terminado.
+        if (patienceRunning && patienceRemaining <= 0f)
+        {
+            ExpireOrder();
             return false;
         }
 
@@ -120,7 +169,6 @@ public class CustomerOrderController : MonoBehaviour
             return false;
         }
 
-        // Confere se o NPC pode receber e mostrar o prato.
         CustomerNPC customerNPC =
             GetComponent<CustomerNPC>();
 
@@ -144,13 +192,14 @@ public class CustomerOrderController : MonoBehaviour
             return false;
         }
 
-        // Registra a entrega e esconde o ícone do pedido.
+        // A entrega correta interrompe a paciência.
+        patienceRunning = false;
         orderCompleted = true;
 
         if (orderUI != null)
             orderUI.Hide();
 
-        // Exibe o prato sobre a mesa e inicia os 15 segundos.
+        // Mantém o comportamento existente de servir a comida.
         customerNPC.ServeFood(foodSprite);
 
         Debug.Log(
@@ -158,6 +207,39 @@ public class CustomerOrderController : MonoBehaviour
         );
 
         return true;
+    }
+
+    private void ExpireOrder()
+    {
+        if (orderExpired || orderCompleted)
+            return;
+
+        orderExpired = true;
+        patienceRunning = false;
+        patienceRemaining = 0f;
+
+        if (orderUI != null)
+            orderUI.Hide();
+
+        Debug.LogWarning(
+            "O NPC perdeu a paciência e foi embora sem comer."
+        );
+
+        CustomerNPC customerNPC =
+            GetComponent<CustomerNPC>();
+
+        if (customerNPC != null)
+        {
+            // Leave libera a cadeira e remove o NPC.
+            customerNPC.Leave();
+        }
+        else
+        {
+            Debug.LogError(
+                "Não foi possível remover o NPC: CustomerNPC não encontrado.",
+                this
+            );
+        }
     }
 
     private Sprite GetFoodSprite(GameObject foodPrefab)

@@ -1,10 +1,31 @@
 fileFormatVersion: 2
-guid: 54fac46831d5a0c47b03869ac845153c
+guid: 31dd14b1e5a679a4abc16746851aaf67
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8873909723148004477
-    second: chaoMontanha_0
+      213: -4192798263448276275
+    second: Moeda Rodando_0
+  - first:
+      213: 4430538007758744974
+    second: Moeda Rodando_1
+  - first:
+      213: 2200197727368140971
+    second: Moeda Rodando_2
+  - first:
+      213: 5364731949230676418
+    second: Moeda Rodando_3
+  - first:
+      213: 1612517427630103904
+    second: Moeda Rodando_4
+  - first:
+      213: 7712929838886485080
+    second: Moeda Rodando_5
+  - first:
+      213: 6079412778896867430
+    second: Moeda Rodando_6
+  - first:
+      213: -7271144085801121646
+    second: Moeda Rodando_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chaoMontanha_0
+      name: Moeda Rodando_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 16
-        height: 16
+        y: 0
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,162 +151,162 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d7c2f1190e5762b70800000000000000
-      internalID: 8873909723148004477
+      spriteID: dc27a4c913030d5c0800000000000000
+      internalID: -4192798263448276275
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chaoMontanha_1
+      name: Moeda Rodando_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aff5f3e31ec9add4f8f5b3ed2bad7d0d
-      internalID: 1062180202
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chaoMontanha_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8c49480a5521904d8ea61719d35d63c
-      internalID: -501405912
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chaoMontanha_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fcc597bc520acbe45b45578d644710f8
-      internalID: -777982887
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chaoMontanha_4
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e67747ad280f52a4caa68c7b5c64013a
-      internalID: -1407778739
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chaoMontanha_5
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 20
         y: 0
-        width: 16
-        height: 16
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e4db1d3b65cfbde40931869e9cfe8caf
-      internalID: -1916857031
+      spriteID: e8da35418de6c7d30800000000000000
+      internalID: 4430538007758744974
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chaoMontanha_6
+      name: Moeda Rodando_2
       rect:
         serializedVersion: 2
-        x: 16
+        x: 40
         y: 0
-        width: 16
-        height: 16
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d261c1776a2e0ed4f8299fc00a238f51
-      internalID: -1530492132
+      spriteID: ba856670d2ca88e10800000000000000
+      internalID: 2200197727368140971
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chaoMontanha_7
+      name: Moeda Rodando_3
       rect:
         serializedVersion: 2
-        x: 32
+        x: 60
         y: 0
-        width: 16
-        height: 16
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 649b2725b9b28354882a89ee88dca927
-      internalID: -917202099
+      spriteID: 2c95515c84b537a40800000000000000
+      internalID: 5364731949230676418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Moeda Rodando_4
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06dd4049e00d06610800000000000000
+      internalID: 1612517427630103904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Moeda Rodando_5
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85cf658d2d4d90b60800000000000000
+      internalID: 7712929838886485080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Moeda Rodando_6
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6604e1956b96e5450800000000000000
+      internalID: 6079412778896867430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Moeda Rodando_7
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29844276af4b71b90800000000000000
+      internalID: -7271144085801121646
       vertices: []
       indices: 
       edges: []
@@ -294,7 +315,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f816c3950fe0c3348a8540a50a579999
+    spriteID: 710933b2242c8de459640377b74c1619
     internalID: 0
     vertices: []
     indices: 
@@ -304,16 +325,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":20.0,"y":20.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      chaoMontanha_0: 8873909723148004477
-      chaoMontanha_1: 1062180202
-      chaoMontanha_2: -501405912
-      chaoMontanha_3: -777982887
-      chaoMontanha_4: -1407778739
-      chaoMontanha_5: -1916857031
-      chaoMontanha_6: -1530492132
-      chaoMontanha_7: -917202099
+      Moeda Rodando_0: -4192798263448276275
+      Moeda Rodando_1: 4430538007758744974
+      Moeda Rodando_2: 2200197727368140971
+      Moeda Rodando_3: 5364731949230676418
+      Moeda Rodando_4: 1612517427630103904
+      Moeda Rodando_5: 7712929838886485080
+      Moeda Rodando_6: 6079412778896867430
+      Moeda Rodando_7: -7271144085801121646
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

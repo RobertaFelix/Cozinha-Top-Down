@@ -19,6 +19,12 @@ public class CustomerNPC : MonoBehaviour
     [SerializeField] private string foodSortingLayerName = "Default";
     [SerializeField] private int foodSortingOrder = 10;
 
+    [Header("Moeda de recompensa")]
+    [SerializeField] private GameObject coinPrefab;
+
+    [SerializeField] private Vector3 coinOffset =
+        new Vector3(0f, -0.12f, 0f);
+
     private GameObject servedFoodObject;
     private bool isLeaving;
 
@@ -26,6 +32,8 @@ public class CustomerNPC : MonoBehaviour
     {
         currentTable = table;
         currentChair = chair;
+
+        isLeaving = false;
 
         transform.position =
             chair.position + new Vector3(0f, -0.124f, 0f);
@@ -45,7 +53,6 @@ public class CustomerNPC : MonoBehaviour
             return;
         }
 
-        // Cria a representação visual da comida no mundo 2D.
         servedFoodObject = new GameObject("ServedFood");
 
         servedFoodObject.transform.SetParent(transform);
@@ -73,7 +80,46 @@ public class CustomerNPC : MonoBehaviour
     {
         yield return new WaitForSeconds(servedFoodDuration);
 
+        if (isLeaving)
+            yield break;
+
+        // Cria a moeda depois que o NPC termina de comer.
+        SpawnCoin();
+
+        // Libera a cadeira e remove o NPC.
         Leave();
+    }
+
+    private void SpawnCoin()
+    {
+        if (coinPrefab == null)
+        {
+            Debug.LogWarning(
+                "CustomerNPC: configure o Coin Prefab no Inspector.",
+                this
+            );
+            return;
+        }
+
+        Vector3 referencePosition =
+            currentChair != null
+                ? currentChair.position
+                : transform.position;
+
+        Vector3 spawnPosition =
+            referencePosition + coinOffset;
+
+        // Instancia o prefab com seu Animator e Controller.
+        // A moeda não será filha do NPC.
+        GameObject coin = Instantiate(
+            coinPrefab,
+            spawnPosition,
+            Quaternion.identity
+        );
+
+        coin.name = "RewardCoin";
+
+        Debug.Log("Moeda criada após o NPC terminar de comer.");
     }
 
     public void Leave()

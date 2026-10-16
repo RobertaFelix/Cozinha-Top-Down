@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCOrderUI : MonoBehaviour
 {
     [Header("Ícone do pedido")]
-    [SerializeField] private SpriteRenderer iconRenderer;
+    [SerializeField] private Image iconImage;
 
-    [Header("Fundo decorativo")]
-    [SerializeField] private SpriteRenderer backgroundRenderer;
+    [Header("Moldura da barra")]
+    [SerializeField] private Image backgroundImage;
+
+    [Header("Preenchimento vermelho")]
+    [SerializeField] private Image patienceBar;
 
     [Header("Animação")]
     [SerializeField] private float floatHeight = 0.04f;
@@ -19,11 +23,17 @@ public class NPCOrderUI : MonoBehaviour
     {
         initialPosition = transform.localPosition;
 
-        if (iconRenderer != null)
-            iconRenderer.enabled = false;
+        if (iconImage != null)
+            iconImage.enabled = false;
 
-        if (backgroundRenderer != null)
-            backgroundRenderer.enabled = false;
+        if (backgroundImage != null)
+            backgroundImage.enabled = false;
+
+        if (patienceBar != null)
+        {
+            patienceBar.fillAmount = 0f;
+            patienceBar.enabled = false;
+        }
     }
 
     private void Update()
@@ -40,42 +50,59 @@ public class NPCOrderUI : MonoBehaviour
 
     public void Show(Sprite sprite)
     {
-        if (iconRenderer == null)
+        if (iconImage == null || sprite == null)
         {
             Debug.LogError(
-                "NPCOrderUI: Icon Renderer não foi configurado.",
+                "NPCOrderUI: configure o Icon Image e o Sprite do prato.",
                 this
             );
             return;
         }
 
-        if (sprite == null)
+        iconImage.sprite = sprite;
+        iconImage.enabled = true;
+
+        if (backgroundImage != null)
+            backgroundImage.enabled = true;
+
+        if (patienceBar != null)
         {
-            Debug.LogError(
-                "NPCOrderUI: o prato não possui Sprite.",
-                this
-            );
-            return;
+            patienceBar.fillAmount = 0f;
+            patienceBar.enabled = true;
         }
-
-        iconRenderer.sprite = sprite;
-        iconRenderer.enabled = true;
-
-        if (backgroundRenderer != null)
-            backgroundRenderer.enabled = true;
 
         isVisible = true;
+
+        // A barra começa vazia.
+        SetPatience(0f);
+    }
+
+    public void SetPatience(float progress)
+    {
+        if (patienceBar == null)
+            return;
+
+        // Preenche a barra de 0 a 1.
+        // A direção é configurada no Inspector:
+        // Filled > Horizontal > Left.
+        patienceBar.fillAmount = Mathf.Clamp01(progress);
     }
 
     public void Hide()
     {
         isVisible = false;
 
-        if (iconRenderer != null)
-            iconRenderer.enabled = false;
+        if (iconImage != null)
+            iconImage.enabled = false;
 
-        if (backgroundRenderer != null)
-            backgroundRenderer.enabled = false;
+        if (backgroundImage != null)
+            backgroundImage.enabled = false;
+
+        if (patienceBar != null)
+        {
+            patienceBar.fillAmount = 0f;
+            patienceBar.enabled = false;
+        }
 
         transform.localPosition = initialPosition;
     }
