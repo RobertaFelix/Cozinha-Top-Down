@@ -6,6 +6,8 @@ public class GameClock : MonoBehaviour
 {
     [Header("Interface")]
     [SerializeField] private TMP_Text clockText;
+    [SerializeField] private TMP_Text weekdayText;
+    [SerializeField] private TMP_Text dayNumberText;
 
     [Header("Horario inicial")]
     [Range(1, 12)]
@@ -22,10 +24,19 @@ public class GameClock : MonoBehaviour
     private float elapsedRealSeconds;
     private int initialGameMinutes;
 
+    private readonly string[] weekdays =
+    {
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY"
+    };
+
     private void Start()
     {
-        // Converte o horario inicial para minutos
-        // desde meia-noite.
         int hour24 = startHour % 12;
 
         if (startPM)
@@ -50,21 +61,21 @@ public class GameClock : MonoBehaviour
 
     private void UpdateClock()
     {
-        if (clockText == null)
-            return;
 
-        float secondsPerMinute =
+        float safeSecondsPerMinute =
             Mathf.Max(0.01f, realSecondsPerGameMinute);
 
         int elapsedGameMinutes =
             Mathf.FloorToInt(
-                elapsedRealSeconds / secondsPerMinute
+                elapsedRealSeconds / safeSecondsPerMinute
             );
 
-        // O dia se repete a cada 24 horas.
+        int totalGameMinutes =
+            initialGameMinutes + elapsedGameMinutes;
+
+        // Hora atual dentro do ciclo de 24 horas.
         int currentMinutes =
-            (initialGameMinutes + elapsedGameMinutes)
-            % (24 * 60);
+            totalGameMinutes % (24 * 60);
 
         int hour24 = currentMinutes / 60;
         int minute = currentMinutes % 60;
@@ -74,9 +85,34 @@ public class GameClock : MonoBehaviour
         int hour12 = hour24 % 12;
 
         if (hour12 == 0)
+        {
             hour12 = 12;
+        }
 
-        clockText.text =
-            $"{hour12:00}:{minute:00} {period}";
+        if (clockText != null)
+        {
+            clockText.text =
+                $"{hour12:00}:{minute:00} {period}";
+        }
+
+        // Quantos dias completos se passaram desde o início.
+        int elapsedDays =
+            totalGameMinutes / (24 * 60);
+
+        // Semana que se repete a cada 7 dias.
+        int weekdayIndex = elapsedDays % 7;
+
+        if (weekdayText != null)
+        {
+            weekdayText.text = weekdays[weekdayIndex];
+        }
+
+        // Calendário de 30 dias: 01 até 30, depois volta a 01.
+        int dayNumber = (elapsedDays % 30) + 1;
+
+        if (dayNumberText != null)
+        {
+            dayNumberText.text = dayNumber.ToString("D2");
+        }
     }
 }

@@ -39,7 +39,7 @@ public class CoinManager : MonoBehaviour
     {
         if (coinText != null)
         {
-            coinText.text = totalCoins.ToString("D3");
+            coinText.text = totalCoins.ToString("D9");
         }
     }
 }
