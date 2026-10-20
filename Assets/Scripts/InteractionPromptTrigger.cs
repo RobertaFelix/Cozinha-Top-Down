@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class InteractionPromptTrigger : MonoBehaviour
@@ -5,6 +6,10 @@ public class InteractionPromptTrigger : MonoBehaviour
     [Header("Objeto que o E deve acompanhar")]
     [SerializeField]
     private Transform target;
+
+    [Header("Ajuste adicional da posição do E")]
+    [SerializeField]
+    private Vector3 offsetAdicional = Vector3.zero;
 
     private void Awake()
     {
@@ -24,7 +29,8 @@ public class InteractionPromptTrigger : MonoBehaviour
             return;
 
         InteractionPromptManager.Instance.Show(
-            target
+            target,
+            offsetAdicional
         );
     }
 

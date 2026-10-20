@@ -14,6 +14,10 @@ public class CoinManager : MonoBehaviour
 
     public int TotalCoins => totalCoins;
 
+    [Header("Multiplicador de ganhos")]
+    [SerializeField, Min(1)]
+    private int rewardMultiplier = 1;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,7 +35,7 @@ public class CoinManager : MonoBehaviour
         if (amount <= 0)
             return;
 
-        totalCoins += amount;
+        totalCoins += amount * rewardMultiplier;
         UpdateUI();
     }
 
@@ -41,5 +45,10 @@ public class CoinManager : MonoBehaviour
         {
             coinText.text = totalCoins.ToString("D9");
         }
+    }
+
+    public void SetRewardMultiplier(int multiplier)
+    {
+        rewardMultiplier = Mathf.Max(1, multiplier);
     }
 }

@@ -1434,13 +1434,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Frizer
   inventoryFrizerController: {fileID: 1702130248}
   items:
-  - itemPrefab: {fileID: 8008127976990012123, guid: e176689ad8ce85e468cd9e3050e8400a, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 651e66a30716cb8428ce232a8052f584, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: d678233426423c04c8385190f34b838d, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 455ecb7e17e0444498361fc88cdbaa92, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: 8fd8318fb2316b4488c1cc4d08d81ca2, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 399f37f5c0e39434cac5a0c21f611ddf, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: 47ba2dd8a6e1d2e49a7ea6b6b4f0805b, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 965d09bdec322b34285895161dbd9ef5, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: d7af14f3d5bb76248931d0aaf7b21454, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: 9b9cf69d3ee0017498cc66b3ba84d0a0, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: 3dc74e9dd88e9484ab2fc72c5107266c, type: 3}
     amount: 1
 --- !u!114 &119078286
 MonoBehaviour:
@@ -1455,6 +1461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
   target: {fileID: 1700554120}
+  offsetAdicional: {x: 0, y: -0.2, z: 0}
 --- !u!1 &150172116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,10 +1586,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1718113014}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -23, y: -616}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -15.235596, y: -108}
+  m_SizeDelta: {x: 63.3822, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &150741001
 MonoBehaviour:
@@ -1670,7 +1677,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 95.00168, w: 177.30508}
+  m_margin: {x: 0, y: 0, z: 0.08013916, w: 0.6878586}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4274,9 +4281,9 @@ MonoBehaviour:
   slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
   slotCount: 30
   itemPrefabs:
-  - {fileID: 8008127976990012123, guid: e176689ad8ce85e468cd9e3050e8400a, type: 3}
-  - {fileID: 8008127976990012123, guid: d678233426423c04c8385190f34b838d, type: 3}
-  - {fileID: 8008127976990012123, guid: 79d1d234d188fce4e99c51dd1522117b, type: 3}
+  - {fileID: 8008127976990012123, guid: 2a6c9afc53462e1428629c958bc74c8e, type: 3}
+  - {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
+  - {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
 --- !u!114 &443527095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4320,7 +4327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptManager
   promptUI: {fileID: 1674842868}
-  offset: {x: 1, y: 1, z: 0}
+  offset: {x: 1.05, y: 1.6, z: 0}
   floatHeight: 0.1
   floatSpeed: 2
 --- !u!114 &443527098
@@ -4337,7 +4344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RecipeBookController
   recipePanel: {fileID: 1691614657}
   slotPrefab: {fileID: 5248493581909994002, guid: bff592ae516cafc4fb88ec7d632fdbb6, type: 3}
-  slotCount: 4
+  slotCount: 12
   stoveController: {fileID: 981803283}
 --- !u!1 &465301436
 GameObject:
@@ -5244,6 +5251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
   target: {fileID: 557992468}
+  offsetAdicional: {x: -0.05, y: -0.4, z: 0}
 --- !u!1 &562200214
 GameObject:
   m_ObjectHideFlags: 0
@@ -16003,8 +16011,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -460.6, y: -211.2}
-  m_SizeDelta: {x: 20.539, y: 62.7666}
+  m_AnchoredPosition: {x: -421.84805, y: -211.2}
+  m_SizeDelta: {x: 1.163, y: 62.7666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &944728121
 MonoBehaviour:
@@ -21703,66 +21711,216 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoveController
   recipes:
   - ingredients:
-    - itemPrefab: {fileID: 8008127976990012123, guid: e176689ad8ce85e468cd9e3050e8400a, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: 79d1d234d188fce4e99c51dd1522117b, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: 7d87635eddc59f9479bdfd2f94e7b181, type: 3}
-      amount: 0
+    - itemPrefab: {fileID: 8008127976990012123, guid: 965d09bdec322b34285895161dbd9ef5, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 607e3e9a2b52e6c459f071060967e9f1, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
+      amount: 1
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 0
-    cookingTime: 5
+      amount: 1
+    cookingTime: 15
+    basePrice: 35
     result:
-      itemPrefab: {fileID: 8008127976990012123, guid: 84531a509901c7e4092c3b5648e7ab21, type: 3}
-      amount: 0
+      itemPrefab: {fileID: 8008127976990012123, guid: 6b420fe05ded4204db2eab7f183b034d, type: 3}
+      amount: 1
   - ingredients:
-    - itemPrefab: {fileID: 8008127976990012123, guid: d678233426423c04c8385190f34b838d, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: ec6c3ea45b6507546a7d08136a289d1b, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: 3dd2344d3cb41b345bd79fc76be55c3b, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: 3f20a16f2c691b1438c14d8133bbd0d8, type: 3}
-      amount: 0
+    - itemPrefab: {fileID: 8008127976990012123, guid: 399f37f5c0e39434cac5a0c21f611ddf, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: c5bf9624353069342a501c20f8b4b70e, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 1de11dbf2374caf4c9620d2dd9dafb7d, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: e3b9fc26dc7221f429951262d8250807, type: 3}
+      amount: 1
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 0
-    cookingTime: 7
+      amount: 1
+    cookingTime: 15
+    basePrice: 55
     result:
-      itemPrefab: {fileID: 8008127976990012123, guid: f1113296e152d1b4da38d7985420f02e, type: 3}
-      amount: 0
+      itemPrefab: {fileID: 8008127976990012123, guid: 469198977bb787b44bb64dec23150ee2, type: 3}
+      amount: 1
   - ingredients:
-    - itemPrefab: {fileID: 8008127976990012123, guid: 8fd8318fb2316b4488c1cc4d08d81ca2, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: 79d1d234d188fce4e99c51dd1522117b, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: f41760a8dc1d29b4fb6afd92184c72b3, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: a8ea6afd398a0594e9023fc7c0c1aaa9, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: 2a2bc2d3e9086774a8062648718776ed, type: 3}
-      amount: 0
+    - itemPrefab: {fileID: 8008127976990012123, guid: 9b9cf69d3ee0017498cc66b3ba84d0a0, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+      amount: 1
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 0
-    cookingTime: 7
+      amount: 1
+    cookingTime: 15
+    basePrice: 35
     result:
-      itemPrefab: {fileID: 8008127976990012123, guid: 9f9af3779fab1344d91499e425664970, type: 3}
-      amount: 0
+      itemPrefab: {fileID: 8008127976990012123, guid: 49ad30e1042cc61479fae59d8e4edff1, type: 3}
+      amount: 1
   - ingredients:
-    - itemPrefab: {fileID: 8008127976990012123, guid: 47ba2dd8a6e1d2e49a7ea6b6b4f0805b, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: fcfb34ffa4ec4e140978596b466ebdd8, type: 3}
-      amount: 0
-    - itemPrefab: {fileID: 8008127976990012123, guid: ab6c0b457066db74f83dd8e4385ee0b2, type: 3}
-      amount: 0
+    - itemPrefab: {fileID: 8008127976990012123, guid: 455ecb7e17e0444498361fc88cdbaa92, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 607e3e9a2b52e6c459f071060967e9f1, type: 3}
+      amount: 1
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 0
-    cookingTime: 5
+      amount: 1
+    cookingTime: 15
+    basePrice: 40
     result:
-      itemPrefab: {fileID: 8008127976990012123, guid: f63b20958f29ebf43a83a7a396d71e90, type: 3}
-      amount: 0
+      itemPrefab: {fileID: 8008127976990012123, guid: f25116efe7d95d946bfc8f2c4a7c8daa, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: 651e66a30716cb8428ce232a8052f584, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 353a6745a6b7aca40b8590d31ffde335, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 25
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: 9ff8b83dbc949fd45bd83f9f629fe17b, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: 3dc74e9dd88e9484ab2fc72c5107266c, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 353a6745a6b7aca40b8590d31ffde335, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 3ae8bc4189aea024bb3cc2ca62c3ef72, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 50
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: 6cc670fe4ccc64e4e89f1adb3a9750e1, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: 399f37f5c0e39434cac5a0c21f611ddf, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 25
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: 110b1c5986f89f34ba47b11dac561936, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: d7af14f3d5bb76248931d0aaf7b21454, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 2a6c9afc53462e1428629c958bc74c8e, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 40
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: a013132757e73e6408928100aecc4a94, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: 651e66a30716cb8428ce232a8052f584, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 1de11dbf2374caf4c9620d2dd9dafb7d, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 35
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: f19f788acb00c8645a6e124e9f7c524e, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: 9b9cf69d3ee0017498cc66b3ba84d0a0, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 2bed924dcbc6e23429747aa63fb7bdf7, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 8ed2d8159f26dc1469fadffc31d90709, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 50
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: 075b9d1d952830c43b9eedac1d83a90e, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 965d09bdec322b34285895161dbd9ef5, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 3ae8bc4189aea024bb3cc2ca62c3ef72, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 40
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: cf122774f949f214d8ee897df6a94f24, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: 2a6c9afc53462e1428629c958bc74c8e, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 8ed2d8159f26dc1469fadffc31d90709, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
+      amount: 1
+    cookingTime: 15
+    basePrice: 40
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: 0b1bf69c7998f504d8c52d6b4966e8bf, type: 3}
+      amount: 1
+  - ingredients:
+    - itemPrefab: {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
+      amount: 1
+    - itemPrefab: {fileID: 2029307285019830437, guid: 2fb3948f08c05754ca4c24b4f914ddee, type: 3}
+      amount: 1
+    cookingTime: 10
+    basePrice: 10
+    result:
+      itemPrefab: {fileID: 8008127976990012123, guid: 607e3e9a2b52e6c459f071060967e9f1, type: 3}
+      amount: 1
   cookingProgressUI: {fileID: 778781742}
   recipeBookController: {fileID: 443527098}
-  burnDuration: 15
+  burnDuration: 20
 --- !u!4 &981803284
 Transform:
   m_ObjectHideFlags: 0
@@ -26977,6 +27135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CoinManager
   totalCoins: 0
   coinText: {fileID: 150741001}
+  rewardMultiplier: 1
 --- !u!1 &1317027125
 GameObject:
   m_ObjectHideFlags: 0
@@ -27396,13 +27555,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   inventoryRefrigeratorController: {fileID: 2014663135}
   items:
-  - itemPrefab: {fileID: 8008127976990012123, guid: 7d87635eddc59f9479bdfd2f94e7b181, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: fcfb34ffa4ec4e140978596b466ebdd8, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 2bed924dcbc6e23429747aa63fb7bdf7, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: a8ea6afd398a0594e9023fc7c0c1aaa9, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: 2a2bc2d3e9086774a8062648718776ed, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: 3ae8bc4189aea024bb3cc2ca62c3ef72, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: f48a6e0cc0f82d740bdba78adbf06f02, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: 2fdbc4466826085408253558744ef058, type: 3}
+    amount: 1
+  - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
     amount: 1
 --- !u!114 &1350259046
 MonoBehaviour:
@@ -27417,6 +27588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
   target: {fileID: 5284287874470152414}
+  offsetAdicional: {x: 0, y: -0.2, z: 0}
 --- !u!1 &1360732688
 GameObject:
   m_ObjectHideFlags: 0
@@ -30515,17 +30687,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Vegetables
   inventoryVegetablesController: {fileID: 259874624}
   items:
-  - itemPrefab: {fileID: 8008127976990012123, guid: f41760a8dc1d29b4fb6afd92184c72b3, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 8ed2d8159f26dc1469fadffc31d90709, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: 79d1d234d188fce4e99c51dd1522117b, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: 3dd2344d3cb41b345bd79fc76be55c3b, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 1de11dbf2374caf4c9620d2dd9dafb7d, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: ec6c3ea45b6507546a7d08136a289d1b, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: c5bf9624353069342a501c20f8b4b70e, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: 3f20a16f2c691b1438c14d8133bbd0d8, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: e3b9fc26dc7221f429951262d8250807, type: 3}
     amount: 1
-  - itemPrefab: {fileID: 8008127976990012123, guid: ab6c0b457066db74f83dd8e4385ee0b2, type: 3}
+  - itemPrefab: {fileID: 8008127976990012123, guid: 353a6745a6b7aca40b8590d31ffde335, type: 3}
     amount: 1
 --- !u!114 &1462157169
 MonoBehaviour:
@@ -30540,6 +30712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
   target: {fileID: 1327803539}
+  offsetAdicional: {x: 0, y: -0.4, z: 0}
 --- !u!1 &1463701571
 GameObject:
   m_ObjectHideFlags: 0
@@ -39001,7 +39174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a64c7d7216c5ad4eb5cc2c484408716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
-  target: {fileID: 0}
+  target: {fileID: 1667544648}
+  offsetAdicional: {x: -0.05, y: -0.4, z: 0}
 --- !u!1 &1674842868
 GameObject:
   m_ObjectHideFlags: 0
@@ -41685,8 +41859,8 @@ MonoBehaviour:
   clockText: {fileID: 1878540547}
   weekdayText: {fileID: 944728121}
   dayNumberText: {fileID: 656922273}
-  startHour: 11
-  startMinute: 40
+  startHour: 8
+  startMinute: 0
   startPM: 1
   realSecondsPerGameMinute: 1
 --- !u!1 &1837408358
@@ -42812,6 +42986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
   target: {fileID: 5284287874470152412}
+  offsetAdicional: {x: 0, y: -0.4, z: 0}
 --- !u!1 &1854688532
 GameObject:
   m_ObjectHideFlags: 0
@@ -54596,7 +54771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8763026574479475893, guid: 03e35994de064934585984e6770d38a7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.33
+      value: 5.298
       objectReference: {fileID: 0}
     - target: {fileID: 8763026574479475893, guid: 03e35994de064934585984e6770d38a7, type: 3}
       propertyPath: m_LocalPosition.y

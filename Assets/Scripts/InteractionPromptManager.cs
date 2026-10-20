@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class InteractionPromptManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class InteractionPromptManager : MonoBehaviour
     private float floatSpeed = 2f;
 
     private Transform currentTarget;
+    private Vector3 currentOffsetAdicional;
 
     private Vector3 initialPosition;
 
@@ -47,17 +49,13 @@ public class InteractionPromptManager : MonoBehaviour
             return;
         }
 
-        // ==========================================
-        // POSIÇÃO BASE
-        // ==========================================
-
+        // Posição global + ajuste específico do objeto.
         Vector3 targetPosition =
-            currentTarget.position + offset;
+            currentTarget.position +
+            offset +
+            currentOffsetAdicional;
 
-        // ==========================================
-        // ANIMAÇÃO DE FLUTUAÇÃO
-        // ==========================================
-
+        // Mantém a animação de flutuação existente.
         float floatOffset =
             Mathf.Sin(
                 Time.time * floatSpeed
@@ -74,10 +72,18 @@ public class InteractionPromptManager : MonoBehaviour
 
     public void Show(Transform target)
     {
+        Show(target, Vector3.zero);
+    }
+
+    public void Show(
+        Transform target,
+        Vector3 offsetAdicional)
+    {
         if (target == null)
             return;
 
         currentTarget = target;
+        currentOffsetAdicional = offsetAdicional;
 
         if (promptUI == null)
             return;
@@ -92,7 +98,6 @@ public class InteractionPromptManager : MonoBehaviour
 
         // Só esconde se o objeto que está
         // pedindo para esconder for o atual.
-
         if (currentTarget != target)
             return;
 
@@ -102,6 +107,7 @@ public class InteractionPromptManager : MonoBehaviour
     public void Hide()
     {
         currentTarget = null;
+        currentOffsetAdicional = Vector3.zero;
 
         if (promptUI != null)
         {

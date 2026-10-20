@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,44 +13,60 @@ public class NPCOrderUI : MonoBehaviour
     [Header("Preenchimento vermelho")]
     [SerializeField] private Image patienceBar;
 
+    [Header("Posição da interface")]
+    [SerializeField] private Vector2 positionOffset = new Vector2(0f, 0.5f);
+
     [Header("Animação")]
     [SerializeField] private float floatHeight = 0.04f;
     [SerializeField] private float floatSpeed = 2f;
 
-    private Vector3 initialPosition;
+    private RectTransform rectTransform;
+    private Vector2 initialPosition;
     private bool isVisible;
 
     private void Awake()
     {
-        initialPosition = transform.localPosition;
+        rectTransform = GetComponent<RectTransform>();
 
-        if (iconImage != null)
-            iconImage.enabled = false;
-
-        if (backgroundImage != null)
-            backgroundImage.enabled = false;
-
-        if (patienceBar != null)
+        if (rectTransform == null)
         {
-            patienceBar.fillAmount = 0f;
-            patienceBar.enabled = false;
+            Debug.LogError(
+                "NPCOrderUI precisa estar em um objeto com RectTransform.",
+                this
+            );
+            return;
         }
+
+        initialPosition = positionOffset;
+        rectTransform.localPosition = new Vector3(
+            initialPosition.x,
+            initialPosition.y,
+            rectTransform.localPosition.z
+        );
+
+        Hide();
     }
 
     private void Update()
     {
-        if (!isVisible)
+        if (!isVisible || rectTransform == null)
             return;
 
         float offset =
             Mathf.Sin(Time.time * floatSpeed) * floatHeight;
 
-        transform.localPosition =
-            initialPosition + Vector3.up * offset;
+        rectTransform.localPosition = new Vector3(
+            initialPosition.x,
+            initialPosition.y + offset,
+            rectTransform.localPosition.z
+        );
     }
 
     public void Show(Sprite sprite)
     {
+        if (rectTransform == null)
+            return;
+
         if (iconImage == null || sprite == null)
         {
             Debug.LogError(
@@ -73,7 +90,6 @@ public class NPCOrderUI : MonoBehaviour
 
         isVisible = true;
 
-        // A barra começa vazia.
         SetPatience(0f);
     }
 
@@ -82,9 +98,6 @@ public class NPCOrderUI : MonoBehaviour
         if (patienceBar == null)
             return;
 
-        // Preenche a barra de 0 a 1.
-        // A direção é configurada no Inspector:
-        // Filled > Horizontal > Left.
         patienceBar.fillAmount = Mathf.Clamp01(progress);
     }
 
@@ -104,6 +117,13 @@ public class NPCOrderUI : MonoBehaviour
             patienceBar.enabled = false;
         }
 
-        transform.localPosition = initialPosition;
+        if (rectTransform != null)
+        {
+            rectTransform.localPosition = new Vector3(
+                initialPosition.x,
+                initialPosition.y,
+                rectTransform.localPosition.z
+            );
+        }
     }
 }

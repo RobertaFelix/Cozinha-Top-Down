@@ -32,6 +32,51 @@ TextureImporter:
   - first:
       213: 8936424660545447932
     second: Ingredientes_9
+  - first:
+      213: 8708809897762268389
+    second: Ingredientes_10
+  - first:
+      213: -6389791878911158278
+    second: Ingredientes_11
+  - first:
+      213: 5620147503895835230
+    second: Ingredientes_12
+  - first:
+      213: -8181156799180385878
+    second: Ingredientes_13
+  - first:
+      213: -7855694586665541625
+    second: Ingredientes_14
+  - first:
+      213: 1426981963296104532
+    second: Ingredientes_15
+  - first:
+      213: 8768507646201821713
+    second: Ingredientes_16
+  - first:
+      213: -8154876616852991778
+    second: Ingredientes_17
+  - first:
+      213: -4320982721186092450
+    second: Ingredientes_18
+  - first:
+      213: 2970220886461851573
+    second: Ingredientes_19
+  - first:
+      213: -4613271278008384204
+    second: Ingredientes_20
+  - first:
+      213: 7366252655380625205
+    second: Ingredientes_21
+  - first:
+      213: -3816184577555536194
+    second: Ingredientes_22
+  - first:
+      213: 4036494562907624992
+    second: Ingredientes_23
+  - first:
+      213: 2414496802776983918
+    second: Ingredientes_24
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -145,12 +190,12 @@ TextureImporter:
       name: Ingredientes_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 19
-        width: 15
-        height: 13
+        x: 0
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -167,12 +212,12 @@ TextureImporter:
       name: Ingredientes_1
       rect:
         serializedVersion: 2
-        x: 29
-        y: 18
+        x: 16
+        y: 64
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -189,12 +234,12 @@ TextureImporter:
       name: Ingredientes_2
       rect:
         serializedVersion: 2
-        x: 50
-        y: 19
-        width: 12
-        height: 13
+        x: 32
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -211,12 +256,12 @@ TextureImporter:
       name: Ingredientes_3
       rect:
         serializedVersion: 2
-        x: 68
-        y: 19
-        width: 14
-        height: 13
+        x: 48
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -233,12 +278,12 @@ TextureImporter:
       name: Ingredientes_4
       rect:
         serializedVersion: 2
-        x: 88
-        y: 19
+        x: 64
+        y: 64
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -255,12 +300,12 @@ TextureImporter:
       name: Ingredientes_5
       rect:
         serializedVersion: 2
-        x: 8
-        y: 0
-        width: 14
-        height: 15
+        x: 0
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -277,12 +322,12 @@ TextureImporter:
       name: Ingredientes_6
       rect:
         serializedVersion: 2
-        x: 27
-        y: 0
+        x: 16
+        y: 48
         width: 16
-        height: 15
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -299,12 +344,12 @@ TextureImporter:
       name: Ingredientes_7
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 15
+        x: 32
+        y: 48
+        width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -321,12 +366,12 @@ TextureImporter:
       name: Ingredientes_8
       rect:
         serializedVersion: 2
-        x: 68
-        y: 1
-        width: 14
-        height: 14
+        x: 48
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -343,12 +388,12 @@ TextureImporter:
       name: Ingredientes_9
       rect:
         serializedVersion: 2
-        x: 87
-        y: 0
-        width: 15
-        height: 15
+        x: 64
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -361,11 +406,341 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Ingredientes_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e4a684f578ebd870800000000000000
+      internalID: 8708809897762268389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_11
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af713d40426e257a0800000000000000
+      internalID: -6389791878911158278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_12
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e527203c066cefd40800000000000000
+      internalID: 5620147503895835230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_13
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa1d41d9c31b67e80800000000000000
+      internalID: -8181156799180385878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70067d90567faf290800000000000000
+      internalID: -7855694586665541625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 450672ff888adc310800000000000000
+      internalID: 1426981963296104532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_16
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11af7262f3fffa970800000000000000
+      internalID: 8768507646201821713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_17
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed096516cee04de80800000000000000
+      internalID: -8154876616852991778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_18
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5a2a1fcb19c804c0800000000000000
+      internalID: -4320982721186092450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_19
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b7210ac828583920800000000000000
+      internalID: 2970220886461851573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4354ccdf63e5affb0800000000000000
+      internalID: -4613271278008384204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_21
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5377db113cf2a3660800000000000000
+      internalID: 7366252655380625205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_22
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb66a7188503a0bc0800000000000000
+      internalID: -3816184577555536194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_23
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02697ef2b62840830800000000000000
+      internalID: 4036494562907624992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ingredientes_24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e69a6d0bc04028120800000000000000
+      internalID: 2414496802776983918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: afdb9d5117836544a9cf35b6700fe3cd
     internalID: 0
     vertices: []
     indices: 
@@ -373,11 +748,28 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Ingredientes_0: -347414827906679412
       Ingredientes_1: -3006948450957946516
+      Ingredientes_10: 8708809897762268389
+      Ingredientes_11: -6389791878911158278
+      Ingredientes_12: 5620147503895835230
+      Ingredientes_13: -8181156799180385878
+      Ingredientes_14: -7855694586665541625
+      Ingredientes_15: 1426981963296104532
+      Ingredientes_16: 8768507646201821713
+      Ingredientes_17: -8154876616852991778
+      Ingredientes_18: -4320982721186092450
+      Ingredientes_19: 2970220886461851573
       Ingredientes_2: -5570227908463447612
+      Ingredientes_20: -4613271278008384204
+      Ingredientes_21: 7366252655380625205
+      Ingredientes_22: -3816184577555536194
+      Ingredientes_23: 4036494562907624992
+      Ingredientes_24: 2414496802776983918
       Ingredientes_3: -407539820462697164
       Ingredientes_4: 1649883304966909098
       Ingredientes_5: -8346652761893649545

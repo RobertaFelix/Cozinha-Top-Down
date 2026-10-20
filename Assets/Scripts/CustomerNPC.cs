@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 
@@ -6,14 +7,18 @@ public class CustomerNPC : MonoBehaviour
     private Table currentTable;
     private Transform currentChair;
 
+    [Header("Ícone de pedido disponível")]
+    [SerializeField] private GameObject orderAvailableIcon;
+    [SerializeField] private float iconFloatHeight = 0.04f;
+    [SerializeField] private float iconFloatSpeed = 2f;
+
+    private Vector3 iconInitialLocalPosition;
+
     [Header("Prato servido")]
     [SerializeField] private Vector3 servedFoodOffset =
         new Vector3(0f, 0.12f, 0f);
-
     [SerializeField] private float servedFoodDuration = 15f;
-
-    [SerializeField] private Vector3 servedFoodScale =
-        Vector3.one;
+    [SerializeField] private Vector3 servedFoodScale = Vector3.one;
 
     [Header("Visual do prato")]
     [SerializeField] private string foodSortingLayerName = "Default";
@@ -21,12 +26,38 @@ public class CustomerNPC : MonoBehaviour
 
     [Header("Moeda de recompensa")]
     [SerializeField] private GameObject coinPrefab;
-
     [SerializeField] private Vector3 coinOffset =
         new Vector3(0f, -0.12f, 0f);
 
     private GameObject servedFoodObject;
     private bool isLeaving;
+    private int rewardValue;
+
+    private void Awake()
+    {
+        if (orderAvailableIcon != null)
+        {
+            iconInitialLocalPosition =
+                orderAvailableIcon.transform.localPosition;
+
+            orderAvailableIcon.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (orderAvailableIcon == null ||
+            !orderAvailableIcon.activeSelf)
+        {
+            return;
+        }
+
+        float offset =
+            Mathf.Sin(Time.time * iconFloatSpeed) * iconFloatHeight;
+
+        orderAvailableIcon.transform.localPosition =
+            iconInitialLocalPosition + Vector3.up * offset;
+    }
 
     public void SitAt(Table table, Transform chair)
     {
@@ -34,12 +65,44 @@ public class CustomerNPC : MonoBehaviour
         currentChair = chair;
 
         isLeaving = false;
+        rewardValue = 0;
 
         transform.position =
             chair.position + new Vector3(0f, -0.124f, 0f);
+
+        ShowOrderAvailableIcon();
     }
 
-    public void ServeFood(Sprite foodSprite)
+    public void ShowOrderAvailableIcon()
+    {
+        Debug.Log(
+            "Tentando mostrar a exclamação. Referência: " +
+            (orderAvailableIcon != null ? orderAvailableIcon.name : "NULA"),
+            this
+        );
+
+        if (orderAvailableIcon == null || isLeaving)
+            return;
+
+        orderAvailableIcon.transform.localPosition =
+            iconInitialLocalPosition;
+
+        orderAvailableIcon.SetActive(true);
+
+        Debug.Log(
+            "Exclamação ativada: " + orderAvailableIcon.activeSelf,
+            orderAvailableIcon
+        );
+    }
+
+
+    public void HideOrderAvailableIcon()
+    {
+        if (orderAvailableIcon != null)
+            orderAvailableIcon.SetActive(false);
+    }
+
+    public void ServeFood(Sprite foodSprite, int foodPrice)
     {
         if (isLeaving || servedFoodObject != null)
             return;
@@ -53,10 +116,10 @@ public class CustomerNPC : MonoBehaviour
             return;
         }
 
+        rewardValue = Mathf.Max(0, foodPrice);
+
         servedFoodObject = new GameObject("ServedFood");
-
         servedFoodObject.transform.SetParent(transform);
-
         servedFoodObject.transform.localPosition = servedFoodOffset;
         servedFoodObject.transform.localRotation = Quaternion.identity;
         servedFoodObject.transform.localScale = servedFoodScale;
@@ -68,11 +131,6 @@ public class CustomerNPC : MonoBehaviour
         foodRenderer.sortingLayerName = foodSortingLayerName;
         foodRenderer.sortingOrder = foodSortingOrder;
 
-        Debug.Log(
-            "Prato servido. O NPC irá embora em " +
-            servedFoodDuration + " segundos."
-        );
-
         StartCoroutine(LeaveAfterEating());
     }
 
@@ -83,10 +141,7 @@ public class CustomerNPC : MonoBehaviour
         if (isLeaving)
             yield break;
 
-        // Cria a moeda depois que o NPC termina de comer.
         SpawnCoin();
-
-        // Libera a cadeira e remove o NPC.
         Leave();
     }
 
@@ -106,20 +161,27 @@ public class CustomerNPC : MonoBehaviour
                 ? currentChair.position
                 : transform.position;
 
-        Vector3 spawnPosition =
-            referencePosition + coinOffset;
-
-        // Instancia o prefab com seu Animator e Controller.
-        // A moeda não será filha do NPC.
         GameObject coin = Instantiate(
             coinPrefab,
-            spawnPosition,
+            referencePosition + coinOffset,
             Quaternion.identity
         );
 
         coin.name = "RewardCoin";
 
-        Debug.Log("Moeda criada após o NPC terminar de comer.");
+        CoinPickup pickup = coin.GetComponent<CoinPickup>();
+
+        if (pickup != null)
+        {
+            pickup.SetValue(rewardValue);
+        }
+        else
+        {
+            Debug.LogError(
+                "O prefab da moeda não possui CoinPickup!",
+                coin
+            );
+        }
     }
 
     public void Leave()
@@ -128,24 +190,20 @@ public class CustomerNPC : MonoBehaviour
             return;
 
         isLeaving = true;
+        HideOrderAvailableIcon();
 
-        // Libera a cadeira para outro NPC.
         if (currentTable != null && currentChair != null)
         {
             currentTable.FreeChair(currentChair);
-
             currentTable = null;
             currentChair = null;
         }
 
-        // Remove o prato, caso ainda exista.
         if (servedFoodObject != null)
         {
             Destroy(servedFoodObject);
             servedFoodObject = null;
         }
-
-        Debug.Log("NPC foi embora e liberou a cadeira.");
 
         Destroy(gameObject);
     }

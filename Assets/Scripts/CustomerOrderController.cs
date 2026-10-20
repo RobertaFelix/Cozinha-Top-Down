@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,11 +17,20 @@ public class CustomerOrderController : MonoBehaviour
     private bool orderCompleted;
     private bool orderExpired;
     private bool patienceRunning;
+    private bool orderRevealed;
 
     private float patienceRemaining;
 
     public CookingRecipe RequestedRecipe => requestedRecipe;
     public bool OrderCompleted => orderCompleted;
+    public bool OrderExpired => orderExpired;
+    public bool OrderRevealed => orderRevealed;
+
+    private void Awake()
+    {
+        if (orderUI != null)
+            orderUI.Hide();
+    }
 
     private void Update()
     {
@@ -29,10 +39,10 @@ public class CustomerOrderController : MonoBehaviour
 
         patienceRemaining -= Time.deltaTime;
 
-        // Começa em 0 e aumenta até 1.
         float normalizedPatience =
             1f - Mathf.Clamp01(
-                patienceRemaining / Mathf.Max(0.1f, patienceDuration)
+                patienceRemaining /
+                Mathf.Max(0.1f, patienceDuration)
             );
 
         if (orderUI != null)
@@ -46,6 +56,15 @@ public class CustomerOrderController : MonoBehaviour
     {
         stoveController = controller;
 
+        orderCompleted = false;
+        orderExpired = false;
+        patienceRunning = false;
+        orderRevealed = false;
+        patienceRemaining = 0f;
+
+        if (orderUI != null)
+            orderUI.Hide();
+
         if (stoveController == null)
         {
             Debug.LogError(
@@ -54,10 +73,6 @@ public class CustomerOrderController : MonoBehaviour
             );
             return;
         }
-
-        orderCompleted = false;
-        orderExpired = false;
-        patienceRunning = false;
 
         ChooseRandomRecipe();
     }
@@ -68,7 +83,8 @@ public class CustomerOrderController : MonoBehaviour
             stoveController.recipes.Length == 0)
         {
             Debug.LogWarning(
-                "Não existem receitas configuradas no fogão."
+                "Não existem receitas configuradas no fogão.",
+                this
             );
             return;
         }
@@ -91,56 +107,89 @@ public class CustomerOrderController : MonoBehaviour
         if (validRecipes.Count == 0)
         {
             Debug.LogWarning(
-                "Nenhuma receita possui um prato de resultado válido."
-            );
-            return;
-        }
-
-        int randomIndex =
-            Random.Range(0, validRecipes.Count);
-
-        requestedRecipe = validRecipes[randomIndex];
-
-        Sprite foodSprite = GetFoodSprite(
-            requestedRecipe.result.itemPrefab
-        );
-
-        if (foodSprite == null)
-        {
-            Debug.LogError(
-                "Não foi possível encontrar o Sprite do prato: " +
-                requestedRecipe.result.itemPrefab.name
-            );
-            return;
-        }
-
-        if (orderUI == null)
-        {
-            Debug.LogError(
-                "CustomerOrderController: NPCOrderUI não foi configurado.",
+                "Nenhuma receita possui um prato de resultado válido.",
                 this
             );
             return;
         }
 
+        requestedRecipe =
+            validRecipes[Random.Range(0, validRecipes.Count)];
+
+        Sprite foodSprite =
+            GetFoodSprite(requestedRecipe.result.itemPrefab);
+
+        if (foodSprite == null)
+        {
+            Debug.LogError(
+                "Não foi possível encontrar o Sprite do prato: " +
+                requestedRecipe.result.itemPrefab.name,
+                this
+            );
+            requestedRecipe = null;
+            return;
+        }
+
+        Debug.Log(
+            "Receita escolhida para o NPC: " +
+            requestedRecipe.result.itemPrefab.name +
+            ". Aguardando o jogador solicitar o pedido."
+        );
+    }
+
+    // Chamado pela interação quando o jogador aperta E perto do NPC.
+    public bool RequestOrder()
+    {
+        if (orderRevealed ||
+            orderCompleted ||
+            orderExpired ||
+            requestedRecipe == null)
+        {
+            return false;
+        }
+
+        if (orderUI == null)
+        {
+            Debug.LogError(
+                "CustomerOrderController: NPCOrderUI não configurado.",
+                this
+            );
+            return false;
+        }
+
+        Sprite foodSprite =
+            GetFoodSprite(requestedRecipe.result.itemPrefab);
+
+        if (foodSprite == null)
+            return false;
+
+        // Marca como revelado antes de exibir a interface,
+        // impedindo que o jogador solicite novamente.
+        orderRevealed = true;
+
+        CustomerNPC customerNPC = GetComponent<CustomerNPC>();
+
+        if (customerNPC != null)
+            customerNPC.HideOrderAvailableIcon();
+
         orderUI.Show(foodSprite);
 
-        // A paciência começa quando o pedido aparece.
         patienceRemaining = Mathf.Max(0.1f, patienceDuration);
         patienceRunning = true;
 
         Debug.Log(
-            "Pedido do NPC: " +
+            "Pedido revelado: " +
             requestedRecipe.result.itemPrefab.name +
-            ". Paciência: " +
-            patienceRemaining +
-            " segundos."
+            ". A paciência começou a contar."
         );
+
+        return true;
     }
 
     public bool TryServe(InventoryItem offeredItem)
     {
-        if (orderCompleted ||
+        if (!orderRevealed ||
+            orderCompleted ||
             orderExpired ||
             requestedRecipe == null ||
             offeredItem == null ||
@@ -149,7 +198,6 @@ public class CustomerOrderController : MonoBehaviour
             return false;
         }
 
-        // Evita aceitar um prato se o prazo já tiver terminado.
         if (patienceRunning && patienceRemaining <= 0f)
         {
             ExpireOrder();
@@ -165,12 +213,10 @@ public class CustomerOrderController : MonoBehaviour
                 "Pedido incorreto! O NPC quer: " +
                 requestedPrefab.name
             );
-
             return false;
         }
 
-        CustomerNPC customerNPC =
-            GetComponent<CustomerNPC>();
+        CustomerNPC customerNPC = GetComponent<CustomerNPC>();
 
         if (customerNPC == null)
         {
@@ -184,23 +230,18 @@ public class CustomerOrderController : MonoBehaviour
         Sprite foodSprite = GetFoodSprite(requestedPrefab);
 
         if (foodSprite == null)
-        {
-            Debug.LogError(
-                "Não foi possível obter o Sprite do prato entregue.",
-                this
-            );
             return false;
-        }
 
-        // A entrega correta interrompe a paciência.
         patienceRunning = false;
         orderCompleted = true;
 
         if (orderUI != null)
             orderUI.Hide();
 
-        // Mantém o comportamento existente de servir a comida.
-        customerNPC.ServeFood(foodSprite);
+        customerNPC.ServeFood(
+            foodSprite,
+            requestedRecipe.basePrice
+        );
 
         Debug.Log(
             "Pedido correto entregue: " + requestedPrefab.name
@@ -225,21 +266,12 @@ public class CustomerOrderController : MonoBehaviour
             "O NPC perdeu a paciência e foi embora sem comer."
         );
 
-        CustomerNPC customerNPC =
-            GetComponent<CustomerNPC>();
+        CustomerNPC customerNPC = GetComponent<CustomerNPC>();
 
         if (customerNPC != null)
-        {
-            // Leave libera a cadeira e remove o NPC.
             customerNPC.Leave();
-        }
         else
-        {
-            Debug.LogError(
-                "Não foi possível remover o NPC: CustomerNPC não encontrado.",
-                this
-            );
-        }
+            Destroy(gameObject);
     }
 
     private Sprite GetFoodSprite(GameObject foodPrefab)
@@ -265,14 +297,8 @@ public class CustomerOrderController : MonoBehaviour
         Image image = foodPrefab.GetComponent<Image>();
 
         if (image == null)
-        {
-            image =
-                foodPrefab.GetComponentInChildren<Image>(true);
-        }
+            image = foodPrefab.GetComponentInChildren<Image>(true);
 
-        if (image != null)
-            return image.sprite;
-
-        return null;
+        return image != null ? image.sprite : null;
     }
 }
