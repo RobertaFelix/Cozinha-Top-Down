@@ -1,94 +1,94 @@
 fileFormatVersion: 2
-guid: 1756b69488d770f4cbfcc00170e4d2d3
+guid: fdf3f84f4e29226459fb5e1b2d94651c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7769710455106241774
-    second: interiorCasa_0
+      213: 4935544665574379190
+    second: interiorCasav2_0
   - first:
-      213: 6214693181988686993
-    second: interiorCasa_1
+      213: 4962265393456571793
+    second: interiorCasav2_1
   - first:
-      213: 6399341130460337790
-    second: interiorCasa_2
+      213: -9069836315919121462
+    second: interiorCasav2_2
   - first:
-      213: 7283875824907037054
-    second: interiorCasa_3
+      213: -5638520136759393853
+    second: interiorCasav2_3
   - first:
-      213: -8170135596429577180
-    second: interiorCasa_4
+      213: -4752698829566283483
+    second: interiorCasav2_4
   - first:
-      213: -3033163568884776249
-    second: interiorCasa_5
+      213: 1220632205225079427
+    second: interiorCasav2_5
   - first:
-      213: -3925850176873858548
-    second: interiorCasa_6
+      213: -2287136286026179842
+    second: interiorCasav2_6
   - first:
-      213: -6813414260393978083
-    second: interiorCasa_7
+      213: -8340097495462211132
+    second: interiorCasav2_7
   - first:
-      213: 4001027946645393663
-    second: interiorCasa_8
+      213: -2659002809960590568
+    second: interiorCasav2_8
   - first:
-      213: -5056200800934979532
-    second: interiorCasa_9
+      213: 2847447121158063123
+    second: interiorCasav2_9
   - first:
-      213: 4488139231742206864
-    second: interiorCasa_10
+      213: 1533307812264491450
+    second: interiorCasav2_10
   - first:
-      213: -8128317627837733194
-    second: interiorCasa_11
+      213: -1328474049015502258
+    second: interiorCasav2_11
   - first:
-      213: -5970766137973066996
-    second: interiorCasa_12
+      213: -1861784211108291893
+    second: interiorCasav2_12
   - first:
-      213: 2561495544511175050
-    second: interiorCasa_13
+      213: 4851257848781089070
+    second: interiorCasav2_13
   - first:
-      213: -1274715987241058706
-    second: interiorCasa_14
+      213: -6329486231211185512
+    second: interiorCasav2_14
   - first:
-      213: 8650066756015489678
-    second: interiorCasa_15
+      213: 6979301715869740160
+    second: interiorCasav2_15
   - first:
-      213: 8866839129049587918
-    second: interiorCasa_16
+      213: 2401364099729603460
+    second: interiorCasav2_16
   - first:
-      213: -1369302692642124903
-    second: interiorCasa_17
+      213: -7007760883300314517
+    second: interiorCasav2_17
   - first:
-      213: 3718690703610831039
-    second: interiorCasa_18
+      213: 3414655958750375934
+    second: interiorCasav2_18
   - first:
-      213: -7946708097566972902
-    second: interiorCasa_19
+      213: 6685765406525401428
+    second: interiorCasav2_19
   - first:
-      213: -117292900237087527
-    second: interiorCasa_20
+      213: 8187008184213819215
+    second: interiorCasav2_20
   - first:
-      213: -1501652407507343031
-    second: interiorCasa_21
+      213: 8197286583210045778
+    second: interiorCasav2_21
   - first:
-      213: 6179558875888196689
-    second: interiorCasa_22
+      213: -4238800111823065788
+    second: interiorCasav2_22
   - first:
-      213: 7565953325597782887
-    second: interiorCasa_23
+      213: 864308399975354280
+    second: interiorCasav2_23
   - first:
-      213: -9059154557943660746
-    second: interiorCasa_24
+      213: 1161376356528264107
+    second: interiorCasav2_24
   - first:
-      213: -2905796126813635427
-    second: interiorCasa_25
+      213: 5933715185773234768
+    second: interiorCasav2_25
   - first:
-      213: 6871266969548094759
-    second: interiorCasa_26
+      213: 4061428974328430478
+    second: interiorCasav2_26
   - first:
-      213: 9009704401461525794
-    second: interiorCasa_27
+      213: 8299292597031298987
+    second: interiorCasav2_27
   - first:
-      213: -4180881402345988880
-    second: interiorCasa_28
+      213: -8676529656501763643
+    second: interiorCasav2_28
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -199,7 +199,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: interiorCasa_0
+      name: interiorCasav2_0
       rect:
         serializedVersion: 2
         x: 3
@@ -214,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 21bf0cbb1817c2490800000000000000
-      internalID: -7769710455106241774
+      spriteID: 6be82a449b39e7440800000000000000
+      internalID: 4935544665574379190
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_1
+      name: interiorCasav2_1
       rect:
         serializedVersion: 2
         x: 19
@@ -236,14 +236,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 19c4a7ca5860f3650800000000000000
-      internalID: 6214693181988686993
+      spriteID: 195613a85128dd440800000000000000
+      internalID: 4962265393456571793
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_2
+      name: interiorCasav2_2
       rect:
         serializedVersion: 2
         x: 47
@@ -258,20 +258,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7692ad5ad60fc850800000000000000
-      internalID: 6399341130460337790
+      spriteID: ac304babce7712280800000000000000
+      internalID: -9069836315919121462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_3
+      name: interiorCasav2_3
       rect:
         serializedVersion: 2
         x: 96
-        y: 111
+        y: 112
         width: 50
-        height: 35
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,14 +280,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e79a3ab9876851560800000000000000
-      internalID: 7283875824907037054
+      spriteID: 3c1c19d4fc3ffb1b0800000000000000
+      internalID: -5638520136759393853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_4
+      name: interiorCasav2_4
       rect:
         serializedVersion: 2
         x: 47
@@ -302,20 +302,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4247a0856f8dd9e80800000000000000
-      internalID: -8170135596429577180
+      spriteID: 521794b68950b0eb0800000000000000
+      internalID: -4752698829566283483
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_5
+      name: interiorCasav2_5
       rect:
         serializedVersion: 2
         x: 118
         y: 68
         width: 30
-        height: 40
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,14 +324,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7c287f2fdc908e5d0800000000000000
-      internalID: -3033163568884776249
+      spriteID: 382b7d1068e80f010800000000000000
+      internalID: 1220632205225079427
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_6
+      name: interiorCasav2_6
       rect:
         serializedVersion: 2
         x: 3
@@ -346,20 +346,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c0a770e60149489c0800000000000000
-      internalID: -3925850176873858548
+      spriteID: efad0866aa57240e0800000000000000
+      internalID: -2287136286026179842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_7
+      name: interiorCasav2_7
       rect:
         serializedVersion: 2
         x: 16
-        y: 82
+        y: 83
         width: 16
-        height: 14
+        height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,14 +368,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d17d2a544d3e171a0800000000000000
-      internalID: -6813414260393978083
+      spriteID: 4c199def385024c80800000000000000
+      internalID: -8340097495462211132
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_8
+      name: interiorCasav2_8
       rect:
         serializedVersion: 2
         x: 34
@@ -390,14 +390,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ff0953818b1868730800000000000000
-      internalID: 4001027946645393663
+      spriteID: 81398874803591bd0800000000000000
+      internalID: -2659002809960590568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_9
+      name: interiorCasav2_9
       rect:
         serializedVersion: 2
         x: 50
@@ -412,14 +412,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43899331924c4d9b0800000000000000
-      internalID: -5056200800934979532
+      spriteID: 314c55df11a248720800000000000000
+      internalID: 2847447121158063123
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_10
+      name: interiorCasav2_10
       rect:
         serializedVersion: 2
         x: 67
@@ -434,14 +434,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0932d722ad2194e30800000000000000
-      internalID: 4488139231742206864
+      spriteID: ab93b59d457674510800000000000000
+      internalID: 1533307812264491450
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_11
+      name: interiorCasav2_11
       rect:
         serializedVersion: 2
         x: 89
@@ -456,14 +456,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6b6af23ee2a623f80800000000000000
-      internalID: -8128317627837733194
+      spriteID: e4a2b1714ef409de0800000000000000
+      internalID: -1328474049015502258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_12
+      name: interiorCasav2_12
       rect:
         serializedVersion: 2
         x: 3
@@ -478,14 +478,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c033f2df4d3932da0800000000000000
-      internalID: -5970766137973066996
+      spriteID: bca9578cf1d9926e0800000000000000
+      internalID: -1861784211108291893
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_13
+      name: interiorCasav2_13
       rect:
         serializedVersion: 2
         x: 19
@@ -500,14 +500,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a89955850a24c8320800000000000000
-      internalID: 2561495544511175050
+      spriteID: e292c667f41235340800000000000000
+      internalID: 4851257848781089070
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_15
+      name: interiorCasav2_15
       rect:
         serializedVersion: 2
         x: 55
@@ -522,14 +522,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e8208b372e53b0870800000000000000
-      internalID: 8650066756015489678
+      spriteID: 08ca0b2cee57bd060800000000000000
+      internalID: 6979301715869740160
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_16
+      name: interiorCasav2_16
       rect:
         serializedVersion: 2
         x: 76
@@ -544,14 +544,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ec0e88795375d0b70800000000000000
-      internalID: 8866839129049587918
+      spriteID: 48b32ccfceb535120800000000000000
+      internalID: 2401364099729603460
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_17
+      name: interiorCasav2_17
       rect:
         serializedVersion: 2
         x: 93
@@ -566,14 +566,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 99b8417b4724ffce0800000000000000
-      internalID: -1369302692642124903
+      spriteID: b62d108fa9e6fbe90800000000000000
+      internalID: -7007760883300314517
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_18
+      name: interiorCasav2_18
       rect:
         serializedVersion: 2
         x: 135
@@ -588,14 +588,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb065421e717b9330800000000000000
-      internalID: 3718690703610831039
+      spriteID: effac7bb08b436f20800000000000000
+      internalID: 3414655958750375934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_19
+      name: interiorCasav2_19
       rect:
         serializedVersion: 2
         x: 3
@@ -610,14 +610,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a14ecc6b61f97b190800000000000000
-      internalID: -7946708097566972902
+      spriteID: 459aa8be63c98cc50800000000000000
+      internalID: 6685765406525401428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_20
+      name: interiorCasav2_20
       rect:
         serializedVersion: 2
         x: 26
@@ -632,14 +632,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9dc61ba8aba4f5ef0800000000000000
-      internalID: -117292900237087527
+      spriteID: f4fc74121981e9170800000000000000
+      internalID: 8187008184213819215
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_21
+      name: interiorCasav2_21
       rect:
         serializedVersion: 2
         x: 47
@@ -654,14 +654,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9492a6a671f092be0800000000000000
-      internalID: -1501652407507343031
+      spriteID: 2517f4267bc92c170800000000000000
+      internalID: 8197286583210045778
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_22
+      name: interiorCasav2_22
       rect:
         serializedVersion: 2
         x: 90
@@ -676,14 +676,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 15c9de19e0432c550800000000000000
-      internalID: 6179558875888196689
+      spriteID: 44d66e4a1c1cc25c0800000000000000
+      internalID: -4238800111823065788
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_23
+      name: interiorCasav2_23
       rect:
         serializedVersion: 2
         x: 114
@@ -698,14 +698,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 763f077a67aaff860800000000000000
-      internalID: 7565953325597782887
+      spriteID: 8afcae419e3aefb00800000000000000
+      internalID: 864308399975354280
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_24
+      name: interiorCasav2_24
       rect:
         serializedVersion: 2
         x: 2
@@ -720,14 +720,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 63f38605dea674280800000000000000
-      internalID: -9059154557943660746
+      spriteID: ba3976d94a90e1010800000000000000
+      internalID: 1161376356528264107
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_25
+      name: interiorCasav2_25
       rect:
         serializedVersion: 2
         x: 27
@@ -742,14 +742,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d9c319771d98ca7d0800000000000000
-      internalID: -2905796126813635427
+      spriteID: 05aca56f58ac85250800000000000000
+      internalID: 5933715185773234768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_26
+      name: interiorCasav2_26
       rect:
         serializedVersion: 2
         x: 48
@@ -764,14 +764,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 72df9cc37e4ab5f50800000000000000
-      internalID: 6871266969548094759
+      spriteID: e8f335f32281d5830800000000000000
+      internalID: 4061428974328430478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_27
+      name: interiorCasav2_27
       rect:
         serializedVersion: 2
         x: 28
@@ -786,14 +786,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 22d336cea66e80d70800000000000000
-      internalID: 9009704401461525794
+      spriteID: ba7641d35a20d2370800000000000000
+      internalID: 8299292597031298987
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: interiorCasa_28
+      name: interiorCasav2_28
       rect:
         serializedVersion: 2
         x: 109
@@ -808,8 +808,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0fc512d04868af5c0800000000000000
-      internalID: -4180881402345988880
+      spriteID: 5c102156f36c69780800000000000000
+      internalID: -8676529656501763643
       vertices: []
       indices: 
       edges: []
@@ -818,7 +818,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a7dd9d12ccd10c0419a2b15d38a29cc4
+    spriteID: 761cf05d7a094f64884647046013cce2
     internalID: 0
     vertices: []
     indices: 
@@ -828,35 +828,35 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      interiorCasa_0: -7769710455106241774
-      interiorCasa_1: 6214693181988686993
-      interiorCasa_10: 4488139231742206864
-      interiorCasa_11: -8128317627837733194
-      interiorCasa_12: -5970766137973066996
-      interiorCasa_13: 2561495544511175050
-      interiorCasa_14: -1274715987241058706
-      interiorCasa_15: 8650066756015489678
-      interiorCasa_16: 8866839129049587918
-      interiorCasa_17: -1369302692642124903
-      interiorCasa_18: 3718690703610831039
-      interiorCasa_19: -7946708097566972902
-      interiorCasa_2: 6399341130460337790
-      interiorCasa_20: -117292900237087527
-      interiorCasa_21: -1501652407507343031
-      interiorCasa_22: 6179558875888196689
-      interiorCasa_23: 7565953325597782887
-      interiorCasa_24: -9059154557943660746
-      interiorCasa_25: -2905796126813635427
-      interiorCasa_26: 6871266969548094759
-      interiorCasa_27: 9009704401461525794
-      interiorCasa_28: -4180881402345988880
-      interiorCasa_3: 7283875824907037054
-      interiorCasa_4: -8170135596429577180
-      interiorCasa_5: -3033163568884776249
-      interiorCasa_6: -3925850176873858548
-      interiorCasa_7: -6813414260393978083
-      interiorCasa_8: 4001027946645393663
-      interiorCasa_9: -5056200800934979532
+      interiorCasav2_0: 4935544665574379190
+      interiorCasav2_1: 4962265393456571793
+      interiorCasav2_10: 1533307812264491450
+      interiorCasav2_11: -1328474049015502258
+      interiorCasav2_12: -1861784211108291893
+      interiorCasav2_13: 4851257848781089070
+      interiorCasav2_14: -6329486231211185512
+      interiorCasav2_15: 6979301715869740160
+      interiorCasav2_16: 2401364099729603460
+      interiorCasav2_17: -7007760883300314517
+      interiorCasav2_18: 3414655958750375934
+      interiorCasav2_19: 6685765406525401428
+      interiorCasav2_2: -9069836315919121462
+      interiorCasav2_20: 8187008184213819215
+      interiorCasav2_21: 8197286583210045778
+      interiorCasav2_22: -4238800111823065788
+      interiorCasav2_23: 864308399975354280
+      interiorCasav2_24: 1161376356528264107
+      interiorCasav2_25: 5933715185773234768
+      interiorCasav2_26: 4061428974328430478
+      interiorCasav2_27: 8299292597031298987
+      interiorCasav2_28: -8676529656501763643
+      interiorCasav2_3: -5638520136759393853
+      interiorCasav2_4: -4752698829566283483
+      interiorCasav2_5: 1220632205225079427
+      interiorCasav2_6: -2287136286026179842
+      interiorCasav2_7: -8340097495462211132
+      interiorCasav2_8: -2659002809960590568
+      interiorCasav2_9: 2847447121158063123
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

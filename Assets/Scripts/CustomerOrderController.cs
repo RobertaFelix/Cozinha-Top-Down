@@ -56,6 +56,7 @@ public class CustomerOrderController : MonoBehaviour
     {
         stoveController = controller;
 
+        requestedRecipe = null;
         orderCompleted = false;
         orderExpired = false;
         patienceRunning = false;
@@ -79,11 +80,27 @@ public class CustomerOrderController : MonoBehaviour
 
     private void ChooseRandomRecipe()
     {
-        if (stoveController.recipes == null ||
-            stoveController.recipes.Length == 0)
+        // O NPC consulta somente o cardápio do restaurante.
+        RestaurantMenuController menuController =
+            RestaurantMenuController.Instance;
+
+        if (menuController == null)
         {
             Debug.LogWarning(
-                "Não existem receitas configuradas no fogão.",
+                "Não foi encontrado um RestaurantMenuController na cena. " +
+                "O NPC não poderá escolher um prato.",
+                this
+            );
+            return;
+        }
+
+        IReadOnlyList<CookingRecipe> menuRecipes =
+            menuController.GetSelectedRecipes();
+
+        if (menuRecipes == null || menuRecipes.Count == 0)
+        {
+            Debug.Log(
+                "O cardápio está vazio. Este NPC não tem um prato para pedir.",
                 this
             );
             return;
@@ -92,12 +109,26 @@ public class CustomerOrderController : MonoBehaviour
         List<CookingRecipe> validRecipes =
             new List<CookingRecipe>();
 
-        foreach (CookingRecipe recipe in stoveController.recipes)
+        foreach (CookingRecipe recipe in menuRecipes)
         {
             if (recipe == null ||
                 recipe.result == null ||
                 recipe.result.itemPrefab == null)
             {
+                continue;
+            }
+
+            // Evita escolher pratos cuja imagem não pode ser exibida.
+            Sprite foodSprite =
+                GetFoodSprite(recipe.result.itemPrefab);
+
+            if (foodSprite == null)
+            {
+                Debug.LogWarning(
+                    "O prato não possui um Sprite válido: " +
+                    recipe.result.itemPrefab.name,
+                    this
+                );
                 continue;
             }
 
@@ -107,7 +138,8 @@ public class CustomerOrderController : MonoBehaviour
         if (validRecipes.Count == 0)
         {
             Debug.LogWarning(
-                "Nenhuma receita possui um prato de resultado válido.",
+                "Nenhum prato válido foi encontrado no cardápio. " +
+                "O NPC não poderá fazer um pedido.",
                 this
             );
             return;
@@ -116,24 +148,9 @@ public class CustomerOrderController : MonoBehaviour
         requestedRecipe =
             validRecipes[Random.Range(0, validRecipes.Count)];
 
-        Sprite foodSprite =
-            GetFoodSprite(requestedRecipe.result.itemPrefab);
-
-        if (foodSprite == null)
-        {
-            Debug.LogError(
-                "Não foi possível encontrar o Sprite do prato: " +
-                requestedRecipe.result.itemPrefab.name,
-                this
-            );
-            requestedRecipe = null;
-            return;
-        }
-
         Debug.Log(
-            "Receita escolhida para o NPC: " +
-            requestedRecipe.result.itemPrefab.name +
-            ". Aguardando o jogador solicitar o pedido."
+            "Prato escolhido do cardápio para o NPC: " +
+            requestedRecipe.result.itemPrefab.name
         );
     }
 
@@ -163,8 +180,6 @@ public class CustomerOrderController : MonoBehaviour
         if (foodSprite == null)
             return false;
 
-        // Marca como revelado antes de exibir a interface,
-        // impedindo que o jogador solicite novamente.
         orderRevealed = true;
 
         CustomerNPC customerNPC = GetComponent<CustomerNPC>();
