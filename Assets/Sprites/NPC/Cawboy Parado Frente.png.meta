@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: a02781e15f03dc74683baec4f3db7c0b
+guid: 505f7af7e1e8f424199f2735bcf0ae89
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1940738496428130850
-    second: NPC_0
+      213: -3879190766020078727
+    second: Cawboy Parado Frente_0
+  - first:
+      213: -9089277237522423168
+    second: Cawboy Parado Frente_1
+  - first:
+      213: -589472957957724544
+    second: Cawboy Parado Frente_2
+  - first:
+      213: 5382303063776428740
+    second: Cawboy Parado Frente_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,23 +124,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NPC_0
+      name: Cawboy Parado Frente_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 9
-        width: 17
-        height: 18
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.496217, y: 0.1929284}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eddb976be9c1115e0800000000000000
-      internalID: -1940738496428130850
+      spriteID: 973d5671d885a2ac0800000000000000
+      internalID: -3879190766020078727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cawboy Parado Frente_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.496217, y: 0.1929284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 082ae6072866cd180800000000000000
+      internalID: -9089277237522423168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cawboy Parado Frente_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.496217, y: 0.1929284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0862b38c775c1d7f0800000000000000
+      internalID: -589472957957724544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cawboy Parado Frente_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.496217, y: 0.1929284}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c204edae18c1ba40800000000000000
+      internalID: 5382303063776428740
       vertices: []
       indices: 
       edges: []
@@ -140,7 +215,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b6a89e1603a8a9645a2926dd42683f8f
+    spriteID: add7a7e3f10d6a941b0a203b63a5ed70
     internalID: 0
     vertices: []
     indices: 
@@ -148,9 +223,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      NPC_0: -1940738496428130850
+      Cawboy Parado Frente_0: -3879190766020078727
+      Cawboy Parado Frente_1: -9089277237522423168
+      Cawboy Parado Frente_2: -589472957957724544
+      Cawboy Parado Frente_3: 5382303063776428740
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,12 +1,12 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
-    [Header("NPC")]
-    [SerializeField] private GameObject customerPrefab;
+    [Header("NPCs disponíveis")]
+    [SerializeField] private GameObject customerPrefabA;
+    [SerializeField] private GameObject customerPrefabB;
 
     [Header("Fogão")]
     [SerializeField] private StoveController stoveController;
@@ -17,6 +17,12 @@ public class CustomerSpawner : MonoBehaviour
     [Header("Mesas disponíveis")]
     [SerializeField] private Table[] tables;
 
+    private readonly List<GameObject> spawnedA =
+        new List<GameObject>();
+
+    private readonly List<GameObject> spawnedB =
+        new List<GameObject>();
+
     private bool initialSpawnCompleted;
 
     private void Start()
@@ -26,14 +32,17 @@ public class CustomerSpawner : MonoBehaviour
 
     private IEnumerator WaitForMenuAndSpawn()
     {
-        // Aguarda até existir um prato selecionado no cardápio.
+        // Aguarda até existir pelo menos um prato no cardápio.
         while (!HasDishesInMenu())
         {
             yield return null;
         }
 
-        // Cria o primeiro NPC automaticamente.
+        // Cria dois NPCs com aparências diferentes.
         SpawnCustomer();
+        SpawnCustomer();
+
+        initialSpawnCompleted = true;
     }
 
     private bool HasDishesInMenu()
@@ -55,13 +64,12 @@ public class CustomerSpawner : MonoBehaviour
 
     public void SpawnCustomer()
     {
-        if (initialSpawnCompleted)
-            return;
+        CleanupSpawnedLists();
 
-        if (customerPrefab == null)
+        if (customerPrefabA == null || customerPrefabB == null)
         {
             Debug.LogError(
-                "Customer Prefab não foi configurado."
+                "Configure os dois prefabs de NPC no CustomerSpawner."
             );
             return;
         }
@@ -80,6 +88,38 @@ public class CustomerSpawner : MonoBehaviour
                 "Spawn aguardando: adicione pelo menos um prato ao cardápio."
             );
             return;
+        }
+
+        bool aIsActive = spawnedA.Count > 0;
+        bool bIsActive = spawnedB.Count > 0;
+
+        if (aIsActive && bIsActive)
+        {
+            Debug.Log(
+                "Os dois tipos de NPC já estão presentes."
+            );
+            return;
+        }
+
+        GameObject selectedPrefab;
+
+        // Se os dois tipos estão disponíveis, sorteia um.
+        if (!aIsActive && !bIsActive)
+        {
+            selectedPrefab =
+                Random.value < 0.5f
+                    ? customerPrefabA
+                    : customerPrefabB;
+        }
+        else if (!aIsActive)
+        {
+            // O tipo A está ausente.
+            selectedPrefab = customerPrefabA;
+        }
+        else
+        {
+            // O tipo B está ausente.
+            selectedPrefab = customerPrefabB;
         }
 
         List<Table> availableTables = new List<Table>();
@@ -102,7 +142,9 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         Table selectedTable =
-            availableTables[Random.Range(0, availableTables.Count)];
+            availableTables[
+                Random.Range(0, availableTables.Count)
+            ];
 
         Transform chair = selectedTable.GetRandomFreeChair();
 
@@ -114,7 +156,7 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
-        GameObject customer = Instantiate(customerPrefab);
+        GameObject customer = Instantiate(selectedPrefab);
 
         CustomerNPC customerNPC =
             customer.GetComponent<CustomerNPC>();
@@ -125,9 +167,11 @@ public class CustomerSpawner : MonoBehaviour
         if (customerNPC == null || orderController == null)
         {
             Debug.LogError(
-                "O prefab precisa conter CustomerNPC e CustomerOrderController."
+                "O prefab precisa conter CustomerNPC e CustomerOrderController.",
+                customer
             );
 
+            selectedTable.FreeChair(chair);
             Destroy(customer);
             return;
         }
@@ -142,15 +186,25 @@ public class CustomerSpawner : MonoBehaviour
             Destroy(customer);
 
             Debug.LogWarning(
-                "O NPC não encontrou um prato válido no cardápio."
+                "O NPC não encontrou um prato válido para pedir."
             );
             return;
         }
 
-        initialSpawnCompleted = true;
+        // Registra qual aparência está ocupando uma cadeira.
+        if (selectedPrefab == customerPrefabA)
+            spawnedA.Add(customer);
+        else
+            spawnedB.Add(customer);
 
         Debug.Log(
-            "NPC criado automaticamente porque existe um prato no cardápio."
+            "NPC criado: " + selectedPrefab.name
         );
+    }
+
+    private void CleanupSpawnedLists()
+    {
+        spawnedA.RemoveAll(customer => customer == null);
+        spawnedB.RemoveAll(customer => customer == null);
     }
 }

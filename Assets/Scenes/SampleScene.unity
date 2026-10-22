@@ -4422,7 +4422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78c3fa8d6d0af3641aa5244d7a8140ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerSpawner
-  customerPrefab: {fileID: 3744413288418818714, guid: 5247561d78ce27344b7b20fcd46201b6, type: 3}
+  customerPrefabA: {fileID: 3744413288418818714, guid: 5247561d78ce27344b7b20fcd46201b6, type: 3}
+  customerPrefabB: {fileID: 3744413288418818714, guid: 8565dd5791d869544825bd61515e306d, type: 3}
   stoveController: {fileID: 981803283}
   restaurantMenuController: {fileID: 443527099}
   tables:
@@ -4553,7 +4554,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 4.5208335
+  orthographic size: 9.953783
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -22148,7 +22149,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.4211, y: 0.1259}
-  m_SizeDelta: {x: 0.8028, y: 0.6751}
+  m_SizeDelta: {x: 0.8, y: 0.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &988884114
 MonoBehaviour:

@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.4211, y: 0.1259}
-  m_SizeDelta: {x: 0.8028, y: 0.6751}
+  m_SizeDelta: {x: 0.8, y: 0.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &549750194964297329
 CanvasRenderer:
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 5581917255035161330}
   - component: {fileID: 2435114306171605220}
   m_Layer: 0
-  m_Name: CustomerNPC
+  m_Name: FarmNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,7 +344,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8252064864205435847, guid: f01334aac9616574c8b06f9390d71745, type: 3}
+  m_Sprite: {fileID: -3879190766020078727, guid: 505f7af7e1e8f424199f2735bcf0ae89, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -459,7 +459,7 @@ Animator:
   m_GameObject: {fileID: 3744413288418818714}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 84816f3a7f5cb9946992cb738cae0adf, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7e372ab05fcd98a4083eef45d18c3873, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
