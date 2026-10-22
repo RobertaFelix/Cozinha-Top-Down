@@ -68,7 +68,7 @@ public class CustomerNPC : MonoBehaviour
         rewardValue = 0;
 
         transform.position =
-            chair.position + new Vector3(0f, -0.124f, 0f);
+            chair.position + new Vector3(0f, -0.25f, 0f);
 
         ShowOrderAvailableIcon();
     }

@@ -188,7 +188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.429, y: 1.51}
+  m_AnchoredPosition: {x: -0.429, y: 1.794}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1952101987840327850
@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 8272804720153118561}
   - component: {fileID: -2399147089150646767}
   - component: {fileID: 5581917255035161330}
+  - component: {fileID: 2435114306171605220}
   m_Layer: 0
   m_Name: CustomerNPC
   m_TagString: Untagged
@@ -286,7 +287,7 @@ Transform:
   m_GameObject: {fileID: 3744413288418818714}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.67631, y: 0.83708, z: 0}
+  m_LocalPosition: {x: -3.67631, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -341,9 +342,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1940738496428130850, guid: a02781e15f03dc74683baec4f3db7c0b, type: 3}
+  m_Sprite: {fileID: -8252064864205435847, guid: f01334aac9616574c8b06f9390d71745, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -352,7 +353,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
   m_BlendShapeWeights: []
 --- !u!114 &7543164828549295498
 MonoBehaviour:
@@ -369,7 +370,7 @@ MonoBehaviour:
   orderAvailableIcon: {fileID: 3944354701945194073}
   iconFloatHeight: 0.04
   iconFloatSpeed: 2
-  servedFoodOffset: {x: 0, y: -0.5, z: 0}
+  servedFoodOffset: {x: 0, y: -0.4, z: 0}
   servedFoodDuration: 15
   servedFoodScale: {x: 0.9, y: 0.9, z: 0.9}
   foodSortingLayerName: Default
@@ -439,8 +440,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.5625}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.0625, y: 1.125}
+    pivot: {x: 0.496217, y: 0.1929284}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.125, y: 1.375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -448,6 +449,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0625, y: 1.125}
   m_EdgeRadius: 0
+--- !u!95 &2435114306171605220
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744413288418818714}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84816f3a7f5cb9946992cb738cae0adf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3944354701945194073
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.027, y: 1.574}
+  m_AnchoredPosition: {x: -0.027, y: 1.779}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4010960689818334429
@@ -540,7 +563,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 8
   m_MaskInteraction: 0
   m_Sprite: {fileID: 149085748569040050, guid: 3aae199561fa84d4b9eaccae4924447e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
