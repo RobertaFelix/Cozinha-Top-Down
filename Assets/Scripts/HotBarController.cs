@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,10 +17,12 @@ public class HotbarController : MonoBehaviour
     {
         for (int i = 0; i < slotCount; i++)
         {
-            Instantiate(
+            Slot slot = Instantiate(
                 slotPrefab,
                 hotbarPanel.transform
             ).GetComponent<Slot>();
+
+            slot.UpdateQuantityDisplay();
         }
     }
 
@@ -45,111 +48,32 @@ public class HotbarController : MonoBehaviour
 
     public bool RemoveItem(InventoryItem item)
     {
-        if (item == null)
-            return false;
-
-        if (item.itemPrefab == null)
-            return false;
-
-        Slot[] slots =
-            hotbarPanel.GetComponentsInChildren<Slot>(true);
-
-        foreach (Slot slot in slots)
-        {
-            if (slot.inventoryItem == null)
-                continue;
-
-            if (slot.inventoryItem.itemPrefab ==
-                item.itemPrefab)
-            {
-                if (slot.currentItem != null)
-                {
-                    Destroy(slot.currentItem);
-                }
-
-                slot.currentItem = null;
-                slot.inventoryItem = null;
-
-                return true;
-            }
-        }
-
-        return false;
+        return InventoryStacking.RemoveItem(
+            hotbarPanel.transform,
+            item
+        );
     }
 
-public bool AddItem(InventoryItem item)
-{
-    if (item == null)
-        return false;
-
-    if (item.itemPrefab == null)
-        return false;
-
-    Debug.Log(
-        "ADICIONANDO ITEM: " +
-        item.itemPrefab.name
-    );
-
-    Debug.Log(
-        "PREFAB POSIÇÃO: " +
-        item.itemPrefab.transform.position
-    );
-
-    Debug.Log(
-        "PREFAB COMPONENTES: " +
-        item.itemPrefab.GetComponent<RectTransform>()
-    );
-
-    Slot[] slots =
-        hotbarPanel.GetComponentsInChildren<Slot>(true);
-
-    foreach (Slot slot in slots)
+    public bool AddItem(InventoryItem item)
     {
-        if (slot.currentItem != null)
-            continue;
-
-        Debug.Log(
-            "ADICIONANDO NO SLOT: " +
-            slot.name
+        bool success = InventoryStacking.AddItem(
+            hotbarPanel.transform,
+            item
         );
 
-        GameObject newItem =
-            Instantiate(
-                item.itemPrefab,
-                slot.transform
-            );
-
-        Debug.Log(
-            "OBJETO CRIADO: " +
-            newItem.name
-        );
-
-        RectTransform rect =
-            newItem.GetComponent<RectTransform>();
-
-        if (rect != null)
+        if (success)
         {
-            rect.anchoredPosition =
-                Vector2.zero;
+            Debug.Log(
+                "Item adicionado à hotbar: " +
+                item.itemPrefab.name +
+                " ×" + item.amount
+            );
+        }
+        else
+        {
+            Debug.Log("Hotbar sem espaço suficiente.");
         }
 
-        slot.currentItem =
-            newItem;
-
-        slot.inventoryItem =
-            new InventoryItem();
-
-        slot.inventoryItem.itemPrefab =
-            item.itemPrefab;
-
-        slot.inventoryItem.amount =
-            item.amount;
-
-        return true;
+        return success;
     }
-
-    Debug.Log("Hotbar cheia.");
-
-    return false;
-}
 }

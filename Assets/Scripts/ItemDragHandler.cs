@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +10,7 @@ public class ItemDragHandler : MonoBehaviour,
     private Transform originalParent;
     private CanvasGroup canvasGroup;
 
-    private void Start()
+    private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
 
@@ -37,79 +38,288 @@ public class ItemDragHandler : MonoBehaviour,
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
 
-        Slot originalSlot = originalParent.GetComponent<Slot>();
+        Slot sourceSlot = originalParent != null
+            ? originalParent.GetComponent<Slot>()
+            : null;
 
-        if (originalSlot == null)
+        if (sourceSlot == null)
         {
             ReturnToOriginalPosition();
             return;
         }
 
-        // Primeiro, tenta entregar o prato a um NPC.
-        if (TryDeliverToNPC(eventData, originalSlot))
+        if (TryDeliverToNPC(eventData, sourceSlot))
             return;
 
-        // Se não foi uma entrega, mantém o comportamento normal
-        // de arrastar e soltar entre slots.
-        Slot dropSlot = FindDropSlot(eventData);
+        Slot targetSlot = FindDropSlot(eventData);
 
-        if (dropSlot == null || dropSlot == originalSlot)
+        if (targetSlot == null || targetSlot == sourceSlot)
         {
             ReturnToOriginalPosition();
             return;
         }
 
-        InventoryItem draggedInventoryItem =
-            originalSlot.inventoryItem;
+        InventoryItem sourceItem = sourceSlot.inventoryItem;
 
-        if (draggedInventoryItem == null)
+        if (sourceItem == null || sourceItem.itemPrefab == null)
         {
             ReturnToOriginalPosition();
             return;
         }
 
-        if (dropSlot.currentItem != null)
+        Transform sourceContainer =
+            FindInventoryContainer(sourceSlot.transform);
+
+        Transform targetContainer =
+            FindInventoryContainer(targetSlot.transform);
+
+        if (sourceContainer == null || targetContainer == null)
         {
-            GameObject droppedItem = dropSlot.currentItem;
+            ReturnToOriginalPosition();
+            return;
+        }
 
-            InventoryItem droppedInventoryItem =
-                dropSlot.inventoryItem;
+        if (sourceContainer != targetContainer)
+        {
+            TransferBetweenContainers(
+                sourceSlot,
+                targetSlot,
+                sourceItem
+            );
 
-            droppedItem.transform.SetParent(originalSlot.transform);
+            return;
+        }
 
-            RectTransform droppedRect =
-                droppedItem.GetComponent<RectTransform>();
+        HandleSameContainer(sourceSlot, targetSlot, sourceItem);
+    }
 
-            if (droppedRect != null)
-                droppedRect.anchoredPosition = Vector2.zero;
+    private void HandleSameContainer(
+        Slot sourceSlot,
+        Slot targetSlot,
+        InventoryItem sourceItem)
+    {
+        InventoryItem targetItem = targetSlot.inventoryItem;
 
-            originalSlot.currentItem = droppedItem;
-            originalSlot.inventoryItem = droppedInventoryItem;
+        // Agrupa itens iguais.
+        if (targetItem != null &&
+            targetItem.itemPrefab == sourceItem.itemPrefab)
+        {
+            int space =
+                InventoryStacking.MaxStackSize - targetItem.amount;
+
+            if (space <= 0)
+            {
+                ReturnToOriginalPosition();
+                return;
+            }
+
+            int moved = Mathf.Min(space, sourceItem.amount);
+
+            targetItem.amount += moved;
+            sourceItem.amount -= moved;
+
+            targetSlot.UpdateQuantityDisplay();
+
+            if (sourceItem.amount <= 0)
+            {
+                sourceSlot.currentItem = null;
+                sourceSlot.inventoryItem = null;
+
+                Destroy(gameObject);
+            }
+
+            sourceSlot.UpdateQuantityDisplay();
+
+            if (sourceItem.amount > 0)
+                ReturnToOriginalPosition();
+
+            return;
+        }
+
+        // Troca itens diferentes entre slots do mesmo contêiner.
+        GameObject targetVisual = targetSlot.currentItem;
+
+        if (targetItem != null && targetVisual == null)
+        {
+            ReturnToOriginalPosition();
+            return;
+        }
+
+        if (targetItem != null)
+        {
+            targetVisual.transform.SetParent(sourceSlot.transform, false);
+            ResetVisualTransform(targetVisual);
+
+            sourceSlot.currentItem = targetVisual;
+            sourceSlot.inventoryItem = targetItem;
         }
         else
         {
-            originalSlot.currentItem = null;
-            originalSlot.inventoryItem = null;
+            sourceSlot.currentItem = null;
+            sourceSlot.inventoryItem = null;
         }
 
-        transform.SetParent(dropSlot.transform);
+        transform.SetParent(targetSlot.transform, false);
+        ResetVisualTransform(gameObject);
 
-        RectTransform rect = GetComponent<RectTransform>();
+        targetSlot.currentItem = gameObject;
+        targetSlot.inventoryItem = sourceItem;
+
+        sourceSlot.UpdateQuantityDisplay();
+        targetSlot.UpdateQuantityDisplay();
+    }
+
+    
+    private void TransferBetweenContainers(
+        Slot sourceSlot,
+        Slot targetSlot,
+        InventoryItem sourceItem)
+    {
+        Debug.Log("[TRANSFERÊNCIA] Método iniciado.");
+
+        if (sourceSlot == null || targetSlot == null)
+        {
+            Debug.LogError("[TRANSFERÊNCIA] Slot nulo.");
+            ReturnToOriginalPosition();
+            return;
+        }
+
+        InventoryItem targetItem = targetSlot.inventoryItem;
+        GameObject targetVisual = targetSlot.currentItem;
+
+        // Verifica se o destino realmente possui um objeto visual válido.
+        bool targetHasVisual =
+            targetVisual != null &&
+            targetVisual.transform.parent == targetSlot.transform;
+
+        if (!targetHasVisual)
+        {
+            targetSlot.currentItem = null;
+            targetSlot.inventoryItem = null;
+            targetSlot.UpdateQuantityDisplay();
+
+            targetItem = null;
+        }
+
+        // Transfere para um slot vazio.
+        if (targetItem == null)
+        {
+            InventoryItem itemToMove = sourceSlot.inventoryItem;
+            GameObject visualToMove = gameObject;
+
+            if (itemToMove == null ||
+                itemToMove.itemPrefab == null ||
+                visualToMove == null)
+            {
+                Debug.LogError("[TRANSFERÊNCIA] Item ou visual inválido.");
+                ReturnToOriginalPosition();
+                return;
+            }
+
+            sourceSlot.currentItem = null;
+            sourceSlot.inventoryItem = null;
+            sourceSlot.UpdateQuantityDisplay();
+
+            visualToMove.transform.SetParent(targetSlot.transform, false);
+
+            RectTransform rect = visualToMove.GetComponent<RectTransform>();
+
+            if (rect != null)
+            {
+                rect.anchoredPosition = Vector2.zero;
+                rect.localScale = Vector3.one;
+            }
+
+            targetSlot.currentItem = visualToMove;
+            targetSlot.inventoryItem = itemToMove;
+            targetSlot.UpdateQuantityDisplay();
+
+            Debug.Log("[TRANSFERÊNCIA] Item movido para a hotbar: " +
+                itemToMove.itemPrefab.name);
+
+            return;
+        }
+
+        // Agrupa itens iguais.
+        if (targetItem.itemPrefab == sourceItem.itemPrefab)
+        {
+            int space = InventoryStacking.MaxStackSize - targetItem.amount;
+
+            if (space <= 0)
+            {
+                ReturnToOriginalPosition();
+                return;
+            }
+
+            int moved = Mathf.Min(space, sourceItem.amount);
+
+            targetItem.amount += moved;
+            sourceItem.amount -= moved;
+
+            targetSlot.UpdateQuantityDisplay();
+
+            if (sourceItem.amount <= 0)
+            {
+                sourceSlot.currentItem = null;
+                sourceSlot.inventoryItem = null;
+                Destroy(gameObject);
+            }
+            else
+            {
+                ReturnToOriginalPosition();
+            }
+
+            sourceSlot.UpdateQuantityDisplay();
+            return;
+        }
+
+        Debug.Log("[TRANSFERÊNCIA] Destino possui outro item válido.");
+        ReturnToOriginalPosition();
+    }
+
+
+
+    private void ResetVisualTransform(GameObject visual)
+    {
+        RectTransform rect = visual.GetComponent<RectTransform>();
 
         if (rect != null)
+        {
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = Vector2.zero;
+            rect.localScale = Vector3.one;
+        }
+    }
 
-        dropSlot.currentItem = gameObject;
-        dropSlot.inventoryItem = draggedInventoryItem;
+    private Transform FindInventoryContainer(Transform slotTransform)
+    {
+        Transform current = slotTransform != null
+            ? slotTransform.parent
+            : null;
+
+        while (current != null)
+        {
+            if (current.GetComponent<HotbarController>() != null ||
+                current.GetComponent<InventoryController>() != null ||
+                current.GetComponent<InventoryRefrigeratorController>() != null)
+            {
+                return current;
+            }
+
+            current = current.parent;
+        }
+
+        return slotTransform != null ? slotTransform.parent : null;
     }
 
     private bool TryDeliverToNPC(
         PointerEventData eventData,
-        Slot originalSlot)
+        Slot sourceSlot)
     {
-        if (originalSlot == null ||
-            originalSlot.inventoryItem == null ||
-            originalSlot.inventoryItem.itemPrefab == null)
+        if (sourceSlot == null ||
+            sourceSlot.inventoryItem == null ||
+            sourceSlot.inventoryItem.itemPrefab == null)
         {
             return false;
         }
@@ -117,106 +327,64 @@ public class ItemDragHandler : MonoBehaviour,
         Camera cam = Camera.main;
 
         if (cam == null)
-        {
-            Debug.LogError(
-                "ItemDragHandler: nenhuma câmera com a tag MainCamera foi encontrada."
-            );
-
             return false;
-        }
-
-        // Converte a posição do cursor na tela para o mundo 2D.
-        float distance = -cam.transform.position.z;
 
         Vector3 screenPosition = new Vector3(
             eventData.position.x,
             eventData.position.y,
-            distance
+            -cam.transform.position.z
         );
 
         Vector3 worldPosition =
             cam.ScreenToWorldPoint(screenPosition);
 
-        // Detecta colliders na posição em que o item foi solto.
-        Collider2D[] hits =
-            Physics2D.OverlapPointAll(worldPosition);
-
-        foreach (Collider2D hit in hits)
+        foreach (Collider2D hit in
+                 Physics2D.OverlapPointAll(worldPosition))
         {
             if (hit == null)
                 continue;
 
-            CustomerOrderController customerOrder =
+            CustomerOrderController customer =
                 hit.GetComponentInParent<CustomerOrderController>();
 
-            if (customerOrder == null)
+            if (customer == null)
                 continue;
 
-            InventoryItem offeredItem =
-                originalSlot.inventoryItem;
-
-            // TryServe retorna true somente se o prato for correto.
-            if (!customerOrder.TryServe(offeredItem))
+            if (!customer.TryServe(sourceSlot.inventoryItem))
             {
-                Debug.Log(
-                    "Prato incorreto ou pedido já concluído."
-                );
-
                 ReturnToOriginalPosition();
                 return true;
             }
 
-            // Pedido aceito: remove o item da hotbar.
-            originalSlot.currentItem = null;
-            originalSlot.inventoryItem = null;
+            sourceSlot.currentItem = null;
+            sourceSlot.inventoryItem = null;
+            sourceSlot.UpdateQuantityDisplay();
 
             Destroy(gameObject);
-
-            Debug.Log(
-                "Prato entregue ao NPC com sucesso!"
-            );
-
             return true;
         }
 
-        // Nenhum NPC foi encontrado: continua o fluxo normal.
         return false;
     }
 
     private Slot FindDropSlot(PointerEventData eventData)
     {
         if (eventData.pointerEnter == null)
-        {
-            Debug.Log("DROP: pointerEnter = NULL");
             return null;
-        }
 
-        Slot slot =
-            eventData.pointerEnter.GetComponent<Slot>();
+        Slot slot = eventData.pointerEnter.GetComponent<Slot>();
 
-        if (slot != null)
-            return slot;
-
-        slot =
-            eventData.pointerEnter.GetComponentInParent<Slot>();
-
-        if (slot == null)
-        {
-            Debug.Log(
-                "DROP: nenhum Slot encontrado no destino."
-            );
-        }
-
-        return slot;
+        return slot != null
+            ? slot
+            : eventData.pointerEnter.GetComponentInParent<Slot>();
     }
 
     private void ReturnToOriginalPosition()
     {
-        transform.SetParent(originalParent);
+        if (originalParent == null)
+            return;
 
-        RectTransform rect = GetComponent<RectTransform>();
-
-        if (rect != null)
-            rect.anchoredPosition = Vector2.zero;
+        transform.SetParent(originalParent, false);
+        ResetVisualTransform(gameObject);
     }
 }
