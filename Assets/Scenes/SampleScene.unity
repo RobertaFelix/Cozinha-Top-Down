@@ -4130,7 +4130,7 @@ MonoBehaviour:
   itemPrefabs:
   - {fileID: 8008127976990012123, guid: 2a6c9afc53462e1428629c958bc74c8e, type: 3}
   - {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
-  - {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
+  - {fileID: 8008127976990012123, guid: 469198977bb787b44bb64dec23150ee2, type: 3}
 --- !u!114 &443527095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4143,7 +4143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8e10471f3f2764ca81e21a50e3c3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HotbarController
-  hotbarPanel: {fileID: 674728113}
+  hotbarPanel: {fileID: 622147173}
   slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
   slotCount: 6
 --- !u!114 &443527096
@@ -14655,6 +14655,122 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &622147173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 622147174}
+  - component: {fileID: 622147176}
+  - component: {fileID: 622147175}
+  - component: {fileID: 622147178}
+  - component: {fileID: 622147177}
+  m_Layer: 5
+  m_Name: Hotbar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &622147174
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622147173}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341448393}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -44.159977, y: 91.83484}
+  m_SizeDelta: {x: 905.886, y: 177.78299}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &622147175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622147173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 5240404496113911933, guid: 4813b6cf8c55e8840b47c945b30de870, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &622147176
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622147173}
+  m_CullTransparentMesh: 1
+--- !u!114 &622147177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622147173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
+  m_Padding:
+    m_Left: 44
+    m_Right: 44
+    m_Top: 46
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 97, y: 86}
+  m_Spacing: {x: 47, y: 0}
+  m_Constraint: 2
+  m_ConstraintCount: 1
+--- !u!114 &622147178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622147173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8e10471f3f2764ca81e21a50e3c3f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  hotbarPanel: {fileID: 622147173}
+  slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
+  slotCount: 0
 --- !u!1 &628381931
 GameObject:
   m_ObjectHideFlags: 0
@@ -15145,122 +15261,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656922271}
   m_CullTransparentMesh: 1
---- !u!1 &674728113
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 674728114}
-  - component: {fileID: 674728116}
-  - component: {fileID: 674728115}
-  - component: {fileID: 674728118}
-  - component: {fileID: 674728119}
-  m_Layer: 5
-  m_Name: Hotbar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &674728114
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674728113}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1341448393}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -452.17993}
-  m_SizeDelta: {x: -1011.7947, y: -904.37}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &674728115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674728113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 5240404496113911933, guid: 4813b6cf8c55e8840b47c945b30de870, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &674728116
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674728113}
-  m_CullTransparentMesh: 1
---- !u!114 &674728118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674728113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8e10471f3f2764ca81e21a50e3c3f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  hotbarPanel: {fileID: 674728113}
-  slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
-  slotCount: 0
---- !u!114 &674728119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674728113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
-  m_Padding:
-    m_Left: 44
-    m_Right: 44
-    m_Top: 38
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 98, y: 98}
-  m_Spacing: {x: 46, y: 0}
-  m_Constraint: 2
-  m_ConstraintCount: 1
 --- !u!1 &697802626
 GameObject:
   m_ObjectHideFlags: 0
@@ -16063,15 +16063,15 @@ RectTransform:
   m_GameObject: {fileID: 929046423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.0739, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2024048216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -360.57275, y: 0.3}
-  m_SizeDelta: {x: 100.4862, y: 94.0848}
+  m_AnchoredPosition: {x: -360.57275, y: 0.30000305}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &929046425
 MonoBehaviour:
@@ -16087,16 +16087,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
   m_Padding:
     m_Left: 0
-    m_Right: 50
+    m_Right: 0
     m_Top: 0
-    m_Bottom: 50
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 44, y: 44}
-  m_Constraint: 1
-  m_ConstraintCount: 6
+  m_Spacing: {x: 44, y: 0}
+  m_Constraint: 2
+  m_ConstraintCount: 1
 --- !u!1 &944728119
 GameObject:
   m_ObjectHideFlags: 0
@@ -21879,15 +21879,15 @@ MonoBehaviour:
   recipes:
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 965d09bdec322b34285895161dbd9ef5, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 607e3e9a2b52e6c459f071060967e9f1, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 35
     result:
@@ -21895,15 +21895,15 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 399f37f5c0e39434cac5a0c21f611ddf, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: c5bf9624353069342a501c20f8b4b70e, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 1de11dbf2374caf4c9620d2dd9dafb7d, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: e3b9fc26dc7221f429951262d8250807, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 55
     result:
@@ -21911,15 +21911,15 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 9b9cf69d3ee0017498cc66b3ba84d0a0, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 35
     result:
@@ -21927,17 +21927,17 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 455ecb7e17e0444498361fc88cdbaa92, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 607e3e9a2b52e6c459f071060967e9f1, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 40
     result:
@@ -21945,15 +21945,15 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 651e66a30716cb8428ce232a8052f584, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 353a6745a6b7aca40b8590d31ffde335, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 25
     result:
@@ -21961,15 +21961,15 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 3dc74e9dd88e9484ab2fc72c5107266c, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 353a6745a6b7aca40b8590d31ffde335, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 3ae8bc4189aea024bb3cc2ca62c3ef72, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 50
     result:
@@ -21977,15 +21977,15 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 399f37f5c0e39434cac5a0c21f611ddf, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 25
     result:
@@ -21993,15 +21993,15 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: d7af14f3d5bb76248931d0aaf7b21454, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 2a6c9afc53462e1428629c958bc74c8e, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: a6f783823fe455f4f949d17aa309b224, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 40
     result:
@@ -22009,15 +22009,15 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 651e66a30716cb8428ce232a8052f584, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 1de11dbf2374caf4c9620d2dd9dafb7d, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 35
     result:
@@ -22025,17 +22025,17 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 9b9cf69d3ee0017498cc66b3ba84d0a0, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 2bed924dcbc6e23429747aa63fb7bdf7, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 8ed2d8159f26dc1469fadffc31d90709, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 50
     result:
@@ -22043,17 +22043,17 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 965d09bdec322b34285895161dbd9ef5, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: c4bf572ba4ae707488840121a36f239b, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 3ae8bc4189aea024bb3cc2ca62c3ef72, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 40
     result:
@@ -22061,13 +22061,13 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: 2a6c9afc53462e1428629c958bc74c8e, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 8ed2d8159f26dc1469fadffc31d90709, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 15
     basePrice: 40
     result:
@@ -22075,11 +22075,11 @@ MonoBehaviour:
       amount: 1
   - ingredients:
     - itemPrefab: {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
-      amount: 1
+      amount: 0
     - itemPrefab: {fileID: 2029307285019830437, guid: 2fb3948f08c05754ca4c24b4f914ddee, type: 3}
-      amount: 1
+      amount: 0
     cookingTime: 10
     basePrice: 10
     result:
@@ -27266,7 +27266,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1110262707}
-  - {fileID: 674728114}
+  - {fileID: 622147174}
   - {fileID: 1631538715}
   - {fileID: 417994287}
   - {fileID: 1617891257}
@@ -27295,7 +27295,7 @@ MonoBehaviour:
   inventoryPanel: {fileID: 1804029831}
   recipePanel: {fileID: 1691614657}
   restaurantMenuPanel: {fileID: 2024048215}
-  hotbarPanel: {fileID: 674728113}
+  hotbarPanel: {fileID: 622147173}
 --- !u!1 &1342716502
 GameObject:
   m_ObjectHideFlags: 0
@@ -52208,10 +52208,10 @@ RectTransform:
   - {fileID: 929046424}
   m_Father: {fileID: 1540946009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 69, y: -560.9468}
-  m_SizeDelta: {x: 808.205, y: 74.351}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 24.84, y: -507.16998}
+  m_SizeDelta: {x: 905.886, y: 177.78299}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2024048217
 MonoBehaviour:
