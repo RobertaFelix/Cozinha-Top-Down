@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: 54216e7d82199824f92cdc0ae4612ae7
+guid: ec710afae2de2244ea89cf571ddbd02a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1168331257661325656
-    second: UIdataMoedaV2_0
+      213: -3706194321392288923
+    second: inventarioComprasV2_0
   - first:
-      213: -4953629701147256263
-    second: UIdataMoedaV2_1
+      213: 5164569505685910711
+    second: inventarioComprasV2_1
   - first:
-      213: -3426876791526577161
-    second: UIdataMoedaV2_2
+      213: 7622756944870499013
+    second: inventarioComprasV2_2
+  - first:
+      213: 3508793893995861881
+    second: inventarioComprasV2_3
+  - first:
+      213: -8796972959696450765
+    second: inventarioComprasV2_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -121,13 +127,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UIdataMoedaV2_0
+      name: inventarioComprasV2_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 4
-        width: 90
-        height: 48
+        x: 8
+        y: 0
+        width: 262
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,8 +142,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8ae7c1749e049cfe0800000000000000
-      internalID: -1168331257661325656
+      spriteID: 56bb7d4a6e3f09cc0800000000000000
+      internalID: -3706194321392288923
       vertices: []
       indices: 
       edges: []
@@ -146,7 +152,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dd8f48db7674e2f40a45473fe6e3bb6c
+    spriteID: 0435d5e3e2f285247a9649b1d90abf0a
     internalID: 0
     vertices: []
     indices: 
@@ -156,9 +162,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UIdataMoedaV2_0: -1168331257661325656
-      UIdataMoedaV2_1: -4953629701147256263
-      UIdataMoedaV2_2: -3426876791526577161
+      inventarioComprasV2_0: -3706194321392288923
+      inventarioComprasV2_1: 5164569505685910711
+      inventarioComprasV2_2: 7622756944870499013
+      inventarioComprasV2_3: 3508793893995861881
+      inventarioComprasV2_4: -8796972959696450765
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

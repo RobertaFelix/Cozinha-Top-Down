@@ -39,12 +39,20 @@ public class CoinManager : MonoBehaviour
         UpdateUI();
     }
 
+    public bool SpendCoins(int amount)
+    {
+        if (amount <= 0 || totalCoins < amount)
+            return false;
+
+        totalCoins -= amount;
+        UpdateUI();
+        return true;
+    }
+
     private void UpdateUI()
     {
         if (coinText != null)
-        {
             coinText.text = totalCoins.ToString("D9");
-        }
     }
 
     public void SetRewardMultiplier(int multiplier)
