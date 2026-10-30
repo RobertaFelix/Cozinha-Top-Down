@@ -1,0 +1,574 @@
+fileFormatVersion: 2
+guid: 86a6c0145c522864d9bcd191aded0ad4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4887443579638653222
+    second: Pocoes_0
+  - first:
+      213: -4072274587325898131
+    second: Pocoes_1
+  - first:
+      213: 8633158684624154076
+    second: Pocoes_2
+  - first:
+      213: 2580767282457565190
+    second: Pocoes_3
+  - first:
+      213: -1984351558513187888
+    second: Pocoes_4
+  - first:
+      213: 3552762152818961537
+    second: Pocoes_5
+  - first:
+      213: 2636909082472635426
+    second: Pocoes_6
+  - first:
+      213: -3934591328103872784
+    second: Pocoes_7
+  - first:
+      213: 1350413298265459386
+    second: Pocoes_8
+  - first:
+      213: -5103578234776807715
+    second: Pocoes_9
+  - first:
+      213: 3095245984909592652
+    second: Pocoes_10
+  - first:
+      213: -4567454702486166992
+    second: Pocoes_11
+  - first:
+      213: -4833555729649616179
+    second: Pocoes_12
+  - first:
+      213: -7861536563876188415
+    second: Pocoes_13
+  - first:
+      213: 3453878799930147035
+    second: Pocoes_14
+  - first:
+      213: -151047255124526053
+    second: Pocoes_15
+  - first:
+      213: 282337185982155002
+    second: Pocoes_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Pocoes_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 42
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adedfd785ff4c2cb0800000000000000
+      internalID: -4887443579638653222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 60
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d62e692b6df5c77c0800000000000000
+      internalID: -4072274587325898131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 60
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdde99e45142fc770800000000000000
+      internalID: 8633158684624154076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_3
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 42
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60855de7b2ab0d320800000000000000
+      internalID: 2580767282457565190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_4
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 60
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d3245565ca2674e0800000000000000
+      internalID: -1984351558513187888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_5
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 60
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18ce93aca52fd4130800000000000000
+      internalID: 3552762152818961537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_6
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 60
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22c58cde6de289420800000000000000
+      internalID: 2636909082472635426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_7
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 22
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f6490098068569c0800000000000000
+      internalID: -3934591328103872784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_8
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 4
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aba831f6db1adb210800000000000000
+      internalID: 1350413298265459386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_9
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 22
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd696b8a2a27c29b0800000000000000
+      internalID: -5103578234776807715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_10
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 4
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c488dfee2d584fa20800000000000000
+      internalID: 3095245984909592652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_11
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 22
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 032ef92c5242d90c0800000000000000
+      internalID: -4567454702486166992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_12
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 4
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dca3e245ca2cbecb0800000000000000
+      internalID: -4833555729649616179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_13
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 22
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10f2a69b52636e290800000000000000
+      internalID: -7861536563876188415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_14
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 22
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd0c6171874aeef20800000000000000
+      internalID: 3453878799930147035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_15
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 3
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1c310e525f57edf0800000000000000
+      internalID: -151047255124526053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pocoes_16
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 3
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af8895dbc201be300800000000000000
+      internalID: 282337185982155002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: db447368f313ab34ca130c0fc92eb430
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Pocoes_0: -4887443579638653222
+      Pocoes_1: -4072274587325898131
+      Pocoes_10: 3095245984909592652
+      Pocoes_11: -4567454702486166992
+      Pocoes_12: -4833555729649616179
+      Pocoes_13: -7861536563876188415
+      Pocoes_14: 3453878799930147035
+      Pocoes_15: -151047255124526053
+      Pocoes_16: 282337185982155002
+      Pocoes_2: 8633158684624154076
+      Pocoes_3: 2580767282457565190
+      Pocoes_4: -1984351558513187888
+      Pocoes_5: 3552762152818961537
+      Pocoes_6: 2636909082472635426
+      Pocoes_7: -3934591328103872784
+      Pocoes_8: 1350413298265459386
+      Pocoes_9: -5103578234776807715
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
