@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 009ecdcbee18d464ba446596a1144563
+guid: f9f47f1b068dc3644a1af4c8773d7b19
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8241709391814558451
-    second: casas_0
+      213: -6382136822386102274
+    second: casas 1_0
   - first:
-      213: -2210486488036156438
-    second: casas_1
+      213: 5805856794460186644
+    second: casas 1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: casas_0
+      name: casas 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -133,30 +133,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d0d74ee79f09f9d80800000000000000
-      internalID: -8241709391814558451
+      spriteID: eff6cb1cf581e67a0800000000000000
+      internalID: -6382136822386102274
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: casas_1
+      name: casas 1_1
       rect:
         serializedVersion: 2
         x: 125
         y: 1
         width: 74
         height: 103
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aebddc33046c251e0800000000000000
-      internalID: -2210486488036156438
+      spriteID: 418669a6efb829050800000000000000
+      internalID: 5805856794460186644
       vertices: []
       indices: 
       edges: []
@@ -165,7 +165,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7dc57cef544014943942946e3d4a0798
+    spriteID: 75e223b0ebd8e6841948f7616f42734b
     internalID: 0
     vertices: []
     indices: 
@@ -175,8 +175,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      casas_0: -8241709391814558451
-      casas_1: -2210486488036156438
+      casas 1_0: -6382136822386102274
+      casas 1_1: 5805856794460186644
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
