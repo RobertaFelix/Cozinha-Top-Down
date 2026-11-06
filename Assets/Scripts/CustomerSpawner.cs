@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class CustomerSpawner : MonoBehaviour
     [Header("NPCs disponíveis")]
     [SerializeField] private GameObject customerPrefabA;
     [SerializeField] private GameObject customerPrefabB;
+    [SerializeField] private GameObject customerPrefabC;
+    [SerializeField] private GameObject customerPrefabD;
 
     [Header("Fogão")]
     [SerializeField] private StoveController stoveController;
@@ -17,10 +20,7 @@ public class CustomerSpawner : MonoBehaviour
     [Header("Mesas disponíveis")]
     [SerializeField] private Table[] tables;
 
-    private readonly List<GameObject> spawnedA =
-        new List<GameObject>();
-
-    private readonly List<GameObject> spawnedB =
+    private readonly List<GameObject> spawnedCustomers =
         new List<GameObject>();
 
     private bool initialSpawnCompleted;
@@ -38,7 +38,7 @@ public class CustomerSpawner : MonoBehaviour
             yield return null;
         }
 
-        // Cria dois NPCs com aparências diferentes.
+        // Cria dois NPCs inicialmente.
         SpawnCustomer();
         SpawnCustomer();
 
@@ -66,10 +66,10 @@ public class CustomerSpawner : MonoBehaviour
     {
         CleanupSpawnedLists();
 
-        if (customerPrefabA == null || customerPrefabB == null)
+        if (!HasDishesInMenu())
         {
-            Debug.LogError(
-                "Configure os dois prefabs de NPC no CustomerSpawner."
+            Debug.Log(
+                "Spawn aguardando: adicione pelo menos um prato ao cardápio."
             );
             return;
         }
@@ -82,46 +82,67 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
-        if (!HasDishesInMenu())
+        // Todos os prefabs disponíveis.
+        GameObject[] allPrefabs =
+        {
+            customerPrefabA,
+            customerPrefabB,
+            customerPrefabC,
+            customerPrefabD
+        };
+
+        // Verifica se todos os prefabs foram configurados.
+        foreach (GameObject prefab in allPrefabs)
+        {
+            if (prefab == null)
+            {
+                Debug.LogError(
+                    "Configure os quatro prefabs de NPC no CustomerSpawner."
+                );
+                return;
+            }
+        }
+
+        // Identifica as aparências que ainda não estão em uso.
+        List<GameObject> availablePrefabs =
+            new List<GameObject>();
+
+        foreach (GameObject prefab in allPrefabs)
+        {
+            bool alreadySpawned = false;
+
+            foreach (GameObject spawnedCustomer in spawnedCustomers)
+            {
+                if (spawnedCustomer != null &&
+                    spawnedCustomer.GetComponent<CustomerAppearance>()
+                    != null &&
+                    spawnedCustomer.GetComponent<CustomerAppearance>().prefab
+                    == prefab)
+                {
+                    alreadySpawned = true;
+                    break;
+                }
+            }
+
+            if (!alreadySpawned)
+                availablePrefabs.Add(prefab);
+        }
+
+        if (availablePrefabs.Count == 0)
         {
             Debug.Log(
-                "Spawn aguardando: adicione pelo menos um prato ao cardápio."
+                "Os quatro tipos de NPC já estão presentes."
             );
             return;
         }
 
-        bool aIsActive = spawnedA.Count > 0;
-        bool bIsActive = spawnedB.Count > 0;
+        // Sorteia uma aparência entre as disponíveis.
+        GameObject selectedPrefab =
+            availablePrefabs[
+                Random.Range(0, availablePrefabs.Count)
+            ];
 
-        if (aIsActive && bIsActive)
-        {
-            Debug.Log(
-                "Os dois tipos de NPC já estão presentes."
-            );
-            return;
-        }
-
-        GameObject selectedPrefab;
-
-        // Se os dois tipos estão disponíveis, sorteia um.
-        if (!aIsActive && !bIsActive)
-        {
-            selectedPrefab =
-                Random.value < 0.5f
-                    ? customerPrefabA
-                    : customerPrefabB;
-        }
-        else if (!aIsActive)
-        {
-            // O tipo A está ausente.
-            selectedPrefab = customerPrefabA;
-        }
-        else
-        {
-            // O tipo B está ausente.
-            selectedPrefab = customerPrefabB;
-        }
-
+        // Procura mesas com cadeiras livres.
         List<Table> availableTables = new List<Table>();
 
         if (tables != null)
@@ -156,6 +177,7 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
+        // Cria o NPC.
         GameObject customer = Instantiate(selectedPrefab);
 
         CustomerNPC customerNPC =
@@ -176,6 +198,12 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
+        // Registra a aparência utilizada.
+        CustomerAppearance appearance =
+            customer.AddComponent<CustomerAppearance>();
+
+        appearance.prefab = selectedPrefab;
+
         customerNPC.SitAt(selectedTable, chair);
 
         orderController.Initialize(stoveController);
@@ -191,11 +219,8 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
-        // Registra qual aparência está ocupando uma cadeira.
-        if (selectedPrefab == customerPrefabA)
-            spawnedA.Add(customer);
-        else
-            spawnedB.Add(customer);
+        // Registra o NPC criado.
+        spawnedCustomers.Add(customer);
 
         Debug.Log(
             "NPC criado: " + selectedPrefab.name
@@ -204,7 +229,14 @@ public class CustomerSpawner : MonoBehaviour
 
     private void CleanupSpawnedLists()
     {
-        spawnedA.RemoveAll(customer => customer == null);
-        spawnedB.RemoveAll(customer => customer == null);
+        spawnedCustomers.RemoveAll(
+            spawnedCustomer => spawnedCustomer == null
+        );
     }
+}
+
+// Identifica qual prefab deu origem ao NPC.
+public class CustomerAppearance : MonoBehaviour
+{
+    public GameObject prefab;
 }
