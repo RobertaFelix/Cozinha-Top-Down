@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,13 +12,37 @@ public class Pan : MonoBehaviour
 
     private bool playerNearby;
 
-    // Guarda a panela original da cena
     private static Pan instance;
 
     private void Awake()
     {
         instance = this;
     }
+
+    private void Start()
+    {
+        FindHotbarController();
+    }
+
+private void FindHotbarController()
+{
+    GameObject gameControllerObject =
+        GameObject.Find("GameController");
+
+    if (gameControllerObject == null)
+    {
+        Debug.LogError("GameObject GameController não encontrado!");
+        return;
+    }
+
+    hotbarController =
+        gameControllerObject.GetComponent<HotbarController>();
+
+    if (hotbarController == null)
+        Debug.LogError("HotbarController não encontrado!");
+    else
+        Debug.Log("HotbarController recuperado com sucesso!");
+}
 
     private void Update()
     {
@@ -44,17 +69,19 @@ public class Pan : MonoBehaviour
             return;
         }
 
+        // Recupera a referência caso tenha sido perdida.
+        FindHotbarController();
+
         if (hotbarController == null)
         {
             Debug.LogError(
-                "HotbarController não foi configurado."
+                "HotbarController não foi encontrado."
             );
 
             return;
         }
 
-        bool added =
-            hotbarController.AddItem(panItem);
+        bool added = hotbarController.AddItem(panItem);
 
         if (!added)
         {
@@ -65,8 +92,6 @@ public class Pan : MonoBehaviour
             return;
         }
 
-        // Em vez de destruir a panela,
-        // apenas escondemos a panela original da bancada.
         gameObject.SetActive(false);
 
         Debug.Log(
@@ -76,29 +101,19 @@ public class Pan : MonoBehaviour
 
     public bool IsPan(InventoryItem item)
     {
-        if (item == null)
+        if (item == null || panItem == null)
             return false;
 
-        if (panItem == null)
+        if (item.itemPrefab == null ||
+            panItem.itemPrefab == null)
             return false;
 
-        if (item.itemPrefab == null)
-            return false;
-
-        if (panItem.itemPrefab == null)
-            return false;
-
-        return item.itemPrefab ==
-               panItem.itemPrefab;
+        return item.itemPrefab == panItem.itemPrefab;
     }
 
-    public static bool WasUsedInRecipe(
-        InventoryItem[] items)
+    public static bool WasUsedInRecipe(InventoryItem[] items)
     {
-        if (instance == null)
-            return false;
-
-        if (items == null)
+        if (instance == null || items == null)
             return false;
 
         foreach (InventoryItem item in items)
@@ -122,8 +137,7 @@ public class Pan : MonoBehaviour
         );
     }
 
-    private void OnTriggerEnter2D(
-        Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
@@ -131,13 +145,11 @@ public class Pan : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(
-    Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             playerNearby = false;
-
         }
     }
 }

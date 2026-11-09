@@ -6,41 +6,24 @@ using UnityEngine.InputSystem;
 public class InteractionPromptTrigger : MonoBehaviour
 {
     [Header("Objeto que o E deve acompanhar")]
-    [SerializeField]
-    private Transform target;
+    [SerializeField] private Transform target;
 
     [Header("Ajuste adicional da posição do E")]
-    [SerializeField]
-    private Vector3 offsetAdicional = Vector3.zero;
+    [SerializeField] private Vector3 offsetAdicional = Vector3.zero;
 
     [Header("Ação ao pressionar E")]
-    [SerializeField]
-    private UnityEvent onInteract;
+    [SerializeField] private UnityEvent onInteract;
+
+    [Header("Troca de cenas")]
+    [SerializeField] private bool useSceneTransition;
+    [SerializeField] private bool returnToFirstScene;
 
     private bool playerNearby;
 
     private void Awake()
     {
-        Debug.Log(
-            "[InteractionPromptTrigger] Awake: " + gameObject.name
-        );
-
         if (target == null)
-        {
             target = transform;
-
-            Debug.Log(
-                "[InteractionPromptTrigger] Target não configurado. " +
-                "Utilizando o próprio objeto: " + gameObject.name
-            );
-        }
-        else
-        {
-            Debug.Log(
-                "[InteractionPromptTrigger] Target configurado: " +
-                target.name
-            );
-        }
     }
 
     private void Update()
@@ -48,126 +31,80 @@ public class InteractionPromptTrigger : MonoBehaviour
         if (!playerNearby)
             return;
 
-        if (Keyboard.current == null)
+        if (Keyboard.current != null &&
+            Keyboard.current.eKey.wasPressedThisFrame)
         {
-            Debug.LogWarning(
-                "[InteractionPromptTrigger] Keyboard.current está nulo."
-            );
+            Debug.Log("Tecla E pressionada em: " + gameObject.name);
 
-            return;
-        }
-
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            Debug.Log(
-                "[InteractionPromptTrigger] E pressionado dentro do trigger: " +
-                gameObject.name
-            );
-
-            if (onInteract == null)
+            if (useSceneTransition)
             {
-                Debug.LogWarning(
-                    "[InteractionPromptTrigger] On Interact está nulo!"
-                );
+                SceneTransitionController controller =
+                    FindAnyObjectByType<SceneTransitionController>();
+
+                if (controller == null)
+                {
+                    Debug.LogError("SceneTransitionController não encontrado!");
+                    return;
+                }
+
+                if (returnToFirstScene)
+                    controller.ReturnToFirstScene();
+                else
+                    controller.LoadDungeon();
 
                 return;
             }
 
-            if (onInteract.GetPersistentEventCount() == 0)
-            {
-                Debug.LogWarning(
-                    "[InteractionPromptTrigger] Nenhuma ação foi configurada " +
-                    "no evento On Interact!"
-                );
-            }
-
-            Debug.Log(
-                "[InteractionPromptTrigger] Executando evento On Interact..."
-            );
-
-            onInteract.Invoke();
-
-            Debug.Log(
-                "[InteractionPromptTrigger] Evento On Interact executado."
-            );
+            onInteract?.Invoke();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(
-            "[InteractionPromptTrigger] OnTriggerEnter2D: " +
-            collision.name
-        );
-
         if (!collision.CompareTag("Player"))
-        {
-            Debug.Log(
-                "[InteractionPromptTrigger] Objeto ignorado. Tag encontrada: " +
-                collision.tag
-            );
-
             return;
-        }
 
-        playerNearby = true;
+        ShowPrompt();
+    }
 
-        Debug.Log(
-            "[InteractionPromptTrigger] Jogador entrou na área: " +
-            gameObject.name
-        );
-
-        if (InteractionPromptManager.Instance == null)
-        {
-            Debug.LogWarning(
-                "[InteractionPromptTrigger] InteractionPromptManager.Instance " +
-                "não foi encontrado!"
-            );
-
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player"))
             return;
-        }
 
-        InteractionPromptManager.Instance.Show(
-            target,
-            offsetAdicional
-        );
-
-        Debug.Log(
-            "[InteractionPromptTrigger] Aviso de interação exibido."
-        );
+        if (!playerNearby)
+            ShowPrompt();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log(
-            "[InteractionPromptTrigger] OnTriggerExit2D: " +
-            collision.name
-        );
-
         if (!collision.CompareTag("Player"))
             return;
 
         playerNearby = false;
 
-        Debug.Log(
-            "[InteractionPromptTrigger] Jogador saiu da área: " +
-            gameObject.name
-        );
+        if (InteractionPromptManager.Instance != null)
+            InteractionPromptManager.Instance.Hide(target);
+    }
 
-        if (InteractionPromptManager.Instance == null)
+    private void ShowPrompt()
+    {
+        playerNearby = true;
+
+        if (InteractionPromptManager.Instance != null)
         {
-            Debug.LogWarning(
-                "[InteractionPromptTrigger] InteractionPromptManager.Instance " +
-                "não foi encontrado!"
+            InteractionPromptManager.Instance.Show(
+                target,
+                offsetAdicional
             );
-
-            return;
         }
+    }
 
-        InteractionPromptManager.Instance.Hide(target);
+    private void OnDisable()
+    {
+        playerNearby = false;
 
-        Debug.Log(
-            "[InteractionPromptTrigger] Aviso de interação escondido."
-        );
+        if (InteractionPromptManager.Instance != null)
+            InteractionPromptManager.Instance.Hide(target);
     }
 }

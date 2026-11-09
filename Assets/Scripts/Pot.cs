@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,31 @@ public class Pot : MonoBehaviour
     {
         instance = this;
     }
+
+    private void Start()
+    {
+        FindHotbarController();
+    }
+
+private void FindHotbarController()
+{
+    GameObject gameControllerObject =
+        GameObject.Find("GameController");
+
+    if (gameControllerObject == null)
+    {
+        Debug.LogError("GameObject GameController não encontrado!");
+        return;
+    }
+
+    hotbarController =
+        gameControllerObject.GetComponent<HotbarController>();
+
+    if (hotbarController == null)
+        Debug.LogError("HotbarController não encontrado!");
+    else
+        Debug.Log("HotbarController recuperado com sucesso!");
+}
 
     private void Update()
     {
@@ -43,17 +69,19 @@ public class Pot : MonoBehaviour
             return;
         }
 
+        // Recupera a referência caso tenha sido perdida.
+        FindHotbarController();
+
         if (hotbarController == null)
         {
             Debug.LogError(
-                "HotbarController não foi configurado."
+                "HotbarController não foi encontrado."
             );
 
             return;
         }
 
-        bool added =
-            hotbarController.AddItem(potItem);
+        bool added = hotbarController.AddItem(potItem);
 
         if (!added)
         {
@@ -73,29 +101,19 @@ public class Pot : MonoBehaviour
 
     public bool IsPot(InventoryItem item)
     {
-        if (item == null)
+        if (item == null || potItem == null)
             return false;
 
-        if (potItem == null)
+        if (item.itemPrefab == null ||
+            potItem.itemPrefab == null)
             return false;
 
-        if (item.itemPrefab == null)
-            return false;
-
-        if (potItem.itemPrefab == null)
-            return false;
-
-        return item.itemPrefab ==
-               potItem.itemPrefab;
+        return item.itemPrefab == potItem.itemPrefab;
     }
 
-    public static bool WasUsedInRecipe(
-        InventoryItem[] items)
+    public static bool WasUsedInRecipe(InventoryItem[] items)
     {
-        if (instance == null)
-            return false;
-
-        if (items == null)
+        if (instance == null || items == null)
             return false;
 
         foreach (InventoryItem item in items)
@@ -119,8 +137,7 @@ public class Pot : MonoBehaviour
         );
     }
 
-    private void OnTriggerEnter2D(
-        Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
@@ -128,8 +145,7 @@ public class Pot : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(
-        Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {

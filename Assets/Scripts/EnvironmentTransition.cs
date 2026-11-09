@@ -28,10 +28,11 @@ public class EnvironmentTransition : MonoBehaviour
 
     private void Start()
     {
+        FindPlayerReferences();
+
         if (exterior != null)
             exterior.SetActive(true);
 
-        // Todos os interiores começam desativados.
         foreach (GameObject interior in interiors)
         {
             if (interior != null)
@@ -46,12 +47,38 @@ public class EnvironmentTransition : MonoBehaviour
         }
     }
 
+    private void FindPlayerReferences()
+    {
+        // Procura o Player pela tag.
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject == null)
+        {
+            Debug.LogError("EnvironmentTransition: Player não encontrado!");
+            return;
+        }
+
+        player = playerObject.transform;
+
+        playerRb = playerObject.GetComponent<Rigidbody2D>();
+
+        playerMovement = playerObject.GetComponent<PlayerController>();
+
+        Debug.Log("Referências do Player recuperadas!");
+
+        Debug.Log("Transform: " + (player != null));
+        Debug.Log("Rigidbody2D: " + (playerRb != null));
+        Debug.Log("PlayerMovement: " + (playerMovement != null));
+    }
+
     // CHAMADO PELA PORTA EXTERNA
     public void EnterInterior(
         GameObject interior,
         Transform interiorSpawn,
         Transform exteriorExitSpawn)
     {
+        FindPlayerReferences();
+        
         if (isTransitioning)
             return;
 
