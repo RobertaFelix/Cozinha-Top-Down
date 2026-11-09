@@ -34,11 +34,152 @@ public class RestaurantMenuController : MonoBehaviour
             Debug.LogError(
                 "Existe mais de um RestaurantMenuController na cena."
             );
+
             return;
         }
 
         Instance = this;
     }
+
+    private void Start()
+    {
+        FindSelectedDishesContainer();
+        FindRecipeBookController();
+        RecoverSelectedDishes();
+    }
+
+    // ==========================================
+    // RECUPERAR SELECTED DISHES CONTAINER
+    // ==========================================
+
+    private void FindSelectedDishesContainer()
+    {
+        GameObject persistentUI =
+            GameObject.Find("PersistentUI");
+
+        if (persistentUI == null)
+        {
+            Debug.LogError(
+                "RestaurantMenuController: PersistentUI não encontrado!"
+            );
+
+            selectedDishesContainer = null;
+            return;
+        }
+
+        Transform[] children =
+            persistentUI.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in children)
+        {
+            if (child.name == "MenuPage")
+            {
+                Transform container =
+                    FindChildRecursive(
+                        child,
+                        "SelectedDishesContainer"
+                    );
+
+                if (container != null)
+                {
+                    selectedDishesContainer = container;
+
+                    Debug.Log(
+                        "RestaurantMenuController: SelectedDishesContainer recuperado!"
+                    );
+
+                    return;
+                }
+            }
+        }
+
+        Debug.LogError(
+            "RestaurantMenuController: SelectedDishesContainer não encontrado dentro de MenuPage!"
+        );
+
+        selectedDishesContainer = null;
+    }
+
+    private Transform FindChildRecursive(
+        Transform parent,
+        string childName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == childName)
+                return child;
+
+            Transform result =
+                FindChildRecursive(child, childName);
+
+            if (result != null)
+                return result;
+        }
+
+        return null;
+    }
+
+    // ==========================================
+    // RECUPERAR RECIPE BOOK CONTROLLER
+    // ==========================================
+
+    private void FindRecipeBookController()
+    {
+        if (recipeBookController != null)
+            return;
+
+        recipeBookController =
+            RecipeBookController.Instance;
+
+        if (recipeBookController != null)
+        {
+            Debug.Log(
+                "RestaurantMenuController: RecipeBookController recuperado!"
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "RestaurantMenuController: RecipeBookController não encontrado!"
+            );
+        }
+    }
+
+    // ==========================================
+    // RECUPERAR PRATOS JÁ SELECIONADOS
+    // ==========================================
+
+    private void RecoverSelectedDishes()
+    {
+        if (selectedDishesContainer == null)
+            return;
+
+        Image[] images =
+            selectedDishesContainer.GetComponentsInChildren<Image>(true);
+
+        foreach (Image image in images)
+        {
+            if (image.transform == selectedDishesContainer)
+                continue;
+
+            Button button =
+                image.GetComponent<Button>();
+
+            if (button == null)
+                button = image.GetComponentInParent<Button>();
+
+            if (button == null)
+                continue;
+
+            // Os pratos recuperados permanecem visíveis.
+            // As receitas continuam na lista se este controlador
+            // também tiver permanecido ativo.
+        }
+    }
+
+    // ==========================================
+    // ADICIONAR RECEITA
+    // ==========================================
 
     public bool TryAddRecipe(CookingRecipe recipe)
     {
@@ -46,12 +187,22 @@ public class RestaurantMenuController : MonoBehaviour
             return false;
 
         if (recipeBookController == null)
+            FindRecipeBookController();
+
+        if (recipeBookController == null)
         {
             Debug.LogError(
-                "RestaurantMenuController: configure o RecipeBookController."
+                "RestaurantMenuController: RecipeBookController não encontrado."
             );
+
             return false;
         }
+
+        if (selectedDishesContainer == null)
+            FindSelectedDishesContainer();
+
+        if (selectedDishesContainer == null)
+            return false;
 
         if (!recipeBookController.HasUnlockedRecipe(recipe))
         {
@@ -71,11 +222,12 @@ public class RestaurantMenuController : MonoBehaviour
             return false;
         }
 
-        if (selectedDishesContainer == null || selectedDishPrefab == null)
+        if (selectedDishPrefab == null)
         {
             Debug.LogError(
-                "Configure o container e o prefab dos pratos selecionados."
+                "Configure o prefab dos pratos selecionados."
             );
+
             return false;
         }
 
@@ -84,6 +236,7 @@ public class RestaurantMenuController : MonoBehaviour
             Debug.LogWarning(
                 "A receita não possui um prato de resultado válido."
             );
+
             return false;
         }
 
@@ -94,6 +247,7 @@ public class RestaurantMenuController : MonoBehaviour
             Debug.LogWarning(
                 "Não foi possível encontrar o sprite do prato."
             );
+
             return false;
         }
 
@@ -126,8 +280,8 @@ public class RestaurantMenuController : MonoBehaviour
         dishImage.color = Color.white;
         dishImage.preserveAspect = true;
 
-        // Clicar no prato selecionado remove-o do cardápio.
         dishButton.onClick.RemoveAllListeners();
+
         dishButton.onClick.AddListener(
             () => RemoveRecipe(recipe)
         );
@@ -142,6 +296,10 @@ public class RestaurantMenuController : MonoBehaviour
 
         return true;
     }
+
+    // ==========================================
+    // REMOVER RECEITA
+    // ==========================================
 
     public bool RemoveRecipe(CookingRecipe recipe)
     {
@@ -166,6 +324,10 @@ public class RestaurantMenuController : MonoBehaviour
         return true;
     }
 
+    // ==========================================
+    // VERIFICAR SE ESTÁ NO CARDÁPIO
+    // ==========================================
+
     public bool IsInMenu(CookingRecipe recipe)
     {
         return recipe != null && selectedRecipes.Contains(recipe);
@@ -175,6 +337,10 @@ public class RestaurantMenuController : MonoBehaviour
     {
         return selectedRecipes.AsReadOnly();
     }
+
+    // ==========================================
+    // OBTER SPRITE
+    // ==========================================
 
     private Sprite GetSprite(GameObject prefab)
     {

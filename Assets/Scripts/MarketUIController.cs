@@ -32,7 +32,6 @@ public class MarketUIController : MonoBehaviour
                 slot.Initialize(this);
         }
 
-        // Associa cada slot do carrinho a este controlador.
         foreach (MarketCartSlot slot in cartSlots)
         {
             if (slot != null)
@@ -42,10 +41,66 @@ public class MarketUIController : MonoBehaviour
         UpdateTotal();
     }
 
+    private void Start()
+    {
+        FindInventoryControllers();
+    }
+
+    private void FindInventoryControllers()
+    {
+        GameObject gameControllerObject =
+            GameObject.Find("GameController");
+
+        if (gameControllerObject == null)
+        {
+            Debug.LogError(
+                "MarketUIController: GameObject GameController não encontrado!"
+            );
+
+            hotbar = null;
+            inventory = null;
+            return;
+        }
+
+        hotbar =
+            gameControllerObject.GetComponent<HotbarController>();
+
+        inventory =
+            gameControllerObject.GetComponent<InventoryController>();
+
+        if (hotbar != null)
+        {
+            Debug.Log(
+                "MarketUIController: HotbarController recuperado com sucesso!"
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "MarketUIController: HotbarController não encontrado no GameController!"
+            );
+        }
+
+        if (inventory != null)
+        {
+            Debug.Log(
+                "MarketUIController: InventoryController recuperado com sucesso!"
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "MarketUIController: InventoryController não encontrado no GameController!"
+            );
+        }
+    }
+
     public void OpenMarket()
     {
         if (marketPanel == null)
             return;
+
+        FindInventoryControllers();
 
         marketPanel.SetActive(true);
         UpdateTotal();
@@ -64,7 +119,6 @@ public class MarketUIController : MonoBehaviour
         if (!IsOpen || prefab == null || price < 0)
             return;
 
-        // Primeiro, procura o mesmo ingrediente no carrinho.
         foreach (MarketCartSlot slot in cartSlots)
         {
             if (slot == null || slot.IsEmpty)
@@ -72,7 +126,6 @@ public class MarketUIController : MonoBehaviour
 
             if (slot.ingredientPrefab == prefab)
             {
-                // Evita misturar o mesmo ingrediente com preços diferentes.
                 if (slot.price != price)
                 {
                     Debug.LogWarning(
@@ -87,7 +140,6 @@ public class MarketUIController : MonoBehaviour
             }
         }
 
-        // Se o ingrediente ainda não existe, usa um slot vazio.
         foreach (MarketCartSlot slot in cartSlots)
         {
             if (slot == null || !slot.IsEmpty)
@@ -106,22 +158,29 @@ public class MarketUIController : MonoBehaviour
         if (!IsOpen)
             return;
 
+        // Recupera as referências novamente antes da compra.
+        FindInventoryControllers();
+
         if (CoinManager.Instance == null)
         {
-            Debug.LogError("CoinManager não encontrado na cena!");
+            Debug.LogError(
+                "CoinManager não encontrado na cena!"
+            );
             return;
         }
 
         if (hotbar == null || hotbar.hotbarPanel == null)
         {
-            Debug.LogError("Hotbar não configurada no MarketUIController!");
+            Debug.LogError(
+                "Hotbar ou hotbarPanel não configurados no MarketUIController!"
+            );
             return;
         }
 
         if (inventory == null)
         {
             Debug.LogError(
-                "InventoryController não configurado no MarketUIController!"
+                "InventoryController não encontrado no GameController!"
             );
             return;
         }
@@ -129,7 +188,6 @@ public class MarketUIController : MonoBehaviour
         int availableCoins = CoinManager.Instance.TotalCoins;
         int purchasedCost = 0;
 
-        // Percorre todos os ingredientes presentes no carrinho.
         foreach (MarketCartSlot slot in cartSlots)
         {
             if (slot == null || slot.IsEmpty || slot.amount <= 0)
@@ -139,10 +197,8 @@ public class MarketUIController : MonoBehaviour
             int requestedQuantity = slot.amount;
             int purchasedQuantity = 0;
 
-            // Tenta transferir cada unidade individualmente.
             for (int i = 0; i < requestedQuantity; i++)
             {
-                // Verifica se há saldo para a próxima unidade.
                 if (unitPrice > 0 &&
                     purchasedCost + unitPrice > availableCoins)
                 {
@@ -155,20 +211,16 @@ public class MarketUIController : MonoBehaviour
                     amount = 1
                 };
 
-                // Primeiro, tenta adicionar à hotbar.
                 bool added = InventoryStacking.AddItem(
                     hotbar.hotbarPanel.transform,
                     item
                 );
 
-                // Se a hotbar estiver cheia, tenta o inventário pessoal.
                 if (!added)
                 {
                     added = inventory.AddItem(item);
                 }
 
-                // Se nenhum inventário aceitar o item,
-                // mantém as unidades restantes no carrinho.
                 if (!added)
                     break;
 
@@ -176,7 +228,6 @@ public class MarketUIController : MonoBehaviour
                 purchasedCost += unitPrice;
             }
 
-            // Remove somente a quantidade transferida.
             slot.amount -= purchasedQuantity;
 
             if (slot.amount <= 0)
@@ -185,12 +236,10 @@ public class MarketUIController : MonoBehaviour
             }
             else if (purchasedQuantity > 0)
             {
-                // Atualiza o número exibido no carrinho.
                 slot.AddAmount(0);
             }
         }
 
-        // Cobra somente o valor das unidades transferidas.
         if (purchasedCost > 0)
         {
             bool paymentSuccessful =
@@ -218,7 +267,6 @@ public class MarketUIController : MonoBehaviour
         UpdateTotal();
     }
 
-    // Público para permitir a atualização após remover uma unidade.
     public void RefreshTotal()
     {
         UpdateTotal();

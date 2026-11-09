@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,46 @@ public class Stove : MonoBehaviour
 
     private bool playerNearby;
 
+    private void Start()
+    {
+        FindHotbarController();
+    }
+
+    // ==========================================
+    // RECUPERAR HOTBAR CONTROLLER
+    // ==========================================
+
+    private void FindHotbarController()
+    {
+        GameObject gameControllerObject =
+            GameObject.Find("GameController");
+
+        if (gameControllerObject == null)
+        {
+            Debug.LogError(
+                "Stove: GameObject GameController não encontrado!"
+            );
+
+            hotbarController = null;
+            return;
+        }
+
+        hotbarController =
+            gameControllerObject.GetComponent<HotbarController>();
+
+        if (hotbarController != null)
+        {
+            Debug.Log(
+                "Stove: HotbarController recuperado com sucesso!"
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "Stove: HotbarController não encontrado no GameController!"
+            );
+        }
+    }
 
     private void Update()
     {
@@ -30,7 +71,6 @@ public class Stove : MonoBehaviour
         }
     }
 
-
     private void Interact()
     {
         // ==========================================
@@ -40,10 +80,8 @@ public class Stove : MonoBehaviour
         if (stoveController.CookingFinished)
         {
             CollectFood();
-
             return;
         }
-
 
         // ==========================================
         // AINDA COZINHANDO
@@ -58,7 +96,6 @@ public class Stove : MonoBehaviour
             return;
         }
 
-
         // ==========================================
         // INTERFACE JÁ ESTÁ ABERTA
         // SEGUNDO E
@@ -67,37 +104,30 @@ public class Stove : MonoBehaviour
         if (stoveInventoryController.IsOpen)
         {
             StartCooking();
-
             return;
         }
-
 
         // ==========================================
         // PRIMEIRO E
         // ABRIR INTERFACE
         // ==========================================
 
-        stoveInventoryController
-            .OpenStoveInventory();
+        stoveInventoryController.OpenStoveInventory();
 
         Debug.Log(
             "Interface do fogão aberta."
         );
     }
 
-
     private void StartCooking()
     {
         InventoryItem[] stoveItems =
-            stoveInventoryController
-                .GetStoveItems();
-
+            stoveInventoryController.GetStoveItems();
 
         Debug.Log(
             "Itens colocados no fogão: " +
             stoveItems.Length
         );
-
 
         // ==========================================
         // VERIFICAR SE A PANELA FOI USADA
@@ -106,7 +136,6 @@ public class Stove : MonoBehaviour
         bool panWasUsed =
             Pan.WasUsedInRecipe(stoveItems);
 
-
         // ==========================================
         // VERIFICAR SE O POT FOI USADO
         // ==========================================
@@ -114,16 +143,12 @@ public class Stove : MonoBehaviour
         bool potWasUsed =
             Pot.WasUsedInRecipe(stoveItems);
 
-
         // ==========================================
         // PROCURAR RECEITA
         // ==========================================
 
         CookingRecipe recipe =
-            stoveController.FindRecipe(
-                stoveItems
-            );
-
+            stoveController.FindRecipe(stoveItems);
 
         // ==========================================
         // NÃO ENCONTROU RECEITA
@@ -138,31 +163,23 @@ public class Stove : MonoBehaviour
             return;
         }
 
-
         // ==========================================
         // RECEITA ENCONTRADA
         // ==========================================
 
-        Debug.Log(
-            "RECEITA ENCONTRADA!"
-        );
-
+        Debug.Log("RECEITA ENCONTRADA!");
 
         // ==========================================
         // REMOVER INGREDIENTES
         // ==========================================
 
-        stoveInventoryController
-            .ClearIngredients();
-
+        stoveInventoryController.ClearIngredients();
 
         // ==========================================
         // FECHAR INTERFACE
         // ==========================================
 
-        stoveInventoryController
-            .CloseStoveInventory();
-
+        stoveInventoryController.CloseStoveInventory();
 
         // ==========================================
         // COMEÇAR RECEITA
@@ -175,16 +192,21 @@ public class Stove : MonoBehaviour
         );
     }
 
-
     private void CollectFood()
     {
+        // Recupera novamente a referência,
+        // caso tenha sido perdida na troca de cena.
+
+        FindHotbarController();
+
+        if (hotbarController == null)
+            return;
+
         InventoryItem food =
             stoveController.GetCookedFood();
 
-
         if (food == null)
             return;
-
 
         // ==========================================
         // VERIFICAR UTENSÍLIOS USADOS
@@ -193,10 +215,8 @@ public class Stove : MonoBehaviour
         bool panWasUsed =
             stoveController.PanWasUsed;
 
-
         bool potWasUsed =
             stoveController.PotWasUsed;
-
 
         // ==========================================
         // TENTAR COLOCAR NA HOTBAR
@@ -204,7 +224,6 @@ public class Stove : MonoBehaviour
 
         bool added =
             hotbarController.AddItem(food);
-
 
         // ==========================================
         // HOTBAR CHEIA
@@ -219,23 +238,17 @@ public class Stove : MonoBehaviour
             return;
         }
 
-
         // ==========================================
-        // COMIDA PEGADA
+        // DESBLOQUEAR RECEITA
         // ==========================================
 
-        // A receita só é desbloqueada aqui,
-        // depois que a comida realmente foi
-        // adicionada à Hotbar.
         stoveController.UnlockCurrentRecipe();
-
 
         // ==========================================
         // LIMPAR FOGÃO
         // ==========================================
 
         stoveController.ClearCookedFood();
-
 
         // ==========================================
         // DEVOLVER A PANELA
@@ -246,7 +259,6 @@ public class Stove : MonoBehaviour
             Pan.ReturnToCounter();
         }
 
-
         // ==========================================
         // DEVOLVER O POT
         // ==========================================
@@ -256,16 +268,13 @@ public class Stove : MonoBehaviour
             Pot.ReturnToCounter();
         }
 
-
         Debug.Log(
             "COMIDA ADICIONADA À HOTBAR: " +
             food.itemPrefab.name
         );
     }
 
-
-    private void OnTriggerEnter2D(
-        Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
@@ -277,9 +286,7 @@ public class Stove : MonoBehaviour
         }
     }
 
-
-    private void OnTriggerExit2D(
-        Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {

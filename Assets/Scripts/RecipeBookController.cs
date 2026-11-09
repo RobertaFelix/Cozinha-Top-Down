@@ -26,16 +26,65 @@ public class RecipeBookController : MonoBehaviour
 
     private void Start()
     {
+        FindRecipePanel();
         CreateSlots();
     }
+
+    // ==========================================
+    // RECUPERAR RECIPES PAGE
+    // ==========================================
+
+    private void FindRecipePanel()
+    {
+        GameObject persistentUI =
+            GameObject.Find("PersistentUI");
+
+        if (persistentUI == null)
+        {
+            Debug.LogError(
+                "RecipeBookController: PersistentUI não encontrado!"
+            );
+
+            recipePanel = null;
+            return;
+        }
+
+        Transform[] children =
+            persistentUI.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in children)
+        {
+            if (child.name == "RecipesPage")
+            {
+                recipePanel = child.gameObject;
+
+                Debug.Log(
+                    "RecipeBookController: RecipesPage recuperado com sucesso!"
+                );
+
+                return;
+            }
+        }
+
+        Debug.LogError(
+            "RecipeBookController: RecipesPage não encontrado dentro de PersistentUI!"
+        );
+
+        recipePanel = null;
+    }
+
+    // ==========================================
+    // CRIAR SLOTS
+    // ==========================================
 
     private void CreateSlots()
     {
         if (recipePanel == null)
         {
             Debug.LogError(
-                "RecipeBookController: Recipe Panel não configurado."
+                "RecipeBookController: Recipe Panel não encontrado."
             );
+
             return;
         }
 
@@ -44,6 +93,7 @@ public class RecipeBookController : MonoBehaviour
             Debug.LogError(
                 "RecipeBookController: Slot Prefab não configurado."
             );
+
             return;
         }
 
@@ -52,6 +102,27 @@ public class RecipeBookController : MonoBehaviour
             Debug.LogError(
                 "RecipeBookController: Stove Controller não configurado."
             );
+
+            return;
+        }
+
+        // Verificar se os slots já existem.
+        RecipeBookSlot[] existingSlots =
+            recipePanel.GetComponentsInChildren<RecipeBookSlot>(true);
+
+        if (existingSlots.Length > 0)
+        {
+            foreach (RecipeBookSlot slot in existingSlots)
+            {
+                if (slot != null && !createdSlots.Contains(slot))
+                    createdSlots.Add(slot);
+            }
+
+            Debug.Log(
+                "RecipeBookController: slots existentes recuperados. Total: " +
+                createdSlots.Count
+            );
+
             return;
         }
 
@@ -62,6 +133,7 @@ public class RecipeBookController : MonoBehaviour
             Debug.LogError(
                 "RecipeBookController: não existem receitas configuradas."
             );
+
             return;
         }
 
@@ -97,11 +169,18 @@ public class RecipeBookController : MonoBehaviour
         }
     }
 
+    // ==========================================
+    // DESBLOQUEAR RECEITA
+    // ==========================================
+
     public void UnlockRecipe(CookingRecipe recipe)
     {
         if (recipe == null)
         {
-            Debug.LogWarning("RecipeBookController: receita nula.");
+            Debug.LogWarning(
+                "RecipeBookController: receita nula."
+            );
+
             return;
         }
 
@@ -110,7 +189,11 @@ public class RecipeBookController : MonoBehaviour
             if (slot != null && slot.GetRecipe() == recipe)
             {
                 slot.Unlock();
-                Debug.Log("Receita desbloqueada no livro de receitas.");
+
+                Debug.Log(
+                    "Receita desbloqueada no livro de receitas."
+                );
+
                 return;
             }
         }
@@ -119,6 +202,10 @@ public class RecipeBookController : MonoBehaviour
             "RecipeBookController: receita não encontrada nos slots."
         );
     }
+
+    // ==========================================
+    // VERIFICAR RECEITA DESBLOQUEADA
+    // ==========================================
 
     public bool HasUnlockedRecipe(CookingRecipe recipe)
     {

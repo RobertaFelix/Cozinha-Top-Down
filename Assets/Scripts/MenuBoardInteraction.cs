@@ -9,6 +9,47 @@ public class MenuBoardInteraction : MonoBehaviour
 
     private bool playerInRange;
 
+    private void Start()
+    {
+        FindMenuController();
+    }
+
+    // ==========================================
+    // RECUPERAR MENU CONTROLLER
+    // ==========================================
+
+    private void FindMenuController()
+    {
+        GameObject persistentUI =
+            GameObject.Find("PersistentUI");
+
+        if (persistentUI == null)
+        {
+            Debug.LogError(
+                "MenuBoardInteraction: PersistentUI não encontrado!"
+            );
+
+            menuController = null;
+            return;
+        }
+
+        menuController =
+            persistentUI.GetComponentInChildren<MenuController>(true);
+
+        if (menuController != null)
+        {
+            Debug.Log(
+                "MenuBoardInteraction: MenuController recuperado com sucesso!"
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "MenuBoardInteraction: MenuController não encontrado dentro de PersistentUI!"
+            );
+        }
+    }
+
     private void Update()
     {
         if (!playerInRange)
@@ -19,11 +60,16 @@ public class MenuBoardInteraction : MonoBehaviour
 
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
+            // Recupera novamente caso a referência tenha sido perdida.
+            if (menuController == null)
+                FindMenuController();
+
             if (menuController == null)
             {
                 Debug.LogError(
-                    "MenuBoardInteraction: configure o MenuController."
+                    "MenuBoardInteraction: não foi possível encontrar o MenuController."
                 );
+
                 return;
             }
 
