@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,7 @@ public class ItemDragHandler : MonoBehaviour,
 {
     private Transform originalParent;
     private CanvasGroup canvasGroup;
+    private Canvas rootCanvas;
 
     private void Awake()
     {
@@ -22,7 +24,21 @@ public class ItemDragHandler : MonoBehaviour,
     {
         originalParent = transform.parent;
 
-        transform.SetParent(transform.root);
+        Canvas parentCanvas = GetComponentInParent<Canvas>();
+
+        if (parentCanvas == null)
+        {
+            Debug.LogError(
+                "ItemDragHandler: Canvas não encontrado!"
+            );
+            return;
+        }
+
+        rootCanvas = parentCanvas.rootCanvas;
+
+        // Mantém o item dentro do Canvas durante o arraste.
+        transform.SetParent(rootCanvas.transform, true);
+        transform.SetAsLastSibling();
 
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.6f;
@@ -30,13 +46,18 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (rootCanvas == null)
+            return;
+
         transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
+
+        // Impede que o próprio item seja identificado como destino.
+        canvasGroup.blocksRaycasts = false;
 
         Slot sourceSlot = originalParent != null
             ? originalParent.GetComponent<Slot>()
@@ -51,7 +72,10 @@ public class ItemDragHandler : MonoBehaviour,
         if (TryDeliverToNPC(eventData, sourceSlot))
             return;
 
+        // Procura o slot sob o cursor.
         Slot targetSlot = FindDropSlot(eventData);
+
+        canvasGroup.blocksRaycasts = true;
 
         if (targetSlot == null || targetSlot == sourceSlot)
         {
@@ -79,6 +103,13 @@ public class ItemDragHandler : MonoBehaviour,
             return;
         }
 
+        Debug.Log(
+            "[DRAG] Origem: " + sourceContainer.name +
+            " | Destino: " + targetContainer.name +
+            " | Slot: " + targetSlot.name
+        );
+
+        // Transferência entre contêineres diferentes.
         if (sourceContainer != targetContainer)
         {
             TransferBetweenContainers(
@@ -90,15 +121,135 @@ public class ItemDragHandler : MonoBehaviour,
             return;
         }
 
-        HandleSameContainer(sourceSlot, targetSlot, sourceItem);
+        // Movimentação dentro do mesmo contêiner.
+        HandleSameContainer(
+            sourceSlot,
+            targetSlot,
+            sourceItem
+        );
     }
 
     private void HandleSameContainer(
+    Slot sourceSlot,
+    Slot targetSlot,
+    InventoryItem sourceItem)
+{
+    InventoryItem targetItem = targetSlot.inventoryItem;
+
+    Debug.Log("[INVENTÁRIO] Iniciando movimentação.");
+
+    // Agrupa itens iguais.
+    if (targetItem != null &&
+        targetItem.itemPrefab == sourceItem.itemPrefab)
+    {
+        int space =
+            InventoryStacking.MaxStackSize - targetItem.amount;
+
+        if (space <= 0)
+        {
+            ReturnToOriginalPosition();
+            return;
+        }
+
+        int moved = Mathf.Min(space, sourceItem.amount);
+
+        targetItem.amount += moved;
+        sourceItem.amount -= moved;
+
+        targetSlot.UpdateQuantityDisplay();
+
+        if (sourceItem.amount <= 0)
+        {
+            sourceSlot.currentItem = null;
+            sourceSlot.inventoryItem = null;
+
+            Destroy(gameObject);
+        }
+        else
+        {
+            ReturnToOriginalPosition();
+        }
+
+        sourceSlot.UpdateQuantityDisplay();
+
+        Debug.Log("[INVENTÁRIO] Agrupamento concluído.");
+        return;
+    }
+
+    GameObject targetVisual = targetSlot.currentItem;
+
+    // Se o destino tem item, troca os objetos visuais.
+    if (targetItem != null)
+    {
+        if (targetVisual == null)
+        {
+            Debug.LogError(
+                "[INVENTÁRIO] Destino possui item, mas não possui visual."
+            );
+
+            ReturnToOriginalPosition();
+            return;
+        }
+
+        targetVisual.transform.SetParent(
+            sourceSlot.transform,
+            false
+        );
+
+        ResetVisualTransform(targetVisual);
+
+        sourceSlot.currentItem = targetVisual;
+        sourceSlot.inventoryItem = targetItem;
+    }
+    else
+    {
+        sourceSlot.currentItem = null;
+        sourceSlot.inventoryItem = null;
+    }
+
+    // Coloca o item arrastado no destino.
+    transform.SetParent(targetSlot.transform, false);
+
+    ResetVisualTransform(gameObject);
+
+    targetSlot.currentItem = gameObject;
+    targetSlot.inventoryItem = sourceItem;
+
+    sourceSlot.UpdateQuantityDisplay();
+    targetSlot.UpdateQuantityDisplay();
+
+    Debug.Log(
+        "[INVENTÁRIO] Movimentação concluída. " +
+        "Novo pai: " + transform.parent.name
+    );
+}
+
+    private void TransferBetweenContainers(
         Slot sourceSlot,
         Slot targetSlot,
         InventoryItem sourceItem)
     {
+        if (sourceSlot == null || targetSlot == null)
+        {
+            ReturnToOriginalPosition();
+            return;
+        }
+
         InventoryItem targetItem = targetSlot.inventoryItem;
+        GameObject targetVisual = targetSlot.currentItem;
+
+        // Confere se o visual do destino realmente pertence ao slot.
+        bool targetHasVisual =
+            targetVisual != null &&
+            targetVisual.transform.parent == targetSlot.transform;
+
+        if (!targetHasVisual)
+        {
+            targetSlot.currentItem = null;
+            targetSlot.inventoryItem = null;
+
+            targetItem = null;
+        }
 
         // Agrupa itens iguais.
         if (targetItem != null &&
@@ -127,143 +278,6 @@ public class ItemDragHandler : MonoBehaviour,
 
                 Destroy(gameObject);
             }
-
-            sourceSlot.UpdateQuantityDisplay();
-
-            if (sourceItem.amount > 0)
-                ReturnToOriginalPosition();
-
-            return;
-        }
-
-        // Troca itens diferentes entre slots do mesmo contêiner.
-        GameObject targetVisual = targetSlot.currentItem;
-
-        if (targetItem != null && targetVisual == null)
-        {
-            ReturnToOriginalPosition();
-            return;
-        }
-
-        if (targetItem != null)
-        {
-            targetVisual.transform.SetParent(sourceSlot.transform, false);
-            ResetVisualTransform(targetVisual);
-
-            sourceSlot.currentItem = targetVisual;
-            sourceSlot.inventoryItem = targetItem;
-        }
-        else
-        {
-            sourceSlot.currentItem = null;
-            sourceSlot.inventoryItem = null;
-        }
-
-        transform.SetParent(targetSlot.transform, false);
-        ResetVisualTransform(gameObject);
-
-        targetSlot.currentItem = gameObject;
-        targetSlot.inventoryItem = sourceItem;
-
-        sourceSlot.UpdateQuantityDisplay();
-        targetSlot.UpdateQuantityDisplay();
-    }
-
-    
-    private void TransferBetweenContainers(
-        Slot sourceSlot,
-        Slot targetSlot,
-        InventoryItem sourceItem)
-    {
-        Debug.Log("[TRANSFERÊNCIA] Método iniciado.");
-
-        if (sourceSlot == null || targetSlot == null)
-        {
-            Debug.LogError("[TRANSFERÊNCIA] Slot nulo.");
-            ReturnToOriginalPosition();
-            return;
-        }
-
-        InventoryItem targetItem = targetSlot.inventoryItem;
-        GameObject targetVisual = targetSlot.currentItem;
-
-        // Verifica se o destino realmente possui um objeto visual válido.
-        bool targetHasVisual =
-            targetVisual != null &&
-            targetVisual.transform.parent == targetSlot.transform;
-
-        if (!targetHasVisual)
-        {
-            targetSlot.currentItem = null;
-            targetSlot.inventoryItem = null;
-            targetSlot.UpdateQuantityDisplay();
-
-            targetItem = null;
-        }
-
-        // Transfere para um slot vazio.
-        if (targetItem == null)
-        {
-            InventoryItem itemToMove = sourceSlot.inventoryItem;
-            GameObject visualToMove = gameObject;
-
-            if (itemToMove == null ||
-                itemToMove.itemPrefab == null ||
-                visualToMove == null)
-            {
-                Debug.LogError("[TRANSFERÊNCIA] Item ou visual inválido.");
-                ReturnToOriginalPosition();
-                return;
-            }
-
-            sourceSlot.currentItem = null;
-            sourceSlot.inventoryItem = null;
-            sourceSlot.UpdateQuantityDisplay();
-
-            visualToMove.transform.SetParent(targetSlot.transform, false);
-
-            RectTransform rect = visualToMove.GetComponent<RectTransform>();
-
-            if (rect != null)
-            {
-                rect.anchoredPosition = Vector2.zero;
-                rect.localScale = Vector3.one;
-            }
-
-            targetSlot.currentItem = visualToMove;
-            targetSlot.inventoryItem = itemToMove;
-            targetSlot.UpdateQuantityDisplay();
-
-            Debug.Log("[TRANSFERÊNCIA] Item movido para a hotbar: " +
-                itemToMove.itemPrefab.name);
-
-            return;
-        }
-
-        // Agrupa itens iguais.
-        if (targetItem.itemPrefab == sourceItem.itemPrefab)
-        {
-            int space = InventoryStacking.MaxStackSize - targetItem.amount;
-
-            if (space <= 0)
-            {
-                ReturnToOriginalPosition();
-                return;
-            }
-
-            int moved = Mathf.Min(space, sourceItem.amount);
-
-            targetItem.amount += moved;
-            sourceItem.amount -= moved;
-
-            targetSlot.UpdateQuantityDisplay();
-
-            if (sourceItem.amount <= 0)
-            {
-                sourceSlot.currentItem = null;
-                sourceSlot.inventoryItem = null;
-                Destroy(gameObject);
-            }
             else
             {
                 ReturnToOriginalPosition();
@@ -273,11 +287,54 @@ public class ItemDragHandler : MonoBehaviour,
             return;
         }
 
-        Debug.Log("[TRANSFERÊNCIA] Destino possui outro item válido.");
-        ReturnToOriginalPosition();
+        // Se o destino está vazio, apenas transfere.
+        if (targetItem == null)
+        {
+            sourceSlot.currentItem = null;
+            sourceSlot.inventoryItem = null;
+
+            transform.SetParent(targetSlot.transform, false);
+            ResetVisualTransform(gameObject);
+
+            targetSlot.currentItem = gameObject;
+            targetSlot.inventoryItem = sourceItem;
+
+            sourceSlot.UpdateQuantityDisplay();
+            targetSlot.UpdateQuantityDisplay();
+
+            return;
+        }
+
+        // Se os itens são diferentes, realiza a troca.
+        if (targetVisual == null)
+        {
+            ReturnToOriginalPosition();
+            return;
+        }
+
+        targetVisual.transform.SetParent(
+            sourceSlot.transform,
+            false
+        );
+
+        ResetVisualTransform(targetVisual);
+
+        transform.SetParent(targetSlot.transform, false);
+        ResetVisualTransform(gameObject);
+
+        sourceSlot.currentItem = targetVisual;
+        sourceSlot.inventoryItem = targetItem;
+
+        targetSlot.currentItem = gameObject;
+        targetSlot.inventoryItem = sourceItem;
+
+        sourceSlot.UpdateQuantityDisplay();
+        targetSlot.UpdateQuantityDisplay();
+
+        Debug.Log(
+            "[TRANSFERÊNCIA] Itens trocados entre contêineres."
+        );
     }
-
-
 
     private void ResetVisualTransform(GameObject visual)
     {
@@ -294,23 +351,10 @@ public class ItemDragHandler : MonoBehaviour,
 
     private Transform FindInventoryContainer(Transform slotTransform)
     {
-        Transform current = slotTransform != null
-            ? slotTransform.parent
-            : null;
+        if (slotTransform == null)
+            return null;
 
-        while (current != null)
-        {
-            if (current.GetComponent<HotbarController>() != null ||
-                current.GetComponent<InventoryController>() != null ||
-                current.GetComponent<InventoryRefrigeratorController>() != null)
-            {
-                return current;
-            }
-
-            current = current.parent;
-        }
-
-        return slotTransform != null ? slotTransform.parent : null;
+        return slotTransform.parent;
     }
 
     private bool TryDeliverToNPC(
@@ -369,22 +413,54 @@ public class ItemDragHandler : MonoBehaviour,
 
     private Slot FindDropSlot(PointerEventData eventData)
     {
-        if (eventData.pointerEnter == null)
+        if (EventSystem.current == null)
+        {
+            Debug.LogError(
+                "[DRAG] EventSystem não encontrado!"
+            );
+
             return null;
+        }
 
-        Slot slot = eventData.pointerEnter.GetComponent<Slot>();
+        List<RaycastResult> results =
+            new List<RaycastResult>();
 
-        return slot != null
-            ? slot
-            : eventData.pointerEnter.GetComponentInParent<Slot>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject == null)
+                continue;
+
+            Slot slot =
+                result.gameObject.GetComponentInParent<Slot>();
+
+            if (slot != null)
+            {
+                Debug.Log(
+                    "[DRAG] Slot encontrado: " + slot.name
+                );
+
+                return slot;
+            }
+        }
+
+        Debug.LogWarning(
+            "[DRAG] Nenhum slot encontrado sob o cursor."
+        );
+
+        return null;
     }
 
     private void ReturnToOriginalPosition()
     {
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
+
         if (originalParent == null)
             return;
 
         transform.SetParent(originalParent, false);
         ResetVisualTransform(gameObject);
-    }
+    } 
 }

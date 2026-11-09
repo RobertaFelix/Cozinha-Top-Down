@@ -11,13 +11,39 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
+        InitializeInventory();
+    }
+
+    private void InitializeInventory()
+    {
+        // Remove slots antigos, caso já existam.
+        foreach (Transform child in inventoryPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int i = 0; i < slotCount; i++)
         {
-            Slot slot = Instantiate(
+            GameObject slotObject = Instantiate(
                 slotPrefab,
                 inventoryPanel.transform
-            ).GetComponent<Slot>();
+            );
 
+            Slot slot = slotObject.GetComponent<Slot>();
+
+            if (slot == null)
+            {
+                Debug.LogError("O prefab Slot não possui Slot.cs!");
+                continue;
+            }
+
+            // Inicializa o slot completamente vazio.
+            slot.currentItem = null;
+            slot.inventoryItem = null;
+
+            slot.UpdateQuantityDisplay();
+
+            // Só adiciona itens iniciais se estiverem configurados.
             if (itemPrefabs != null &&
                 i < itemPrefabs.Length &&
                 itemPrefabs[i] != null)
@@ -27,8 +53,7 @@ public class InventoryController : MonoBehaviour
                     slot.transform
                 );
 
-                RectTransform rect =
-                    item.GetComponent<RectTransform>();
+                RectTransform rect = item.GetComponent<RectTransform>();
 
                 if (rect != null)
                     rect.anchoredPosition = Vector2.zero;
@@ -40,19 +65,18 @@ public class InventoryController : MonoBehaviour
                     itemPrefab = itemPrefabs[i],
                     amount = 1
                 };
-            }
 
-            slot.UpdateQuantityDisplay();
+                slot.UpdateQuantityDisplay();
+            }
         }
+
+        Debug.Log("[INVENTÁRIO] " + slotCount + " slots inicializados.");
     }
 
     public InventoryItem[] GetInventoryItems()
     {
-        List<InventoryItem> items =
-            new List<InventoryItem>();
-
-        Slot[] slots =
-            inventoryPanel.GetComponentsInChildren<Slot>(true);
+        List<InventoryItem> items = new List<InventoryItem>();
+        Slot[] slots = inventoryPanel.GetComponentsInChildren<Slot>(true);
 
         foreach (Slot slot in slots)
         {

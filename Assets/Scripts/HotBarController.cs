@@ -22,6 +22,9 @@ public class HotbarController : MonoBehaviour
                 hotbarPanel.transform
             ).GetComponent<Slot>();
 
+            slot.currentItem = null;
+            slot.inventoryItem = null;
+
             slot.UpdateQuantityDisplay();
         }
     }
