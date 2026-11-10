@@ -62,6 +62,28 @@ public class SceneTransitionController : MonoBehaviour
         if (scene.name != pendingSceneName)
             return;
 
+        GameObject gameControllerObject =
+            GameObject.Find("GameController");
+
+        if (gameControllerObject != null)
+        {
+            InventoryController inventory =
+                gameControllerObject.GetComponent<InventoryController>();
+
+            HotbarController hotbar =
+                gameControllerObject.GetComponent<HotbarController>();
+
+            if (inventory != null)
+                inventory.CleanEmptySlots();
+
+            if (hotbar != null)
+                hotbar.CleanEmptySlots();
+        }
+        else
+        {
+            Debug.LogError("[INVENTÁRIO] GameController não encontrado!");
+        }
+
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
         GameObject spawnObject =

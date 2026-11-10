@@ -79,4 +79,9 @@ public class HotbarController : MonoBehaviour
 
         return success;
     }
+
+    public void CleanEmptySlots()
+    {
+        InventorySlotCleaner.Clean(hotbarPanel.transform);
+    }
 }

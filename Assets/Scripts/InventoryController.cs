@@ -105,4 +105,9 @@ public class InventoryController : MonoBehaviour
             item
         );
     }
+
+    public void CleanEmptySlots()
+    {
+        InventorySlotCleaner.Clean(inventoryPanel.transform);
+    }
 }
