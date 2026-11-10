@@ -18891,7 +18891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6788139898053970427, guid: 720aee07ffbfe0745b7a9321340dfc7e, type: 3}
       propertyPath: price
-      value: 50
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6788139898053970427, guid: 720aee07ffbfe0745b7a9321340dfc7e, type: 3}
       propertyPath: ingredientPrefab
