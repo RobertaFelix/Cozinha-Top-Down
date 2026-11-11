@@ -253,10 +253,12 @@ public class CustomerOrderController : MonoBehaviour
         if (orderUI != null)
             orderUI.Hide();
 
-        customerNPC.ServeFood(
-            foodSprite,
-            requestedRecipe.basePrice
-        );
+        // Calcula o valor na entrega, inclusive para pedidos feitos antes da compra.
+        int salePrice = CoinManager.Instance != null
+            ? CoinManager.Instance.GetDishSalePrice(requestedRecipe.basePrice)
+            : Mathf.Max(0, requestedRecipe.basePrice);
+
+        customerNPC.ServeFood(foodSprite, salePrice);
 
         Debug.Log(
             "Pedido correto entregue: " + requestedPrefab.name

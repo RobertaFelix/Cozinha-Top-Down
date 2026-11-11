@@ -51,6 +51,9 @@ public class UpgradeUIController : MonoBehaviour
     private const int LeftSlotCount = 24;
     private const int RightSlotCount = 12;
 
+    // Grade com seis colunas: quarto ícone da segunda fileira (cédulas).
+    private const int DoubleDishPriceUpgradeIndex = 9;
+
     private Button[] leftButtons;
     private Image[] leftIcons;
     private TMP_Text[] leftPriceTexts;
@@ -365,6 +368,14 @@ public class UpgradeUIController : MonoBehaviour
                 continue;
 
             purchasedSprites[i] = pendingSprites[i];
+
+            if (upgradeSprites != null &&
+                upgradeSprites.Length > DoubleDishPriceUpgradeIndex &&
+                purchasedSprites[i] == upgradeSprites[DoubleDishPriceUpgradeIndex])
+            {
+                CoinManager.Instance.EnableDoubleDishPrices();
+            }
+
             pendingSprites[i] = null;
         }
 
