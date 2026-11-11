@@ -280,6 +280,7 @@ public class UpgradeUIController : MonoBehaviour
         if (upgradePanel == null)
             return;
 
+        InventoryPanelSession.Open(upgradePanel, CancelPurchase);
         ClearPending();
         upgradePanel.SetActive(true);
 
@@ -289,6 +290,7 @@ public class UpgradeUIController : MonoBehaviour
 
     public void CancelPurchase()
     {
+        InventoryPanelSession.Closed(upgradePanel);
         ClearPending();
 
         UpdateRightSlots();

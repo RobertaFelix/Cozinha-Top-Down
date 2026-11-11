@@ -38,16 +38,12 @@ public class MenuController : MonoBehaviour
 
             if (menuCanvas.activeSelf)
             {
-                menuCanvas.SetActive(false);
-
-                if (restaurantMenuPanel != null)
-                    restaurantMenuPanel.SetActive(false);
-
-                if (hotbarPanel != null)
-                    hotbarPanel.SetActive(true);
+                CloseMenu();
             }
             else
             {
+                InventoryPanelSession.Bind(menuCanvas, null);
+                InventoryPanelSession.Open(menuCanvas, CloseMenu);
                 menuCanvas.SetActive(true);
 
                 if (inventoryPanel != null)
@@ -65,7 +61,17 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    public void OpenRestaurantMenu()
+    public void CloseMenu()
+    {
+        InventoryPanelSession.Closed(menuCanvas);
+        if (menuCanvas != null) menuCanvas.SetActive(false);
+        if (restaurantMenuPanel != null) restaurantMenuPanel.SetActive(false);
+        if (hotbarPanel != null) hotbarPanel.SetActive(true);
+    }
+
+    public void OpenRestaurantMenu() { OpenRestaurantMenu(null); }
+
+    public void OpenRestaurantMenu(Collider2D interactionArea)
     {
         if (menuCanvas == null)
         {
@@ -73,6 +79,8 @@ public class MenuController : MonoBehaviour
             return;
         }
 
+        InventoryPanelSession.Bind(menuCanvas, interactionArea);
+        InventoryPanelSession.Open(menuCanvas, CloseMenu);
         menuCanvas.SetActive(true);
 
         if (inventoryPanel != null)

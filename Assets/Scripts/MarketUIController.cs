@@ -163,6 +163,7 @@ public class MarketUIController : MonoBehaviour
         if (marketPanel == null)
             return;
 
+        InventoryPanelSession.Open(marketPanel, CloseMarket);
         FindInventoryControllers();
 
         sessionAfterHours = !openingHours.IsOpen;
@@ -175,6 +176,7 @@ public class MarketUIController : MonoBehaviour
 
     public void CloseMarket()
     {
+        InventoryPanelSession.Closed(marketPanel);
         tradingSessionActive = false;
         RefreshVendorPresence();
         ClearCart();

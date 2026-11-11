@@ -25,7 +25,13 @@ public class InventoryVegetablesController : MonoBehaviour
     public void OpenVegetables(InventoryItem[] items)
     {
         // Garante que não existam slots antigos
-        ClearVegetablesSlots();
+        if (vegetablesPanel == null) return;
+        InventoryPanelSession.Open(vegetablesPanel, CloseVegetables);
+        if (vegetablesPanel.GetComponentsInChildren<Slot>(true).Length > 0)
+        {
+            vegetablesPanel.SetActive(true);
+            return;
+        }
 
         vegetablesPanel.SetActive(true);
 
@@ -77,7 +83,7 @@ public class InventoryVegetablesController : MonoBehaviour
     // Fecha os vegetais
     public void CloseVegetables()
     {
-        ClearVegetablesSlots();
+        InventoryPanelSession.Closed(vegetablesPanel);
 
         vegetablesPanel.SetActive(false);
     }

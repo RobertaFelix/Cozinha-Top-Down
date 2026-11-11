@@ -5828,6 +5828,7 @@ GameObject:
   - component: {fileID: 417994286}
   - component: {fileID: 417994285}
   - component: {fileID: 417994284}
+  - component: {fileID: 417994288}
   m_Layer: 5
   m_Name: FrizerPage
   m_TagString: Untagged
@@ -5916,6 +5917,19 @@ RectTransform:
   m_AnchoredPosition: {x: -395.99133, y: 243.26001}
   m_SizeDelta: {x: 618.02, y: 572.2339}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &417994288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417994283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9ba8ec883a24ba6b86d64813e45c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryPanelSession
+  interactionArea: {fileID: 119078284}
 --- !u!1 &418198116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6714,6 +6728,7 @@ GameObject:
   - component: {fileID: 470981929}
   - component: {fileID: 470981931}
   - component: {fileID: 470981930}
+  - component: {fileID: 470981932}
   m_Layer: 5
   m_Name: PotionsPage
   m_TagString: Untagged
@@ -6785,6 +6800,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470981928}
   m_CullTransparentMesh: 1
+--- !u!114 &470981932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470981928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9ba8ec883a24ba6b86d64813e45c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryPanelSession
+  interactionArea: {fileID: 310865426}
 --- !u!1 &490959241
 GameObject:
   m_ObjectHideFlags: 0
@@ -27167,6 +27195,7 @@ GameObject:
   - component: {fileID: 996038664}
   - component: {fileID: 996038663}
   - component: {fileID: 996038662}
+  - component: {fileID: 996038665}
   m_Layer: 5
   m_Name: StovePage
   m_TagString: Untagged
@@ -27255,6 +27284,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996038660}
   m_CullTransparentMesh: 1
+--- !u!114 &996038665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996038660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9ba8ec883a24ba6b86d64813e45c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryPanelSession
+  interactionArea: {fileID: 1851738075}
 --- !u!1 &1031774278
 GameObject:
   m_ObjectHideFlags: 0
@@ -34626,6 +34668,7 @@ GameObject:
   - component: {fileID: 1331061676}
   - component: {fileID: 1331061678}
   - component: {fileID: 1331061677}
+  - component: {fileID: 1331061679}
   m_Layer: 5
   m_Name: MarketPage
   m_TagString: Untagged
@@ -34697,6 +34740,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331061675}
   m_CullTransparentMesh: 1
+--- !u!114 &1331061679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331061675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9ba8ec883a24ba6b86d64813e45c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryPanelSession
+  interactionArea: {fileID: 920457386}
 --- !u!1 &1339056990
 GameObject:
   m_ObjectHideFlags: 0
@@ -46660,6 +46716,7 @@ GameObject:
   - component: {fileID: 1617891260}
   - component: {fileID: 1617891259}
   - component: {fileID: 1617891258}
+  - component: {fileID: 1617891261}
   m_Layer: 5
   m_Name: VegetablesPage
   m_TagString: Untagged
@@ -46748,6 +46805,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617891256}
   m_CullTransparentMesh: 1
+--- !u!114 &1617891261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617891256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9ba8ec883a24ba6b86d64813e45c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryPanelSession
+  interactionArea: {fileID: 1462157167}
 --- !u!1 &1618661739
 GameObject:
   m_ObjectHideFlags: 0
@@ -47552,6 +47622,7 @@ GameObject:
   - component: {fileID: 1631538717}
   - component: {fileID: 1631538716}
   - component: {fileID: 1631538718}
+  - component: {fileID: 1631538719}
   m_Layer: 5
   m_Name: RefrigeratorPage
   m_TagString: Untagged
@@ -47640,6 +47711,19 @@ MonoBehaviour:
   m_Spacing: {x: 40, y: 36}
   m_Constraint: 1
   m_ConstraintCount: 4
+--- !u!114 &1631538719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631538714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9ba8ec883a24ba6b86d64813e45c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryPanelSession
+  interactionArea: {fileID: 1350259044}
 --- !u!1001 &1638256084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70264,6 +70348,7 @@ GameObject:
   - component: {fileID: 2102510515}
   - component: {fileID: 2102510517}
   - component: {fileID: 2102510516}
+  - component: {fileID: 2102510518}
   m_Layer: 5
   m_Name: UpgradePage
   m_TagString: Untagged
@@ -70335,6 +70420,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102510514}
   m_CullTransparentMesh: 1
+--- !u!114 &2102510518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102510514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9ba8ec883a24ba6b86d64813e45c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryPanelSession
+  interactionArea: {fileID: 576115439}
 --- !u!1 &2108073567
 GameObject:
   m_ObjectHideFlags: 0
