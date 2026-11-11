@@ -5,7 +5,11 @@ public sealed class MarketOpeningHours : MonoBehaviour
 {
     [SerializeField, Range(0, 23)] private int openingHour = 9;
     [SerializeField, Range(1, 24)] private int closingHour = 19;
+    [SerializeField, Min(0f)] private float afterHoursMarkup = 0.2f;
     private GameClock clock;
+
+    public bool CanAccess => IsOpen || UpgradePurchases.Has(UpgradePurchases.VillageKey);
+    public float AfterHoursMarkup => Mathf.Max(0f, afterHoursMarkup);
 
     public bool IsOpen
     {

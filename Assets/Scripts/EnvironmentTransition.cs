@@ -158,7 +158,7 @@ public class EnvironmentTransition : MonoBehaviour
 
         // Check here so every normal market entrance uses the same business rule.
         var hours = interior != null ? interior.GetComponent<MarketOpeningHours>() : null;
-        if (hours != null && !hours.IsOpen)
+        if (hours != null && !hours.CanAccess)
         {
             hours.ShowClosedNotice();
             return;

@@ -10,6 +10,7 @@ public static class UpgradePurchases
     public const int Backpack = 2;
     public const int Wristwatch = 3;
     public const int Wallet = 4;
+    public const int VillageKey = 7;
     public const int Television = 11;
     public const int Magnet = 12;
 

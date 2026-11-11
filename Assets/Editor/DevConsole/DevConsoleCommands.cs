@@ -31,7 +31,7 @@ public static class DevConsoleCommands
     private static readonly Dictionary<int, string> upgradeNames = new Dictionary<int, string>
     {
         {0, "cooking"}, {1, "shoes"}, {2, "backpack"}, {3, "patience"},
-        {4, "wallet"}, {9, "dish-prices"}, {11, "advertising"}, {12, "magnet"}
+        {4, "wallet"}, {7, "key"}, {9, "dish-prices"}, {11, "advertising"}, {12, "magnet"}
     };
     public static IEnumerable<string> CommandNames => commands.Keys.OrderBy(k => k);
 

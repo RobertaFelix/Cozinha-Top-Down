@@ -45989,6 +45989,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::MarketOpeningHours
   openingHour: 9
+  afterHoursMarkup: 0.2
   closingHour: 19
 --- !u!1 &1574663841
 GameObject:
