@@ -70,6 +70,8 @@ public class InventoryRefrigeratorController : MonoBehaviour
 
             slot.inventoryItem.amount =
                 items[i].amount;
+
+            slot.UpdateQuantityDisplay();
         }
     }
 
