@@ -2,8 +2,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerDownHandler
 {
     public GameObject currentItem;
     public InventoryItem inventoryItem;
@@ -11,9 +12,21 @@ public class Slot : MonoBehaviour
     [Header("Quantidade do item")]
     [SerializeField] private TextMeshProUGUI amountText;
 
+    public TMP_Text QuantityLabel => amountText;
+
     private void Awake()
     {
         ItemTooltipTarget.Bind(gameObject, GetTooltipContent);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        InventoryStackCursor.PointerDown(this, eventData);
+    }
+
+    private void OnDisable()
+    {
+        InventoryStackCursor.CancelIfSource(this);
     }
 
     private ItemTooltipContent GetTooltipContent()
@@ -41,6 +54,14 @@ public class Slot : MonoBehaviour
         if (amountText == null)
             return;
 
+        var preview = InventoryStackCursor.PreviewAmount(this);
+        if (preview.HasValue)
+        {
+            amountText.text = preview.Value.ToString();
+            amountText.transform.SetAsLastSibling();
+            return;
+        }
+
         if (inventoryItem == null ||
             inventoryItem.itemPrefab == null)
         {
@@ -48,7 +69,8 @@ public class Slot : MonoBehaviour
             return;
         }
 
-        amountText.text = "" + Mathf.Max(1, inventoryItem.amount);
+        int visibleAmount = inventoryItem.amount - InventoryStackCursor.ReservedFrom(this);
+        amountText.text = visibleAmount > 0 ? visibleAmount.ToString() : "";
         amountText.transform.SetAsLastSibling();
     }
 }
