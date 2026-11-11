@@ -14,6 +14,19 @@ public class CoinManager : MonoBehaviour
 
     public int TotalCoins => totalCoins;
 
+    public bool AreDishPricesDoubled { get; private set; }
+
+    public void EnableDoubleDishPrices()
+    {
+        // O upgrade é único: aplicar novamente mantém o bônus em 2x.
+        AreDishPricesDoubled = true;
+    }
+
+    public int GetDishSalePrice(int basePrice)
+    {
+        return Mathf.Max(0, basePrice) * (AreDishPricesDoubled ? 2 : 1);
+    }
+
     [Header("Multiplicador de ganhos")]
     [SerializeField, Min(1)]
     private int rewardMultiplier = 1;
