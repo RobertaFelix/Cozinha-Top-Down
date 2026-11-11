@@ -11,6 +11,7 @@ public class ItemDragHandler : MonoBehaviour,
     private Transform originalParent;
     private CanvasGroup canvasGroup;
     private Canvas rootCanvas;
+    private bool isDragging;
 
     private void Awake()
     {
@@ -36,6 +37,9 @@ public class ItemDragHandler : MonoBehaviour,
 
         rootCanvas = parentCanvas.rootCanvas;
 
+        isDragging = true;
+        ItemTooltipView.BeginDrag();
+
         // Mantém o item dentro do Canvas durante o arraste.
         transform.SetParent(rootCanvas.transform, true);
         transform.SetAsLastSibling();
@@ -54,6 +58,9 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        isDragging = false;
+        ItemTooltipView.EndDrag();
+
         canvasGroup.alpha = 1f;
 
         // Impede que o próprio item seja identificado como destino.
@@ -409,6 +416,13 @@ public class ItemDragHandler : MonoBehaviour,
         }
 
         return false;
+    }
+
+    private void OnDisable()
+    {
+        if (!isDragging) return;
+        isDragging = false;
+        ItemTooltipView.EndDrag();
     }
 
     private Slot FindDropSlot(PointerEventData eventData)

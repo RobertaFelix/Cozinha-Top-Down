@@ -22,6 +22,8 @@ public class RecipeBookSlot : MonoBehaviour
 
     private void Awake()
     {
+        ItemTooltipTarget.Bind(gameObject, () => ItemTooltipCatalog.ForRecipe(currentRecipe, unlocked));
+
         if (recipeButton == null)
             recipeButton = GetComponent<Button>();
 

@@ -21,6 +21,9 @@ public class MarketIngredientSlot : MonoBehaviour
 
     private void Awake()
     {
+        ItemTooltipTarget.Bind(gameObject, () => ItemTooltipCatalog.ForItem(ingredientPrefab, 0,
+            market != null ? market.GetPurchasePrice(price) : Mathf.Max(0, price)));
+
         if (button == null)
             button = GetComponent<Button>();
 
