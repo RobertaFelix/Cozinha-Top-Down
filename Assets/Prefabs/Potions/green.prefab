@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 257714089863812930}
   - component: {fileID: 5566793735861189852}
   - component: {fileID: 306329870847378089}
+  - component: {fileID: 812345678901234568}
   m_Layer: 5
   m_Name: green
   m_TagString: Untagged
@@ -101,3 +102,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e5dc8bd05e4114bb3809a5129a01d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &812345678901234568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8008127976990012123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a79bd051404d9f95868f92721b8d27, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PotionItem
+  effect: {fileID: 0}
