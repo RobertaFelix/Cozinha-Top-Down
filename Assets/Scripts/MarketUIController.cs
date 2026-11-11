@@ -21,6 +21,36 @@ public class MarketUIController : MonoBehaviour
     public bool IsOpen =>
         marketPanel != null && marketPanel.activeSelf;
 
+    [Header("Upgrade de desconto")]
+    [SerializeField, Range(0f, 1f)] private float upgradedDiscount = 0.2f;
+
+    public int GetPurchasePrice(int basePrice)
+    {
+        if (basePrice <= 0) return 0;
+        return UpgradePurchases.Has(UpgradePurchases.Wallet)
+            ? Mathf.Max(1, Mathf.CeilToInt(basePrice * (1f - Mathf.Clamp01(upgradedDiscount))))
+            : basePrice;
+    }
+
+    private void OnEnable()
+    {
+        UpgradePurchases.Changed += RefreshPrices;
+        RefreshPrices();
+    }
+
+    private void OnDisable()
+    {
+        UpgradePurchases.Changed -= RefreshPrices;
+    }
+
+    private void RefreshPrices()
+    {
+        if (ingredientSlots != null)
+            foreach (MarketIngredientSlot slot in ingredientSlots)
+                if (slot != null) slot.RefreshPrice();
+        UpdateTotal();
+    }
+
     private void Awake()
     {
         if (marketPanel != null)
@@ -193,7 +223,7 @@ public class MarketUIController : MonoBehaviour
             if (slot == null || slot.IsEmpty || slot.amount <= 0)
                 continue;
 
-            int unitPrice = slot.price;
+            int unitPrice = GetPurchasePrice(slot.price);
             int requestedQuantity = slot.amount;
             int purchasedQuantity = 0;
 
@@ -274,7 +304,7 @@ public class MarketUIController : MonoBehaviour
 
     private void UpdateTotal()
     {
-        if (totalText == null)
+        if (totalText == null || cartSlots == null)
             return;
 
         int total = 0;
@@ -284,7 +314,7 @@ public class MarketUIController : MonoBehaviour
             if (slot == null || slot.IsEmpty)
                 continue;
 
-            total += slot.price * slot.amount;
+            total += GetPurchasePrice(slot.price) * slot.amount;
         }
 
         totalText.text = total.ToString();
