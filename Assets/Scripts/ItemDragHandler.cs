@@ -36,12 +36,12 @@ public class ItemDragHandler : MonoBehaviour,
             return;
         }
 
-        rootCanvas = parentCanvas.rootCanvas;
+        rootCanvas = InventoryStackCursor.DragCanvas;
 
         isDragging = true;
         ItemTooltipView.BeginDrag();
 
-        // Mantém o item dentro do Canvas durante o arraste.
+        // Shared overlay keeps the item above every inventory Canvas while dragging.
         transform.SetParent(rootCanvas.transform, true);
         transform.SetAsLastSibling();
 
