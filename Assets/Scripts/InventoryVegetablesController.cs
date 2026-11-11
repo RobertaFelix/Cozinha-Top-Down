@@ -69,6 +69,8 @@ public class InventoryVegetablesController : MonoBehaviour
 
             slot.inventoryItem.amount =
                 items[i].amount;
+
+            slot.UpdateQuantityDisplay();
         }
     }
 

@@ -50,7 +50,10 @@ public class MarketIngredientSlot : MonoBehaviour
     public void RefreshPrice()
     {
         if (priceText != null)
+        {
             priceText.text = (market != null ? market.GetPurchasePrice(price) : Mathf.Max(0, price)).ToString();
+            priceText.transform.SetAsLastSibling();
+        }
     }
 
     private void UpdateDisplay()

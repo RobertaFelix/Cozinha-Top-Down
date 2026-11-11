@@ -476,5 +476,6 @@ public class ItemDragHandler : MonoBehaviour,
 
         transform.SetParent(originalParent, false);
         ResetVisualTransform(gameObject);
+        originalParent.GetComponent<Slot>()?.UpdateQuantityDisplay();
     } 
 }
