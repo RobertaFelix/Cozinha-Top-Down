@@ -21,6 +21,9 @@ public class MarketIngredientSlot : MonoBehaviour
 
     private void Awake()
     {
+        ItemTooltipTarget.Bind(gameObject, () => ItemTooltipCatalog.ForItem(ingredientPrefab, 0,
+            market != null ? market.GetPurchasePrice(price) : Mathf.Max(0, price)));
+
         if (button == null)
             button = GetComponent<Button>();
 
@@ -44,10 +47,18 @@ public class MarketIngredientSlot : MonoBehaviour
         market.AddToCart(ingredientPrefab, price);
     }
 
-    private void UpdateDisplay()
+    public void RefreshPrice()
     {
         if (priceText != null)
-            priceText.text = price.ToString();
+        {
+            priceText.text = (market != null ? market.GetPurchasePrice(price) : Mathf.Max(0, price)).ToString();
+            priceText.transform.SetAsLastSibling();
+        }
+    }
+
+    private void UpdateDisplay()
+    {
+        RefreshPrice();
 
         if (ingredientImage != null && ingredientPrefab != null)
         {

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class EnvironmentTransition : MonoBehaviour
 {
@@ -21,7 +22,74 @@ public class EnvironmentTransition : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.6f;
     [SerializeField] private float cameraSettleDelay = 0.6f;
 
+    [Header("Retorno para casa")]
+    [SerializeField] private GameObject homeInterior;
+    [SerializeField] private Transform homeSpawn;
+    [SerializeField] private Transform homeExteriorExitSpawn;
+
+    public bool IsTransitioning => isTransitioning;
     private bool isTransitioning;
+
+    public string CurrentInteriorId => currentInterior != null ? currentInterior.name : "";
+
+    public bool CanRestoreCheckpoint(string interiorId)
+    {
+        if (string.IsNullOrEmpty(interiorId)) return exterior != null;
+        foreach (var interior in interiors)
+            if (interior != null && interior.name == interiorId) return true;
+        return false;
+    }
+
+    public bool RestoreHomeCheckpoint(Vector3 position)
+    {
+        return homeInterior != null && RestorePlayerCheckpoint(homeInterior.name, position);
+    }
+
+    public bool RestorePlayerCheckpoint(string interiorId, Vector3 position)
+    {
+        if (exterior == null || isTransitioning || !CanRestoreCheckpoint(interiorId)) return false;
+        FindPlayerReferences();
+        if (player == null) return false;
+        GameObject selected = null;
+        foreach (var interior in interiors)
+            if (interior != null && interior.name == interiorId) selected = interior;
+        Transform exit = null;
+        if (selected == homeInterior) exit = homeExteriorExitSpawn;
+        else if (selected != null)
+            foreach (var door in FindObjectsByType<InteriorDoor>(FindObjectsInactive.Include))
+                if (door.Interior == selected && door.ExteriorExitSpawn != null)
+                {
+                    exit = door.ExteriorExitSpawn;
+                    break;
+                }
+        if (selected != null && exit == null) return false;
+        foreach (var interior in interiors)
+            if (interior != null) interior.SetActive(interior == selected);
+        exterior.SetActive(selected == null);
+        currentInterior = selected;
+        currentExteriorExitSpawn = exit;
+        Vector3 previous = player.position;
+        MovePlayer(position);
+        var camera = FindAnyObjectByType<CinemachineCamera>();
+        if (camera != null)
+        {
+            camera.OnTargetObjectWarped(player, position - previous);
+            camera.PreviousStateIsValid = false;
+        }
+        Physics2D.SyncTransforms();
+        return true;
+    }
+
+    public bool TryReturnHome()
+    {
+        if (!isActiveAndEnabled || isTransitioning || currentInterior == homeInterior ||
+            homeInterior == null || homeSpawn == null || homeExteriorExitSpawn == null ||
+            exterior == null || transitionImage == null) return false;
+        FindPlayerReferences();
+        if (player == null) return false;
+        StartCoroutine(Transition(homeInterior, homeSpawn.position, homeExteriorExitSpawn, true));
+        return true;
+    }
 
     private GameObject currentInterior;
     private Transform currentExteriorExitSpawn;
@@ -85,6 +153,14 @@ public class EnvironmentTransition : MonoBehaviour
         if (currentInterior != null)
         {
             Debug.LogWarning("Já existe um interior ativo.");
+            return;
+        }
+
+        // Check here so every normal market entrance uses the same business rule.
+        var hours = interior != null ? interior.GetComponent<MarketOpeningHours>() : null;
+        if (hours != null && !hours.CanAccess)
+        {
+            hours.ShowClosedNotice();
             return;
         }
 
@@ -157,6 +233,8 @@ public class EnvironmentTransition : MonoBehaviour
         // Troca os ambientes.
         if (entering)
         {
+            if (currentInterior != null && currentInterior != interior)
+                currentInterior.SetActive(false);
             exterior.SetActive(false);
             interior.SetActive(true);
 

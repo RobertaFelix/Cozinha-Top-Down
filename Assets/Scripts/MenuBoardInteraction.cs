@@ -73,7 +73,7 @@ public class MenuBoardInteraction : MonoBehaviour
                 return;
             }
 
-            menuController.OpenRestaurantMenu();
+            menuController.OpenRestaurantMenu(GetComponent<Collider2D>());
         }
     }
 

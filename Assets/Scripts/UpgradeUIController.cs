@@ -51,6 +51,9 @@ public class UpgradeUIController : MonoBehaviour
     private const int LeftSlotCount = 24;
     private const int RightSlotCount = 12;
 
+    // Grade com seis colunas: quarto ícone da segunda fileira (cédulas).
+    private const int DoubleDishPriceUpgradeIndex = 9;
+
     private Button[] leftButtons;
     private Image[] leftIcons;
     private TMP_Text[] leftPriceTexts;
@@ -70,6 +73,7 @@ public class UpgradeUIController : MonoBehaviour
     private void Awake()
     {
         CreateSlots();
+        RestorePurchasedUpgrades();
 
         if (confirmButton != null)
             confirmButton.onClick.AddListener(ConfirmPurchase);
@@ -113,6 +117,8 @@ public class UpgradeUIController : MonoBehaviour
 
             int index = i;
 
+            ItemTooltipTarget.Bind(slot, () => GetUpgradeTooltip(index));
+
             if (leftButtons[i] != null)
             {
                 leftButtons[i].onClick.AddListener(
@@ -151,6 +157,9 @@ public class UpgradeUIController : MonoBehaviour
             GameObject slot = Instantiate(slotPrefab, rightSlots);
             slot.name = "PurchaseSlot_" + (i + 1);
 
+            int purchaseIndex = i;
+            ItemTooltipTarget.Bind(slot, () => GetPurchasedTooltip(purchaseIndex));
+
             RectTransform slotRect = slot.GetComponent<RectTransform>();
 
             if (slotRect != null)
@@ -182,6 +191,22 @@ public class UpgradeUIController : MonoBehaviour
             if (rightButtons[i] != null)
                 rightButtons[i].interactable = false;
         }
+    }
+
+    private ItemTooltipContent GetUpgradeTooltip(int index)
+    {
+        if (upgradeSprites == null || index < 0 || index >= upgradeSprites.Length)
+            return default;
+        Sprite sprite = upgradeSprites[index];
+        bool purchased = sprite != null && System.Array.IndexOf(purchasedSprites, sprite) >= 0;
+        bool pending = sprite != null && System.Array.IndexOf(pendingSprites, sprite) >= 0;
+        return ItemTooltipCatalog.ForUpgrade(index, sprite, GetUpgradePrice(index), purchased, pending);
+    }
+
+    private ItemTooltipContent GetPurchasedTooltip(int slot)
+    {
+        Sprite sprite = purchasedSprites[slot] != null ? purchasedSprites[slot] : pendingSprites[slot];
+        return sprite != null ? GetUpgradeTooltip(System.Array.IndexOf(upgradeSprites, sprite)) : default;
     }
 
     private Image GetIcon(Transform slot)
@@ -255,6 +280,7 @@ public class UpgradeUIController : MonoBehaviour
         if (upgradePanel == null)
             return;
 
+        InventoryPanelSession.Open(upgradePanel, CancelPurchase);
         ClearPending();
         upgradePanel.SetActive(true);
 
@@ -264,6 +290,7 @@ public class UpgradeUIController : MonoBehaviour
 
     public void CancelPurchase()
     {
+        InventoryPanelSession.Closed(upgradePanel);
         ClearPending();
 
         UpdateRightSlots();
@@ -365,13 +392,51 @@ public class UpgradeUIController : MonoBehaviour
                 continue;
 
             purchasedSprites[i] = pendingSprites[i];
+
+            if (upgradeSprites != null &&
+                upgradeSprites.Length > DoubleDishPriceUpgradeIndex &&
+                purchasedSprites[i] == upgradeSprites[DoubleDishPriceUpgradeIndex])
+            {
+                CoinManager.Instance.EnableDoubleDishPrices();
+            }
+
             pendingSprites[i] = null;
         }
 
         UpdateRightSlots();
         UpdateTotal();
 
+        // Reconstitui o estado também se esta interface for recriada em outra cena.
+        for (int i = 0; i < purchasedSprites.Length; i++)
+        {
+            if (purchasedSprites[i] == null)
+                continue;
+            int index = System.Array.IndexOf(upgradeSprites, purchasedSprites[i]);
+            UpgradePurchases.RegisterPurchase(index);
+        }
+
         Debug.Log("Upgrades comprados com sucesso!");
+    }
+
+    private void OnEnable() { UpgradePurchases.Restored += RefreshPurchasedUpgrades; }
+    private void OnDisable() { UpgradePurchases.Restored -= RefreshPurchasedUpgrades; }
+    private void RefreshPurchasedUpgrades()
+    {
+        System.Array.Clear(purchasedSprites, 0, purchasedSprites.Length);
+        System.Array.Clear(pendingSprites, 0, pendingSprites.Length);
+        RestorePurchasedUpgrades();
+        UpdateRightSlots();
+        UpdateTotal();
+    }
+
+    private void RestorePurchasedUpgrades()
+    {
+        int destination = 0;
+        for (int index = 0; index < upgradeSprites.Length && destination < RightSlotCount; index++)
+        {
+            if (UpgradePurchases.Has(index) && upgradeSprites[index] != null)
+                purchasedSprites[destination++] = upgradeSprites[index];
+        }
     }
 
     private void ClearPending()

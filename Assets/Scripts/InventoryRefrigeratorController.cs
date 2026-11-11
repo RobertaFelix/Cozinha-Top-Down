@@ -26,7 +26,13 @@ public class InventoryRefrigeratorController : MonoBehaviour
     public void OpenRefrigerator(
         InventoryItem[] items)
     {
-        ClearRefrigeratorSlots();
+        if (refrigeratorPanel == null) return;
+        InventoryPanelSession.Open(refrigeratorPanel, CloseRefrigerator);
+        if (refrigeratorPanel.GetComponentsInChildren<Slot>(true).Length > 0)
+        {
+            refrigeratorPanel.SetActive(true);
+            return;
+        }
 
         refrigeratorPanel.SetActive(true);
 
@@ -70,13 +76,15 @@ public class InventoryRefrigeratorController : MonoBehaviour
 
             slot.inventoryItem.amount =
                 items[i].amount;
+
+            slot.UpdateQuantityDisplay();
         }
     }
 
     // Fecha a geladeira
     public void CloseRefrigerator()
     {
-        ClearRefrigeratorSlots();
+        InventoryPanelSession.Closed(refrigeratorPanel);
 
         refrigeratorPanel.SetActive(false);
     }

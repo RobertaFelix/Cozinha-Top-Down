@@ -17,6 +17,13 @@ public class StoveController : MonoBehaviour
     [SerializeField]
     private float burnDuration = 18f;
 
+    [Header("Upgrade de preparo")]
+    [SerializeField, Range(0.01f, 1f)] private float upgradedCookingTimeMultiplier = 0.75f;
+
+    public float CurrentCookingDuration => currentRecipe == null ? 0f : Mathf.Max(0.01f,
+        currentRecipe.cookingTime * (UpgradePurchases.Has(UpgradePurchases.CookingClock)
+            ? Mathf.Clamp(upgradedCookingTimeMultiplier, 0.01f, 1f) : 1f));
+
     private CookingRecipe currentRecipe;
 
     private float timer;
@@ -46,7 +53,7 @@ public class StoveController : MonoBehaviour
             timer += Time.deltaTime;
 
             float progress = Mathf.Clamp01(
-                timer / currentRecipe.cookingTime
+                timer / CurrentCookingDuration
             );
 
             if (cookingProgressUI != null)
@@ -54,12 +61,12 @@ public class StoveController : MonoBehaviour
                 cookingProgressUI.SetProgress(progress);
             }
 
-            if (timer >= currentRecipe.cookingTime)
+            if (timer >= CurrentCookingDuration)
             {
                 cooking = false;
                 finished = true;
 
-                timer = currentRecipe.cookingTime;
+                timer = CurrentCookingDuration;
                 burnTimer = 0f;
 
                 if (cookingProgressUI != null)
@@ -171,6 +178,27 @@ public class StoveController : MonoBehaviour
         }
 
         return null;
+    }
+
+    public CookingSaveState CaptureCookingState() => new CookingSaveState
+    {
+        recipeId = currentRecipe == null ? "" : RecipeSaveModule.Id(currentRecipe),
+        timer = timer, burnTimer = burnTimer, cooking = cooking, finished = finished,
+        usedPan = panWasUsed, usedPot = potWasUsed
+    };
+
+    public void RestoreCookingState(CookingSaveState state)
+    {
+        ClearCookedFood();
+        currentRecipe = RecipeSaveModule.FindRecipe(this, state.recipeId);
+        timer = state.timer; burnTimer = state.burnTimer;
+        cooking = state.cooking; finished = state.finished;
+        panWasUsed = state.usedPan; potWasUsed = state.usedPot;
+        if (currentRecipe != null && cookingProgressUI != null)
+        {
+            cookingProgressUI.Show(GetFoodSprite(currentRecipe), Mathf.Clamp01(timer / CurrentCookingDuration));
+            cookingProgressUI.SetBurnProgress(Mathf.Clamp01(burnTimer / Mathf.Max(.01f, burnDuration)));
+        }
     }
 
     // Inicia o preparo da receita.

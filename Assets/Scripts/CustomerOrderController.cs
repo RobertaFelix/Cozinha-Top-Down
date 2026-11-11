@@ -11,6 +11,12 @@ public class CustomerOrderController : MonoBehaviour
     [Header("Paciência do NPC")]
     [SerializeField] private float patienceDuration = 30f;
 
+    [Header("Upgrade de paciência")]
+    [SerializeField, Min(1f)] private float upgradedPatienceMultiplier = 1.5f;
+
+    public float PatienceMultiplier => UpgradePurchases.Has(UpgradePurchases.Wristwatch)
+        ? Mathf.Max(1f, upgradedPatienceMultiplier) : 1f;
+
     private StoveController stoveController;
     private CookingRecipe requestedRecipe;
 
@@ -37,7 +43,8 @@ public class CustomerOrderController : MonoBehaviour
         if (!patienceRunning || orderCompleted || orderExpired)
             return;
 
-        patienceRemaining -= Time.deltaTime;
+        // Reduz a velocidade da contagem; vale também para clientes que já esperavam.
+        patienceRemaining -= Time.deltaTime / PatienceMultiplier;
 
         float normalizedPatience =
             1f - Mathf.Clamp01(
@@ -253,10 +260,12 @@ public class CustomerOrderController : MonoBehaviour
         if (orderUI != null)
             orderUI.Hide();
 
-        customerNPC.ServeFood(
-            foodSprite,
-            requestedRecipe.basePrice
-        );
+        // Calcula o valor na entrega, inclusive para pedidos feitos antes da compra.
+        int salePrice = CoinManager.Instance != null
+            ? CoinManager.Instance.GetDishSalePrice(requestedRecipe.basePrice)
+            : Mathf.Max(0, requestedRecipe.basePrice);
+
+        customerNPC.ServeFood(foodSprite, salePrice);
 
         Debug.Log(
             "Pedido correto entregue: " + requestedPrefab.name

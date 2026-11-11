@@ -29,9 +29,10 @@ public class StoveInventoryController : MonoBehaviour
 
     public void OpenStoveInventory()
     {
-        ClearSlots();
-
+        if (stovePanel == null) return;
+        InventoryPanelSession.Open(stovePanel, CloseStoveInventory);
         stovePanel.SetActive(true);
+        if (stovePanel.GetComponentsInChildren<Slot>(true).Length > 0) return;
 
         for (int i = 0; i < slotCount; i++)
         {
@@ -44,8 +45,7 @@ public class StoveInventoryController : MonoBehaviour
 
     public void CloseStoveInventory()
     {
-        ClearSlots();
-
+        InventoryPanelSession.Closed(stovePanel);
         stovePanel.SetActive(false);
     }
 
@@ -83,6 +83,7 @@ public class StoveInventoryController : MonoBehaviour
 
             slot.currentItem = null;
             slot.inventoryItem = null;
+            slot.UpdateQuantityDisplay();
         }
     }
 

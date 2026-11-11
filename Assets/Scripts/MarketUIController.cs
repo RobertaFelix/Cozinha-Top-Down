@@ -6,6 +6,14 @@ public class MarketUIController : MonoBehaviour
 {
     [Header("Painel")]
     [SerializeField] private GameObject marketPanel;
+    [SerializeField] private MarketOpeningHours openingHours;
+    [SerializeField] private GameObject vendor;
+    [SerializeField] private GameObject vendorInteractionArea;
+
+    private bool tradingSessionActive;
+    private float sessionMarkup;
+    private bool sessionAfterHours;
+    public bool IsTradingAllowed => tradingSessionActive && IsOpen;
 
     [Header("Slots da loja")]
     [SerializeField] private MarketIngredientSlot[] ingredientSlots;
@@ -20,6 +28,39 @@ public class MarketUIController : MonoBehaviour
 
     public bool IsOpen =>
         marketPanel != null && marketPanel.activeSelf;
+
+    [Header("Upgrade de desconto")]
+    [SerializeField, Range(0f, 1f)] private float upgradedDiscount = 0.2f;
+
+    public int GetPurchasePrice(int basePrice)
+    {
+        if (basePrice <= 0) return 0;
+        float discount = UpgradePurchases.Has(UpgradePurchases.Wallet) ? Mathf.Clamp01(upgradedDiscount) : 0f;
+        float markup = IsTradingAllowed ? sessionMarkup
+            : openingHours != null && !openingHours.IsOpen && openingHours.CanAccess ? openingHours.AfterHoursMarkup : 0f;
+        // Apply both modifiers before rounding once to whole coins.
+        return Mathf.Max(1, (int)System.Math.Ceiling(
+            basePrice * (1m - (decimal)discount) * (1m + (decimal)markup)));
+    }
+
+    private void OnEnable()
+    {
+        UpgradePurchases.Changed += RefreshPrices;
+        RefreshPrices();
+    }
+
+    private void OnDisable()
+    {
+        UpgradePurchases.Changed -= RefreshPrices;
+    }
+
+    private void RefreshPrices()
+    {
+        if (ingredientSlots != null)
+            foreach (MarketIngredientSlot slot in ingredientSlots)
+                if (slot != null) slot.RefreshPrice();
+        UpdateTotal();
+    }
 
     private void Awake()
     {
@@ -39,6 +80,21 @@ public class MarketUIController : MonoBehaviour
         }
 
         UpdateTotal();
+    }
+
+    private void Update()
+    {
+        RefreshVendorPresence();
+    }
+
+    private void RefreshVendorPresence()
+    {
+        // Finish serving an existing customer before leaving for the day.
+        bool present = openingHours != null && (openingHours.IsOpen || (IsTradingAllowed && !sessionAfterHours));
+        bool canInteract = openingHours != null && (openingHours.CanAccess || IsTradingAllowed);
+        if (vendor != null && vendor.activeSelf != present) vendor.SetActive(present);
+        if (vendorInteractionArea != null && vendorInteractionArea.activeSelf != canInteract)
+            vendorInteractionArea.SetActive(canInteract);
     }
 
     private void Start()
@@ -97,17 +153,32 @@ public class MarketUIController : MonoBehaviour
 
     public void OpenMarket()
     {
+        // An already-open shopping session may finish after closing time.
+        if (IsTradingAllowed) return;
+        if (openingHours == null || !openingHours.CanAccess)
+        {
+            if (openingHours != null) openingHours.ShowClosedNotice();
+            return;
+        }
         if (marketPanel == null)
             return;
 
+        InventoryPanelSession.Open(marketPanel, CloseMarket);
         FindInventoryControllers();
 
+        sessionAfterHours = !openingHours.IsOpen;
+        sessionMarkup = sessionAfterHours ? openingHours.AfterHoursMarkup : 0f;
+        tradingSessionActive = true;
         marketPanel.SetActive(true);
-        UpdateTotal();
+        RefreshVendorPresence();
+        RefreshPrices();
     }
 
     public void CloseMarket()
     {
+        InventoryPanelSession.Closed(marketPanel);
+        tradingSessionActive = false;
+        RefreshVendorPresence();
         ClearCart();
 
         if (marketPanel != null)
@@ -116,6 +187,7 @@ public class MarketUIController : MonoBehaviour
 
     public void AddToCart(GameObject prefab, int price)
     {
+        if (!IsTradingAllowed) return;
         if (!IsOpen || prefab == null || price < 0)
             return;
 
@@ -155,6 +227,7 @@ public class MarketUIController : MonoBehaviour
 
     public void BuyItems()
     {
+        if (!IsTradingAllowed) return;
         if (!IsOpen)
             return;
 
@@ -193,7 +266,7 @@ public class MarketUIController : MonoBehaviour
             if (slot == null || slot.IsEmpty || slot.amount <= 0)
                 continue;
 
-            int unitPrice = slot.price;
+            int unitPrice = GetPurchasePrice(slot.price);
             int requestedQuantity = slot.amount;
             int purchasedQuantity = 0;
 
@@ -274,7 +347,7 @@ public class MarketUIController : MonoBehaviour
 
     private void UpdateTotal()
     {
-        if (totalText == null)
+        if (totalText == null || cartSlots == null)
             return;
 
         int total = 0;
@@ -284,7 +357,7 @@ public class MarketUIController : MonoBehaviour
             if (slot == null || slot.IsEmpty)
                 continue;
 
-            total += slot.price * slot.amount;
+            total += GetPurchasePrice(slot.price) * slot.amount;
         }
 
         totalText.text = total.ToString();

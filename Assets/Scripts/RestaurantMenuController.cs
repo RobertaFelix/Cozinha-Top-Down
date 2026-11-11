@@ -181,6 +181,17 @@ public class RestaurantMenuController : MonoBehaviour
     // ADICIONAR RECEITA
     // ==========================================
 
+    public void ClearMenu()
+    {
+        foreach (Transform child in selectedDishesContainer)
+        {
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+        }
+        selectedRecipes.Clear();
+        dishObjects.Clear();
+    }
+
     public bool TryAddRecipe(CookingRecipe recipe)
     {
         if (recipe == null)
@@ -279,6 +290,8 @@ public class RestaurantMenuController : MonoBehaviour
         dishImage.sprite = dishSprite;
         dishImage.color = Color.white;
         dishImage.preserveAspect = true;
+
+        ItemTooltipTarget.Bind(dishObject, () => ItemTooltipCatalog.ForRecipe(recipe));
 
         dishButton.onClick.RemoveAllListeners();
 

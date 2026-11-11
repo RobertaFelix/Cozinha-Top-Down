@@ -35,6 +35,15 @@ public class GameClock : MonoBehaviour
         "SUNDAY"
     };
 
+    public double TotalGameMinutes => initialGameMinutes + (double)elapsedRealSeconds / Mathf.Max(.01f, realSecondsPerGameMinute);
+
+    public void SetTotalGameMinutes(double minutes)
+    {
+        initialGameMinutes = (int)System.Math.Floor(minutes);
+        elapsedRealSeconds = (float)((minutes - initialGameMinutes) * Mathf.Max(.01f, realSecondsPerGameMinute));
+        UpdateClock();
+    }
+
     private void Start()
     {
         int hour24 = startHour % 12;

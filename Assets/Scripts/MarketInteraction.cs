@@ -11,7 +11,7 @@ public class MarketInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (!playerNearby || Keyboard.current == null)
+        if (Time.timeScale <= 0 || !playerNearby || Keyboard.current == null)
             return;
 
         if (Keyboard.current.eKey.wasPressedThisFrame)
@@ -37,6 +37,16 @@ public class MarketInteraction : MonoBehaviour
             playerNearby = true;
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player")) playerNearby = true;
+    }
+
+    private void OnDisable()
+    {
+        playerNearby = false;
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player"))
@@ -44,7 +54,6 @@ public class MarketInteraction : MonoBehaviour
 
         playerNearby = false;
 
-        if (marketUI != null && marketUI.IsOpen)
-            marketUI.CloseMarket();
+
     }
 }

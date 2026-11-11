@@ -22,6 +22,8 @@ public class RecipeBookSlot : MonoBehaviour
 
     private void Awake()
     {
+        ItemTooltipTarget.Bind(gameObject, () => ItemTooltipCatalog.ForRecipe(currentRecipe, unlocked));
+
         if (recipeButton == null)
             recipeButton = GetComponent<Button>();
 
@@ -135,6 +137,8 @@ public class RecipeBookSlot : MonoBehaviour
 
         return image != null ? image.sprite : null;
     }
+
+    public void SetUnlocked(bool value) { unlocked = value; UpdateVisual(); }
 
     public void Unlock()
     {

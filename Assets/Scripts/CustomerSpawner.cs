@@ -1,5 +1,4 @@
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,26 +22,42 @@ public class CustomerSpawner : MonoBehaviour
     private readonly List<GameObject> spawnedCustomers =
         new List<GameObject>();
 
-    private bool initialSpawnCompleted;
+    [Header("Funcionamento do restaurante")]
+    [SerializeField, Min(0.1f)] private float spawnInterval = 8f;
 
-    private void Start()
+    [Header("Upgrade de publicidade")]
+    [SerializeField, Range(0.01f, 1f)] private float advertisedSpawnIntervalMultiplier = 0.75f;
+
+    public float CurrentSpawnInterval => Mathf.Max(0.1f, spawnInterval *
+        (UpgradePurchases.Has(UpgradePurchases.Television)
+            ? Mathf.Clamp(advertisedSpawnIntervalMultiplier, 0.01f, 1f) : 1f));
+
+    public bool IsRestaurantOpen { get; private set; }
+
+    private float nextSpawnTime;
+
+    private void Awake()
     {
-        StartCoroutine(WaitForMenuAndSpawn());
+        IsRestaurantOpen = false;
     }
 
-    private IEnumerator WaitForMenuAndSpawn()
+    public void SetRestaurantOpen(bool isOpen)
     {
-        // Aguarda até existir pelo menos um prato no cardápio.
-        while (!HasDishesInMenu())
-        {
-            yield return null;
-        }
+        if (IsRestaurantOpen == isOpen)
+            return;
 
-        // Cria dois NPCs inicialmente.
-        SpawnCustomer();
-        SpawnCustomer();
+        IsRestaurantOpen = isOpen;
+        // Ao abrir, o primeiro cliente pode chegar imediatamente.
+        nextSpawnTime = Time.time;
+    }
 
-        initialSpawnCompleted = true;
+    private void Update()
+    {
+        if (Time.timeScale <= 0 || !IsRestaurantOpen || Time.time < nextSpawnTime || !HasDishesInMenu())
+            return;
+
+        nextSpawnTime = Time.time + CurrentSpawnInterval;
+        SpawnCustomer();
     }
 
     private bool HasDishesInMenu()
@@ -64,6 +79,10 @@ public class CustomerSpawner : MonoBehaviour
 
     public void SpawnCustomer()
     {
+        // Também protege chamadas diretas, além do spawn automático.
+        if (!IsRestaurantOpen)
+            return;
+
         CleanupSpawnedLists();
 
         if (!HasDishesInMenu())

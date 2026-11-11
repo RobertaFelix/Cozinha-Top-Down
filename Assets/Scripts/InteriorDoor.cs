@@ -11,6 +11,9 @@ public class InteriorDoor : MonoBehaviour
     [SerializeField] private Transform interiorSpawn;
     [SerializeField] private Transform exteriorExitSpawn;
 
+    public GameObject Interior => interior;
+    public Transform ExteriorExitSpawn => exteriorExitSpawn;
+
     // Utilizado na porta externa.
     public void Enter()
     {

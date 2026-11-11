@@ -13,6 +13,28 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private TMP_Text coinText;
 
     public int TotalCoins => totalCoins;
+    public int RewardMultiplier => rewardMultiplier;
+
+    public void RestoreEconomy(int coins, int multiplier, bool doubleDishPrices)
+    {
+        totalCoins = Mathf.Max(0, coins);
+        rewardMultiplier = Mathf.Max(1, multiplier);
+        AreDishPricesDoubled = doubleDishPrices;
+        UpdateUI();
+    }
+
+    public bool AreDishPricesDoubled { get; private set; }
+
+    public void EnableDoubleDishPrices()
+    {
+        // O upgrade é único: aplicar novamente mantém o bônus em 2x.
+        AreDishPricesDoubled = true;
+    }
+
+    public int GetDishSalePrice(int basePrice)
+    {
+        return Mathf.Max(0, basePrice) * (AreDishPricesDoubled ? 2 : 1);
+    }
 
     [Header("Multiplicador de ganhos")]
     [SerializeField, Min(1)]

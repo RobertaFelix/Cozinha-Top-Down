@@ -11,6 +11,7 @@ public class ItemDragHandler : MonoBehaviour,
     private Transform originalParent;
     private CanvasGroup canvasGroup;
     private Canvas rootCanvas;
+    private bool isDragging;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left || InventoryStackCursor.IsHolding || Time.timeScale <= 0) return;
         originalParent = transform.parent;
 
         Canvas parentCanvas = GetComponentInParent<Canvas>();
@@ -34,9 +36,12 @@ public class ItemDragHandler : MonoBehaviour,
             return;
         }
 
-        rootCanvas = parentCanvas.rootCanvas;
+        rootCanvas = InventoryStackCursor.DragCanvas;
 
-        // Mantém o item dentro do Canvas durante o arraste.
+        isDragging = true;
+        ItemTooltipView.BeginDrag();
+
+        // Shared overlay keeps the item above every inventory Canvas while dragging.
         transform.SetParent(rootCanvas.transform, true);
         transform.SetAsLastSibling();
 
@@ -46,7 +51,7 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (rootCanvas == null)
+        if (!isDragging || rootCanvas == null)
             return;
 
         transform.position = eventData.position;
@@ -54,6 +59,10 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isDragging) return;
+        isDragging = false;
+        ItemTooltipView.EndDrag();
+
         canvasGroup.alpha = 1f;
 
         // Impede que o próprio item seja identificado como destino.
@@ -411,6 +420,24 @@ public class ItemDragHandler : MonoBehaviour,
         return false;
     }
 
+    public static void CancelAllDrags()
+    {
+        foreach (var drag in FindObjectsByType<ItemDragHandler>(FindObjectsInactive.Include))
+        {
+            if (!drag.isDragging) continue;
+            drag.isDragging = false;
+            drag.ReturnToOriginalPosition();
+            ItemTooltipView.EndDrag();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (!isDragging) return;
+        isDragging = false;
+        ItemTooltipView.EndDrag();
+    }
+
     private Slot FindDropSlot(PointerEventData eventData)
     {
         if (EventSystem.current == null)
@@ -462,5 +489,6 @@ public class ItemDragHandler : MonoBehaviour,
 
         transform.SetParent(originalParent, false);
         ResetVisualTransform(gameObject);
+        originalParent.GetComponent<Slot>()?.UpdateQuantityDisplay();
     } 
 }
