@@ -73,6 +73,7 @@ public class UpgradeUIController : MonoBehaviour
     private void Awake()
     {
         CreateSlots();
+        RestorePurchasedUpgrades();
 
         if (confirmButton != null)
             confirmButton.onClick.AddListener(ConfirmPurchase);
@@ -382,7 +383,26 @@ public class UpgradeUIController : MonoBehaviour
         UpdateRightSlots();
         UpdateTotal();
 
+        // Reconstitui o estado também se esta interface for recriada em outra cena.
+        for (int i = 0; i < purchasedSprites.Length; i++)
+        {
+            if (purchasedSprites[i] == null)
+                continue;
+            int index = System.Array.IndexOf(upgradeSprites, purchasedSprites[i]);
+            UpgradePurchases.RegisterPurchase(index);
+        }
+
         Debug.Log("Upgrades comprados com sucesso!");
+    }
+
+    private void RestorePurchasedUpgrades()
+    {
+        int destination = 0;
+        for (int index = 0; index < upgradeSprites.Length && destination < RightSlotCount; index++)
+        {
+            if (UpgradePurchases.Has(index) && upgradeSprites[index] != null)
+                purchasedSprites[destination++] = upgradeSprites[index];
+        }
     }
 
     private void ClearPending()
