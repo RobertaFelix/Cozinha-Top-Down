@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
         playerControls = new PlayerControls();
 
         rb = GetComponent<Rigidbody2D>();
+        // Render between physics ticks; Cinemachine follows this interpolated pose in LateUpdate.
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         myAnimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>();
 
