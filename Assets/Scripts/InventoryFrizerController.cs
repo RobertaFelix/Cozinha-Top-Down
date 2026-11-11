@@ -25,7 +25,13 @@ public class InventoryFrizerController : MonoBehaviour
     public void OpenFrizer(InventoryItem[] items)
     {
         // Garante que não existam slots antigos
-        ClearFrizerSlots();
+        if (frizerPanel == null) return;
+        InventoryPanelSession.Open(frizerPanel, CloseFrizer);
+        if (frizerPanel.GetComponentsInChildren<Slot>(true).Length > 0)
+        {
+            frizerPanel.SetActive(true);
+            return;
+        }
 
         frizerPanel.SetActive(true);
 
@@ -77,7 +83,7 @@ public class InventoryFrizerController : MonoBehaviour
     // Fecha o freezer
     public void CloseFrizer()
     {
-        ClearFrizerSlots();
+        InventoryPanelSession.Closed(frizerPanel);
 
         frizerPanel.SetActive(false);
     }

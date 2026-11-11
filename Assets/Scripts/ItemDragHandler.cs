@@ -420,6 +420,17 @@ public class ItemDragHandler : MonoBehaviour,
         return false;
     }
 
+    public static void CancelAllDrags()
+    {
+        foreach (var drag in FindObjectsByType<ItemDragHandler>(FindObjectsInactive.Include))
+        {
+            if (!drag.isDragging) continue;
+            drag.isDragging = false;
+            drag.ReturnToOriginalPosition();
+            ItemTooltipView.EndDrag();
+        }
+    }
+
     private void OnDisable()
     {
         if (!isDragging) return;

@@ -65,8 +65,6 @@ public class KeyboardUpgradeStation : MonoBehaviour
         if (interactionPrompt != null)
             interactionPrompt.SetActive(false);
 
-        // Sair da área cancela somente a seleção pendente.
-        if (upgradeUI != null && upgradeUI.IsOpen)
-            upgradeUI.CancelPurchase();
+        // InventoryPanelSession closes after the configured distance.
     }
 }

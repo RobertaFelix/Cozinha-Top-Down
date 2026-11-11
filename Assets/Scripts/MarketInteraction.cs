@@ -54,7 +54,6 @@ public class MarketInteraction : MonoBehaviour
 
         playerNearby = false;
 
-        if (marketUI != null && marketUI.IsOpen)
-            marketUI.CloseMarket();
+
     }
 }
