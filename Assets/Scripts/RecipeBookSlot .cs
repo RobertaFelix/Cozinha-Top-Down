@@ -138,6 +138,8 @@ public class RecipeBookSlot : MonoBehaviour
         return image != null ? image.sprite : null;
     }
 
+    public void SetUnlocked(bool value) { unlocked = value; UpdateVisual(); }
+
     public void Unlock()
     {
         unlocked = true;

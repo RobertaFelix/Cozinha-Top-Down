@@ -115,7 +115,18 @@ public class RecipeBookController : MonoBehaviour
             foreach (RecipeBookSlot slot in existingSlots)
             {
                 if (slot != null && !createdSlots.Contains(slot))
+                {
+                    bool unlocked = slot.IsUnlocked();
+                    var oldRecipe = slot.GetRecipe();
+                    foreach (var recipe in stoveController.recipes)
+                        if (recipe?.result?.itemPrefab != null && oldRecipe?.result?.itemPrefab == recipe.result.itemPrefab)
+                        {
+                            slot.Setup(recipe);
+                            slot.SetUnlocked(unlocked);
+                            break;
+                        }
                     createdSlots.Add(slot);
+                }
             }
 
             Debug.Log(
@@ -219,6 +230,13 @@ public class RecipeBookController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void RestoreUnlockedRecipes(CookingRecipe[] recipes)
+    {
+        var unlocked = new HashSet<CookingRecipe>(recipes);
+        foreach (var slot in createdSlots)
+            if (slot != null) slot.SetUnlocked(unlocked.Contains(slot.GetRecipe()));
     }
 
     private void OnDestroy()

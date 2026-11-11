@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class EnvironmentTransition : MonoBehaviour
 {
@@ -28,6 +29,56 @@ public class EnvironmentTransition : MonoBehaviour
 
     public bool IsTransitioning => isTransitioning;
     private bool isTransitioning;
+
+    public string CurrentInteriorId => currentInterior != null ? currentInterior.name : "";
+
+    public bool CanRestoreCheckpoint(string interiorId)
+    {
+        if (string.IsNullOrEmpty(interiorId)) return exterior != null;
+        foreach (var interior in interiors)
+            if (interior != null && interior.name == interiorId) return true;
+        return false;
+    }
+
+    public bool RestoreHomeCheckpoint(Vector3 position)
+    {
+        return homeInterior != null && RestorePlayerCheckpoint(homeInterior.name, position);
+    }
+
+    public bool RestorePlayerCheckpoint(string interiorId, Vector3 position)
+    {
+        if (exterior == null || isTransitioning || !CanRestoreCheckpoint(interiorId)) return false;
+        FindPlayerReferences();
+        if (player == null) return false;
+        GameObject selected = null;
+        foreach (var interior in interiors)
+            if (interior != null && interior.name == interiorId) selected = interior;
+        Transform exit = null;
+        if (selected == homeInterior) exit = homeExteriorExitSpawn;
+        else if (selected != null)
+            foreach (var door in FindObjectsByType<InteriorDoor>(FindObjectsInactive.Include))
+                if (door.Interior == selected && door.ExteriorExitSpawn != null)
+                {
+                    exit = door.ExteriorExitSpawn;
+                    break;
+                }
+        if (selected != null && exit == null) return false;
+        foreach (var interior in interiors)
+            if (interior != null) interior.SetActive(interior == selected);
+        exterior.SetActive(selected == null);
+        currentInterior = selected;
+        currentExteriorExitSpawn = exit;
+        Vector3 previous = player.position;
+        MovePlayer(position);
+        var camera = FindAnyObjectByType<CinemachineCamera>();
+        if (camera != null)
+        {
+            camera.OnTargetObjectWarped(player, position - previous);
+            camera.PreviousStateIsValid = false;
+        }
+        Physics2D.SyncTransforms();
+        return true;
+    }
 
     public bool TryReturnHome()
     {

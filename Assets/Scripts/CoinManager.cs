@@ -13,6 +13,15 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private TMP_Text coinText;
 
     public int TotalCoins => totalCoins;
+    public int RewardMultiplier => rewardMultiplier;
+
+    public void RestoreEconomy(int coins, int multiplier, bool doubleDishPrices)
+    {
+        totalCoins = Mathf.Max(0, coins);
+        rewardMultiplier = Mathf.Max(1, multiplier);
+        AreDishPricesDoubled = doubleDishPrices;
+        UpdateUI();
+    }
 
     public bool AreDishPricesDoubled { get; private set; }
 

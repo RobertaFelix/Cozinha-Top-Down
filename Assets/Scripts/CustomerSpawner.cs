@@ -53,7 +53,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!IsRestaurantOpen || Time.time < nextSpawnTime || !HasDishesInMenu())
+        if (Time.timeScale <= 0 || !IsRestaurantOpen || Time.time < nextSpawnTime || !HasDishesInMenu())
             return;
 
         nextSpawnTime = Time.time + CurrentSpawnInterval;
