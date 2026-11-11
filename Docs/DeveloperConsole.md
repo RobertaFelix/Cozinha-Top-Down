@@ -18,7 +18,7 @@ The overlay is created dynamically only during Editor Play Mode. Every source is
 - `tp -3.25 7.5`: teleport to coordinates in the current environment; optional third argument is Z. Coordinates use a dot decimal separator. This is a debug teleport and does not validate floor collisions.
 - `tp home`, `tp village`, `tp restaurant`, `tp market`, `tp dungeon`: use existing spawn markers and scene/environment transitions. Dungeon entry uses the normal random layout/spawn selection. Return to the village before choosing market/restaurant from a dungeon.
 - `recipes`, `recipes dinner01`, `recipe unlock dinner01`, `recipe unlock all`: inspect/unlock configured village recipe-book entries. Recipes outside the current book slot count are listed separately; use `dish give` to create their outputs directly.
-- `upgrade list`, `upgrade add backpack`, `upgrade remove 2`: grant/revoke implemented upgrades without payment. Existing stacks are preserved when revoking the backpack.
+- `upgrade list`, `upgrade add backpack`, `upgrade remove 2`, `upgrade add key`: grant/revoke implemented upgrades without payment. Existing stacks are preserved when revoking the backpack.
 - `time set 07:00`, `day set 5`, `day add 1`: change the clock; day numbers are one-based and preserve the time of day.
 - `save`: explicitly write the current checkpoint, including position. Village scene only, matching the current save system.
 - `save path`: show the checkpoint file path.

@@ -11,6 +11,8 @@ public class MarketUIController : MonoBehaviour
     [SerializeField] private GameObject vendorInteractionArea;
 
     private bool tradingSessionActive;
+    private float sessionMarkup;
+    private bool sessionAfterHours;
     public bool IsTradingAllowed => tradingSessionActive && IsOpen;
 
     [Header("Slots da loja")]
@@ -33,9 +35,12 @@ public class MarketUIController : MonoBehaviour
     public int GetPurchasePrice(int basePrice)
     {
         if (basePrice <= 0) return 0;
-        return UpgradePurchases.Has(UpgradePurchases.Wallet)
-            ? Mathf.Max(1, Mathf.CeilToInt(basePrice * (1f - Mathf.Clamp01(upgradedDiscount))))
-            : basePrice;
+        float discount = UpgradePurchases.Has(UpgradePurchases.Wallet) ? Mathf.Clamp01(upgradedDiscount) : 0f;
+        float markup = IsTradingAllowed ? sessionMarkup
+            : openingHours != null && !openingHours.IsOpen && openingHours.CanAccess ? openingHours.AfterHoursMarkup : 0f;
+        // Apply both modifiers before rounding once to whole coins.
+        return Mathf.Max(1, (int)System.Math.Ceiling(
+            basePrice * (1m - (decimal)discount) * (1m + (decimal)markup)));
     }
 
     private void OnEnable()
@@ -85,10 +90,11 @@ public class MarketUIController : MonoBehaviour
     private void RefreshVendorPresence()
     {
         // Finish serving an existing customer before leaving for the day.
-        bool present = openingHours != null && (openingHours.IsOpen || IsTradingAllowed);
+        bool present = openingHours != null && (openingHours.IsOpen || (IsTradingAllowed && !sessionAfterHours));
+        bool canInteract = openingHours != null && (openingHours.CanAccess || IsTradingAllowed);
         if (vendor != null && vendor.activeSelf != present) vendor.SetActive(present);
-        if (vendorInteractionArea != null && vendorInteractionArea.activeSelf != present)
-            vendorInteractionArea.SetActive(present);
+        if (vendorInteractionArea != null && vendorInteractionArea.activeSelf != canInteract)
+            vendorInteractionArea.SetActive(canInteract);
     }
 
     private void Start()
@@ -149,7 +155,7 @@ public class MarketUIController : MonoBehaviour
     {
         // An already-open shopping session may finish after closing time.
         if (IsTradingAllowed) return;
-        if (openingHours == null || !openingHours.IsOpen)
+        if (openingHours == null || !openingHours.CanAccess)
         {
             if (openingHours != null) openingHours.ShowClosedNotice();
             return;
@@ -159,10 +165,12 @@ public class MarketUIController : MonoBehaviour
 
         FindInventoryControllers();
 
+        sessionAfterHours = !openingHours.IsOpen;
+        sessionMarkup = sessionAfterHours ? openingHours.AfterHoursMarkup : 0f;
         tradingSessionActive = true;
         marketPanel.SetActive(true);
         RefreshVendorPresence();
-        UpdateTotal();
+        RefreshPrices();
     }
 
     public void CloseMarket()
