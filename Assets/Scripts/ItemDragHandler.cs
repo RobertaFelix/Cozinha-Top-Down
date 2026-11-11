@@ -23,6 +23,7 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left || InventoryStackCursor.IsHolding || Time.timeScale <= 0) return;
         originalParent = transform.parent;
 
         Canvas parentCanvas = GetComponentInParent<Canvas>();
@@ -50,7 +51,7 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (rootCanvas == null)
+        if (!isDragging || rootCanvas == null)
             return;
 
         transform.position = eventData.position;
@@ -58,6 +59,7 @@ public class ItemDragHandler : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isDragging) return;
         isDragging = false;
         ItemTooltipView.EndDrag();
 
