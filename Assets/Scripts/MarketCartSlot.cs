@@ -23,6 +23,9 @@ public class MarketCartSlot : MonoBehaviour
 
     private void Awake()
     {
+        ItemTooltipTarget.Bind(gameObject, () => ItemTooltipCatalog.ForItem(ingredientPrefab, amount,
+            market != null ? market.GetPurchasePrice(price) : Mathf.Max(0, price)));
+
         slotButton = GetComponent<UnityEngine.UI.Button>();
 
         if (slotButton != null)

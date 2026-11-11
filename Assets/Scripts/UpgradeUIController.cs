@@ -117,6 +117,8 @@ public class UpgradeUIController : MonoBehaviour
 
             int index = i;
 
+            ItemTooltipTarget.Bind(slot, () => GetUpgradeTooltip(index));
+
             if (leftButtons[i] != null)
             {
                 leftButtons[i].onClick.AddListener(
@@ -155,6 +157,9 @@ public class UpgradeUIController : MonoBehaviour
             GameObject slot = Instantiate(slotPrefab, rightSlots);
             slot.name = "PurchaseSlot_" + (i + 1);
 
+            int purchaseIndex = i;
+            ItemTooltipTarget.Bind(slot, () => GetPurchasedTooltip(purchaseIndex));
+
             RectTransform slotRect = slot.GetComponent<RectTransform>();
 
             if (slotRect != null)
@@ -186,6 +191,22 @@ public class UpgradeUIController : MonoBehaviour
             if (rightButtons[i] != null)
                 rightButtons[i].interactable = false;
         }
+    }
+
+    private ItemTooltipContent GetUpgradeTooltip(int index)
+    {
+        if (upgradeSprites == null || index < 0 || index >= upgradeSprites.Length)
+            return default;
+        Sprite sprite = upgradeSprites[index];
+        bool purchased = sprite != null && System.Array.IndexOf(purchasedSprites, sprite) >= 0;
+        bool pending = sprite != null && System.Array.IndexOf(pendingSprites, sprite) >= 0;
+        return ItemTooltipCatalog.ForUpgrade(index, sprite, GetUpgradePrice(index), purchased, pending);
+    }
+
+    private ItemTooltipContent GetPurchasedTooltip(int slot)
+    {
+        Sprite sprite = purchasedSprites[slot] != null ? purchasedSprites[slot] : pendingSprites[slot];
+        return sprite != null ? GetUpgradeTooltip(System.Array.IndexOf(upgradeSprites, sprite)) : default;
     }
 
     private Image GetIcon(Transform slot)

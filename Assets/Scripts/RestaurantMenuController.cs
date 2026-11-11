@@ -280,6 +280,8 @@ public class RestaurantMenuController : MonoBehaviour
         dishImage.color = Color.white;
         dishImage.preserveAspect = true;
 
+        ItemTooltipTarget.Bind(dishObject, () => ItemTooltipCatalog.ForRecipe(recipe));
+
         dishButton.onClick.RemoveAllListeners();
 
         dishButton.onClick.AddListener(
