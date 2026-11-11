@@ -25,6 +25,13 @@ public class CustomerSpawner : MonoBehaviour
     [Header("Funcionamento do restaurante")]
     [SerializeField, Min(0.1f)] private float spawnInterval = 8f;
 
+    [Header("Upgrade de publicidade")]
+    [SerializeField, Range(0.01f, 1f)] private float advertisedSpawnIntervalMultiplier = 0.75f;
+
+    public float CurrentSpawnInterval => Mathf.Max(0.1f, spawnInterval *
+        (UpgradePurchases.Has(UpgradePurchases.Television)
+            ? Mathf.Clamp(advertisedSpawnIntervalMultiplier, 0.01f, 1f) : 1f));
+
     public bool IsRestaurantOpen { get; private set; }
 
     private float nextSpawnTime;
@@ -49,7 +56,7 @@ public class CustomerSpawner : MonoBehaviour
         if (!IsRestaurantOpen || Time.time < nextSpawnTime || !HasDishesInMenu())
             return;
 
-        nextSpawnTime = Time.time + Mathf.Max(0.1f, spawnInterval);
+        nextSpawnTime = Time.time + CurrentSpawnInterval;
         SpawnCustomer();
     }
 
