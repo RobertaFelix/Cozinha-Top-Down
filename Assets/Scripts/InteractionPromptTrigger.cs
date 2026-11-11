@@ -28,6 +28,7 @@ public class InteractionPromptTrigger : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0) return;
         if (!playerNearby)
             return;
 

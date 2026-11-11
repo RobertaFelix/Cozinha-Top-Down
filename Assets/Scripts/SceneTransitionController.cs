@@ -62,6 +62,7 @@ public class SceneTransitionController : MonoBehaviour
         if (isLoading)
             return;
 
+        SaveGameService.Instance?.CaptureSceneState();
         isLoading = true;
 
         pendingSceneName = sceneName;

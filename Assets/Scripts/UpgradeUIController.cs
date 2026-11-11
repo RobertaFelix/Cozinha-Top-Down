@@ -416,6 +416,17 @@ public class UpgradeUIController : MonoBehaviour
         Debug.Log("Upgrades comprados com sucesso!");
     }
 
+    private void OnEnable() { UpgradePurchases.Restored += RefreshPurchasedUpgrades; }
+    private void OnDisable() { UpgradePurchases.Restored -= RefreshPurchasedUpgrades; }
+    private void RefreshPurchasedUpgrades()
+    {
+        System.Array.Clear(purchasedSprites, 0, purchasedSprites.Length);
+        System.Array.Clear(pendingSprites, 0, pendingSprites.Length);
+        RestorePurchasedUpgrades();
+        UpdateRightSlots();
+        UpdateTotal();
+    }
+
     private void RestorePurchasedUpgrades()
     {
         int destination = 0;

@@ -180,6 +180,27 @@ public class StoveController : MonoBehaviour
         return null;
     }
 
+    public CookingSaveState CaptureCookingState() => new CookingSaveState
+    {
+        recipeId = currentRecipe == null ? "" : RecipeSaveModule.Id(currentRecipe),
+        timer = timer, burnTimer = burnTimer, cooking = cooking, finished = finished,
+        usedPan = panWasUsed, usedPot = potWasUsed
+    };
+
+    public void RestoreCookingState(CookingSaveState state)
+    {
+        ClearCookedFood();
+        currentRecipe = RecipeSaveModule.FindRecipe(this, state.recipeId);
+        timer = state.timer; burnTimer = state.burnTimer;
+        cooking = state.cooking; finished = state.finished;
+        panWasUsed = state.usedPan; potWasUsed = state.usedPot;
+        if (currentRecipe != null && cookingProgressUI != null)
+        {
+            cookingProgressUI.Show(GetFoodSprite(currentRecipe), Mathf.Clamp01(timer / CurrentCookingDuration));
+            cookingProgressUI.SetBurnProgress(Mathf.Clamp01(burnTimer / Mathf.Max(.01f, burnDuration)));
+        }
+    }
+
     // Inicia o preparo da receita.
     public void StartCooking(
         CookingRecipe recipe,

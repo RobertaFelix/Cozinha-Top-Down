@@ -1920,6 +1920,7 @@ MonoBehaviour:
   hotbarPanel: {fileID: 823922922}
   slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
   slotCount: 6
+  potionUser: {fileID: 0}
 --- !u!114 &132417191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3955,6 +3956,116 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292006152}
   m_CullTransparentMesh: 1
+--- !u!1 &298102868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 298102869}
+  - component: {fileID: 298102871}
+  - component: {fileID: 298102870}
+  m_Layer: 0
+  m_Name: BedInteractionArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &298102869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298102868}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1279306066}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &298102870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298102868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a64c7d7216c5ad4eb5cc2c484408716, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
+  target: {fileID: 1279306066}
+  offsetAdicional: {x: 0, y: 0, z: 0}
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1279306069}
+        m_TargetAssemblyTypeName: BedInteraction, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName:
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+  useSceneTransition: 0
+  returnToFirstScene: 0
+--- !u!61 &298102871
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298102868}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 2.4, y: 1.4}
+  m_EdgeRadius: 0
 --- !u!114 &305313051 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 825632947540497102, guid: 28da55a1eb0c5eb4293c0338e7ed3191, type: 3}
@@ -6303,6 +6414,7 @@ MonoBehaviour:
   totalText: {fileID: 1658840739}
   hotbar: {fileID: 132417190}
   inventory: {fileID: 132417191}
+  upgradedDiscount: 0.2
 --- !u!114 &443527101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6940,6 +7052,7 @@ MonoBehaviour:
   - {fileID: 530778664}
   - {fileID: 1925929490}
   spawnInterval: 8
+  advertisedSpawnIntervalMultiplier: 0.75
 --- !u!4 &495892453
 Transform:
   m_ObjectHideFlags: 0
@@ -19470,6 +19583,7 @@ MonoBehaviour:
   hotbarPanel: {fileID: 823922922}
   slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
   slotCount: 0
+  potionUser: {fileID: 0}
 --- !u!114 &823922926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20227,6 +20341,16 @@ GameObject:
   - component: {fileID: 905555454}
   - component: {fileID: 905555455}
   - component: {fileID: 905555456}
+  - component: {fileID: 905555465}
+  - component: {fileID: 905555464}
+  - component: {fileID: 905555463}
+  - component: {fileID: 905555462}
+  - component: {fileID: 905555461}
+  - component: {fileID: 905555460}
+  - component: {fileID: 905555459}
+  - component: {fileID: 905555458}
+  - component: {fileID: 905555457}
+  - component: {fileID: 905555466}
   m_Layer: 0
   m_Name: PersistentObjects
   m_TagString: Untagged
@@ -20286,6 +20410,134 @@ MonoBehaviour:
   dungeonSpawnTag: DungeonSpawn
   firstSceneName: SampleScene
   firstSceneSpawnTag: VillageSpawn
+--- !u!114 &905555457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4437ebd181fc96340a38d5a7106ac8fd, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySaveModule
+  inventoryId: hotbar
+  container: {fileID: 823922923}
+  slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
+--- !u!114 &905555458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4437ebd181fc96340a38d5a7106ac8fd, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySaveModule
+  inventoryId: backpack
+  container: {fileID: 1682252331}
+  slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
+--- !u!114 &905555459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec35d423a95278459224abe2c94287a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CookingSaveModule
+--- !u!114 &905555460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c33364e6c75c74fab7fa8823b05c0d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeSaveModule
+--- !u!114 &905555461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b136749f8405e0a4b944309db86cf8ff, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::EconomySaveModule
+--- !u!114 &905555462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9c2983acf6eb444b6692ffe0a6c572, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ClockSaveModule
+--- !u!114 &905555463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0db50ba3b8bb604eba061c2325351bb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BedDayCycle
+  morningHour: 7
+  wakePosition: {x: 51.85193, y: -41.08954, z: 0}
+--- !u!114 &905555464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1b2c8f4f8c4a04e993dd779b3ffee0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::DayEndScreen
+--- !u!114 &905555465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57525e1cbbc23a94ea4d620e3bd8743a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::SaveGameService
+--- !u!114 &905555466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905555453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb244e2b7dc96e2448dfa33877f6ac9d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLocationSaveModule
 --- !u!1001 &913068589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26798,6 +27050,7 @@ MonoBehaviour:
   cookingProgressUI: {fileID: 778781742}
   recipeBookController: {fileID: 443527102}
   burnDuration: 20
+  upgradedCookingTimeMultiplier: 0.75
 --- !u!4 &981803284
 Transform:
   m_ObjectHideFlags: 0
@@ -31220,6 +31473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 4
+  upgradedMoveSpeedMultiplier: 1.25
 --- !u!95 &1140978914
 Animator:
   serializedVersion: 7
@@ -33507,6 +33761,7 @@ GameObject:
   - component: {fileID: 1279306066}
   - component: {fileID: 1279306067}
   - component: {fileID: 1279306068}
+  - component: {fileID: 1279306069}
   m_Layer: 0
   m_Name: bed
   m_TagString: Untagged
@@ -33529,6 +33784,7 @@ Transform:
   m_Children:
   - {fileID: 1560282158}
   - {fileID: 1430257677}
+  - {fileID: 298102869}
   m_Father: {fileID: 535526780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1279306067
@@ -33637,6 +33893,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.4510651, y: 2.333213}
   m_EdgeRadius: 0
+--- !u!114 &1279306069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279306065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac70c197850c8d49839d204d6483a0b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BedInteraction
 --- !u!1001 &1292119300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34683,6 +34951,7 @@ MonoBehaviour:
   totalText: {fileID: 1852754212}
   hotbar: {fileID: 132417190}
   inventory: {fileID: 132417191}
+  upgradedDiscount: 0.2
 --- !u!1001 &1344017386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55272,9 +55541,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6b494a226035740bf573c7e34bbf1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnvironmentTransition
-  homeInterior: {fileID: 2027675625}
-  homeSpawn: {fileID: 1430257677}
-  homeExteriorExitSpawn: {fileID: 1114689764}
   exterior: {fileID: 1860243222}
   interiors:
   - {fileID: 2027675625}
@@ -55286,6 +55552,9 @@ MonoBehaviour:
   transitionImage: {fileID: 741854201}
   fadeDuration: 0.6
   cameraSettleDelay: 1
+  homeInterior: {fileID: 2027675625}
+  homeSpawn: {fileID: 1430257677}
+  homeExteriorExitSpawn: {fileID: 1114689764}
 --- !u!1 &1845899429
 GameObject:
   m_ObjectHideFlags: 0

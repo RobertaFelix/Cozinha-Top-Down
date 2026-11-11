@@ -27,6 +27,7 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0) return;
         if (Keyboard.current == null)
             return;
 

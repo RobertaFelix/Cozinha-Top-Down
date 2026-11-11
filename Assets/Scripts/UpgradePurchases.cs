@@ -15,8 +15,24 @@ public static class UpgradePurchases
 
     private static readonly HashSet<int> purchased = new HashSet<int>();
     public static event Action Changed;
+    public static event Action Restored;
 
     public static bool Has(int index) => purchased.Contains(index);
+
+    public static int[] GetPurchased()
+    {
+        var result = new List<int>(purchased);
+        result.Sort();
+        return result.ToArray();
+    }
+
+    public static void RestorePurchases(int[] indices)
+    {
+        purchased.Clear();
+        foreach (int index in indices) if (index >= 0) purchased.Add(index);
+        Changed?.Invoke();
+        Restored?.Invoke();
+    }
 
     // Chamado pela loja somente após a confirmação e o pagamento.
     public static void RegisterPurchase(int index)
@@ -30,5 +46,6 @@ public static class UpgradePurchases
     {
         purchased.Clear();
         Changed = null;
+        Restored = null;
     }
 }
