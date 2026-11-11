@@ -54,6 +54,9 @@ public sealed class InventoryStackCursor : MonoBehaviour
     private RectTransform cursor;
     private Image icon;
     private TMP_Text count;
+    // Both click-held items and legacy drag handlers share the same screen overlay.
+    public static Canvas DragCanvas => GetCursor().GetComponent<Canvas>();
+
     public static bool IsHolding => instance != null && instance.amount > 0;
     public static int HeldAmount => IsHolding ? instance.amount : 0;
     public static int ReservedFrom(Slot slot)
@@ -129,6 +132,7 @@ public sealed class InventoryStackCursor : MonoBehaviour
     {
         var canvas = GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
         canvas.sortingOrder = 32761;
         var visual = new GameObject("HeldStack", typeof(RectTransform), typeof(Image));
         visual.transform.SetParent(transform, false);
