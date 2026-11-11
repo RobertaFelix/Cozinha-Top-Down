@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class InventoryStacking
 {
-    public const int MaxStackSize = 99;
+    public static int MaxStackSize => UpgradePurchases.Has(UpgradePurchases.Backpack) ? 99 : 10;
 
     public static bool AddItem(
         Transform container,
