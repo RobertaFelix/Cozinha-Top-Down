@@ -6385,9 +6385,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d8f2614a1eb9d64096f3e1a43896f58, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::MarketUIController
   marketPanel: {fileID: 1331061675}
+  openingHours: {fileID: 1564103990}
+  vendor: {fileID: 1671591855}
+  vendorInteractionArea: {fileID: 920457382}
   ingredientSlots:
   - {fileID: 1972117564}
   - {fileID: 977545979}
@@ -34921,9 +34924,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d8f2614a1eb9d64096f3e1a43896f58, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::MarketUIController
   marketPanel: {fileID: 470981928}
+  openingHours: {fileID: 1564103990}
+  vendor: {fileID: 1149917879}
+  vendorInteractionArea: {fileID: 310865422}
   ingredientSlots:
   - {fileID: 318905835}
   - {fileID: 930977800}
@@ -45946,6 +45952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1564103989}
+  - component: {fileID: 1564103990}
   m_Layer: 0
   m_Name: InteriorMarket
   m_TagString: Untagged
@@ -45969,6 +45976,20 @@ Transform:
   - {fileID: 1429170354}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1564103990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564103988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b753be28c186e54bbb3c925a04b270d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::MarketOpeningHours
+  openingHour: 9
+  closingHour: 19
 --- !u!1 &1574663841
 GameObject:
   m_ObjectHideFlags: 0

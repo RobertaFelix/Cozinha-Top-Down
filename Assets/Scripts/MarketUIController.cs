@@ -6,6 +6,12 @@ public class MarketUIController : MonoBehaviour
 {
     [Header("Painel")]
     [SerializeField] private GameObject marketPanel;
+    [SerializeField] private MarketOpeningHours openingHours;
+    [SerializeField] private GameObject vendor;
+    [SerializeField] private GameObject vendorInteractionArea;
+
+    private bool tradingSessionActive;
+    public bool IsTradingAllowed => tradingSessionActive && IsOpen;
 
     [Header("Slots da loja")]
     [SerializeField] private MarketIngredientSlot[] ingredientSlots;
@@ -71,6 +77,20 @@ public class MarketUIController : MonoBehaviour
         UpdateTotal();
     }
 
+    private void Update()
+    {
+        RefreshVendorPresence();
+    }
+
+    private void RefreshVendorPresence()
+    {
+        // Finish serving an existing customer before leaving for the day.
+        bool present = openingHours != null && (openingHours.IsOpen || IsTradingAllowed);
+        if (vendor != null && vendor.activeSelf != present) vendor.SetActive(present);
+        if (vendorInteractionArea != null && vendorInteractionArea.activeSelf != present)
+            vendorInteractionArea.SetActive(present);
+    }
+
     private void Start()
     {
         FindInventoryControllers();
@@ -127,17 +147,28 @@ public class MarketUIController : MonoBehaviour
 
     public void OpenMarket()
     {
+        // An already-open shopping session may finish after closing time.
+        if (IsTradingAllowed) return;
+        if (openingHours == null || !openingHours.IsOpen)
+        {
+            if (openingHours != null) openingHours.ShowClosedNotice();
+            return;
+        }
         if (marketPanel == null)
             return;
 
         FindInventoryControllers();
 
+        tradingSessionActive = true;
         marketPanel.SetActive(true);
+        RefreshVendorPresence();
         UpdateTotal();
     }
 
     public void CloseMarket()
     {
+        tradingSessionActive = false;
+        RefreshVendorPresence();
         ClearCart();
 
         if (marketPanel != null)
@@ -146,6 +177,7 @@ public class MarketUIController : MonoBehaviour
 
     public void AddToCart(GameObject prefab, int price)
     {
+        if (!IsTradingAllowed) return;
         if (!IsOpen || prefab == null || price < 0)
             return;
 
@@ -185,6 +217,7 @@ public class MarketUIController : MonoBehaviour
 
     public void BuyItems()
     {
+        if (!IsTradingAllowed) return;
         if (!IsOpen)
             return;
 
