@@ -7,6 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 1f;
 
+    [Header("Upgrade de movimento")]
+    [SerializeField, Min(1f)] private float upgradedMoveSpeedMultiplier = 1.25f;
+
+    public float CurrentMoveSpeed => moveSpeed * (UpgradePurchases.Has(UpgradePurchases.Shoes)
+        ? Mathf.Max(1f, upgradedMoveSpeedMultiplier) : 1f);
+
     private PlayerControls playerControls;
     private Vector2 movement;
     private Vector2 lastMovement;
@@ -57,7 +63,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         rb.MovePosition(
-            rb.position + movement * (moveSpeed * Time.fixedDeltaTime)
+            rb.position + movement * (CurrentMoveSpeed * Time.fixedDeltaTime)
         );
     }
 
