@@ -18891,7 +18891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6788139898053970427, guid: 720aee07ffbfe0745b7a9321340dfc7e, type: 3}
       propertyPath: price
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6788139898053970427, guid: 720aee07ffbfe0745b7a9321340dfc7e, type: 3}
       propertyPath: ingredientPrefab
@@ -26434,7 +26434,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 0
     cookingTime: 15
-    basePrice: 55
+    basePrice: 15800
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 469198977bb787b44bb64dec23150ee2, type: 3}
       amount: 1
