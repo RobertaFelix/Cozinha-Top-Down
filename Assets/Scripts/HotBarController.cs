@@ -1,12 +1,80 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
 
 public class HotbarController : MonoBehaviour
 {
     public GameObject hotbarPanel;
     public GameObject slotPrefab;
     public int slotCount;
+
+    [SerializeField] private GameObject potionUser;
+
+    private static readonly Key[] numberKeys = { Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4, Key.Digit5, Key.Digit6 };
+    private static readonly Key[] numpadKeys = { Key.Numpad1, Key.Numpad2, Key.Numpad3, Key.Numpad4, Key.Numpad5, Key.Numpad6 };
+
+    private void Update()
+    {
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
+        for (int i = 0; i < numberKeys.Length; i++)
+            if (keyboard[numberKeys[i]].wasPressedThisFrame || keyboard[numpadKeys[i]].wasPressedThisFrame)
+                TryUseSlot(i);
+    }
+
+    private bool CanUseHotbar()
+    {
+        if (!isActiveAndEnabled || hotbarPanel == null || !hotbarPanel.activeInHierarchy ||
+            Time.timeScale <= 0 || ItemTooltipView.IsDragging) return false;
+        var transition = FindFirstObjectByType<EnvironmentTransition>();
+        if (transition != null && transition.IsTransitioning) return false;
+        var scenes = FindFirstObjectByType<SceneTransitionController>();
+        if (scenes != null && scenes.IsLoading) return false;
+        var selected = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
+        return selected == null || (selected.GetComponentInParent<TMP_InputField>() == null &&
+            selected.GetComponentInParent<InputField>() == null);
+    }
+
+    // Zero-based index; consume only the stack in this physical hotbar slot.
+    public bool TryUseSlot(int index)
+    {
+        if (!CanUseHotbar() || index < 0 || index >= numberKeys.Length || index >= slotCount) return false;
+        int slotIndex = 0;
+        Slot slot = null;
+        foreach (Transform child in hotbarPanel.transform)
+        {
+            var candidate = child.GetComponent<Slot>();
+            if (candidate == null) continue;
+            if (slotIndex++ == index) { slot = candidate; break; }
+        }
+        if (slot == null || !slot.gameObject.activeInHierarchy || slot.inventoryItem?.itemPrefab == null ||
+            slot.inventoryItem.amount <= 0 || slot.currentItem == null ||
+            slot.currentItem.transform.parent != slot.transform) return false;
+
+        var potion = slot.inventoryItem.itemPrefab.GetComponent<PotionItem>();
+        if (potion == null) return false;
+        if (potionUser == null)
+        {
+            var player = FindFirstObjectByType<PlayerController>();
+            if (player != null) potionUser = player.gameObject;
+        }
+        if (!potion.TryUse(potionUser)) return false;
+
+        slot.inventoryItem.amount--;
+        if (slot.inventoryItem.amount == 0)
+        {
+            slot.currentItem.SetActive(false);
+            Destroy(slot.currentItem);
+            slot.currentItem = null;
+            slot.inventoryItem = null;
+        }
+        slot.UpdateQuantityDisplay();
+        return true;
+    }
 
     private void Start()
     {

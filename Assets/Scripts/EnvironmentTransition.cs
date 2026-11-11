@@ -21,7 +21,24 @@ public class EnvironmentTransition : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.6f;
     [SerializeField] private float cameraSettleDelay = 0.6f;
 
+    [Header("Retorno para casa")]
+    [SerializeField] private GameObject homeInterior;
+    [SerializeField] private Transform homeSpawn;
+    [SerializeField] private Transform homeExteriorExitSpawn;
+
+    public bool IsTransitioning => isTransitioning;
     private bool isTransitioning;
+
+    public bool TryReturnHome()
+    {
+        if (!isActiveAndEnabled || isTransitioning || currentInterior == homeInterior ||
+            homeInterior == null || homeSpawn == null || homeExteriorExitSpawn == null ||
+            exterior == null || transitionImage == null) return false;
+        FindPlayerReferences();
+        if (player == null) return false;
+        StartCoroutine(Transition(homeInterior, homeSpawn.position, homeExteriorExitSpawn, true));
+        return true;
+    }
 
     private GameObject currentInterior;
     private Transform currentExteriorExitSpawn;
@@ -157,6 +174,8 @@ public class EnvironmentTransition : MonoBehaviour
         // Troca os ambientes.
         if (entering)
         {
+            if (currentInterior != null && currentInterior != interior)
+                currentInterior.SetActive(false);
             exterior.SetActive(false);
             interior.SetActive(true);
 

@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
 
@@ -20,7 +21,25 @@ public class SceneTransitionController : MonoBehaviour
     [SerializeField] private string firstSceneName = "SampleScene";
     [SerializeField] private string firstSceneSpawnTag = "VillageSpawn";
 
+    private bool returnHomeAfterLoad;
     private bool isLoading;
+    public bool IsLoading => isLoading;
+
+    public bool TryReturnHome()
+    {
+        if (isLoading || !Application.CanStreamedLevelBeLoaded(firstSceneName)) return false;
+        returnHomeAfterLoad = true;
+        LoadScene(firstSceneName, firstSceneSpawnTag);
+        return true;
+    }
+
+    private IEnumerator FinishReturnHome()
+    {
+        // Scene Start initializes the exterior and interior state first.
+        yield return null;
+        var environment = FindFirstObjectByType<EnvironmentTransition>();
+        if (environment != null) environment.TryReturnHome();
+    }
     private string pendingSceneName;
     private string pendingSpawnTag;
 
@@ -149,6 +168,11 @@ public class SceneTransitionController : MonoBehaviour
         EnablePlayerMovement();
 
         isLoading = false;
+        if (returnHomeAfterLoad)
+        {
+            returnHomeAfterLoad = false;
+            StartCoroutine(FinishReturnHome());
+        }
 
         Debug.Log(
             "Cena carregada: " + scene.name +

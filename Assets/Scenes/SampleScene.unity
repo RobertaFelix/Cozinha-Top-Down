@@ -55272,6 +55272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6b494a226035740bf573c7e34bbf1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnvironmentTransition
+  homeInterior: {fileID: 2027675625}
+  homeSpawn: {fileID: 1430257677}
+  homeExteriorExitSpawn: {fileID: 1114689764}
   exterior: {fileID: 1860243222}
   interiors:
   - {fileID: 2027675625}
