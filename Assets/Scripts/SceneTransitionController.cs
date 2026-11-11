@@ -42,11 +42,13 @@ public class SceneTransitionController : MonoBehaviour
     }
     private string pendingSceneName;
     private string pendingSpawnTag;
+    private bool pendingRandomDungeonSpawn;
+    public string DungeonSceneName => dungeonSceneName;
 
     public void LoadDungeon()
     {
-        Debug.Log("LoadDungeon foi chamado!");
-
+        if (isLoading) return;
+        pendingRandomDungeonSpawn = true;
         LoadScene(dungeonSceneName, dungeonSpawnTag);
     }
 
@@ -105,8 +107,17 @@ public class SceneTransitionController : MonoBehaviour
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
-        GameObject spawnObject =
-            GameObject.FindGameObjectWithTag(pendingSpawnTag);
+        GameObject spawnObject = null;
+        if (pendingRandomDungeonSpawn)
+        {
+            pendingRandomDungeonSpawn = false;
+            if (DungeonLayout.TrySelectSpawn(scene, out Transform dungeonSpawn))
+                spawnObject = dungeonSpawn.gameObject;
+            else
+                Debug.LogWarning("No configured dungeon spawn points; using the legacy spawn.");
+        }
+        if (spawnObject == null)
+            spawnObject = GameObject.FindGameObjectWithTag(pendingSpawnTag);
 
         if (spawnObject == null)
         {
