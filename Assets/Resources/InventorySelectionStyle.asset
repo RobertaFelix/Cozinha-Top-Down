@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb30f8c944d4b5eaf03103d67fbbbaa, type: 3}
+  m_Name: InventorySelectionStyle
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySelectionStyle
+  topLeft: {fileID: 5082201413853151123, guid: c132a41e3cbf42847ac119302e0402c0, type: 3}
+  topRight: {fileID: -1769489117381750988, guid: c132a41e3cbf42847ac119302e0402c0, type: 3}
+  bottomLeft: {fileID: -5254744234589555980, guid: c132a41e3cbf42847ac119302e0402c0, type: 3}
+  bottomRight: {fileID: -7464025755702553562, guid: c132a41e3cbf42847ac119302e0402c0, type: 3}
+  hoverSound: {fileID: 8300000, guid: 192ddcaf33c344eca715585a4e78c9a4, type: 3}
+  hoverVolume: 0.25
+  framePadding: 4

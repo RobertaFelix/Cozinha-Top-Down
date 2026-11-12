@@ -5,6 +5,12 @@ TextureImporter:
   - first:
       213: 1155509044528257626
     second: tooltipV2_0
+  - first:
+      213: 7155509044528257626
+    second: tooltipV2_header
+  - first:
+      213: 7155509044528257627
+    second: tooltipV2_body
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -124,8 +130,8 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      border: {x: 4, y: 4, z: 4, w: 14}
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -133,17 +139,61 @@ TextureImporter:
       spriteID: a5a9bd59a51390010800000000000000
       internalID: 1155509044528257626
       vertices: []
-      indices: 
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tooltipV2_header
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 18
+        width: 48
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 4, y: 3, z: 4, w: 4}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b6d3d328be4d0094bd70a962e7863f
+      internalID: 7155509044528257626
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tooltipV2_body
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 48
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 4, y: 4, z: 4, w: 1}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3320c6e907224d519cca750891ba937a
+      internalID: 7155509044528257627
+      vertices: []
+      indices:
       edges: []
       weights: []
     outline: []
-    customData: 
+    customData:
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID:
     internalID: 0
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
     secondaryTextures: []
@@ -151,8 +201,10 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       tooltipV2_0: 1155509044528257626
-  mipmapLimitGroupName: 
+      tooltipV2_body: 7155509044528257627
+      tooltipV2_header: 7155509044528257626
+  mipmapLimitGroupName:
   pSDRemoveMatte: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:
