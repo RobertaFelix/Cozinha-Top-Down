@@ -127,12 +127,12 @@ TextureImporter:
       name: cenouraCrescendo_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 8
+        width: 10
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -149,12 +149,12 @@ TextureImporter:
       name: cenouraCrescendo_1
       rect:
         serializedVersion: 2
-        x: 11
+        x: 10
         y: 0
-        width: 8
+        width: 10
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -171,12 +171,12 @@ TextureImporter:
       name: cenouraCrescendo_2
       rect:
         serializedVersion: 2
-        x: 20
+        x: 19
         y: 0
-        width: 10
+        width: 11
         height: 11
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -198,7 +198,7 @@ TextureImporter:
         width: 11
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -215,7 +215,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 873375779cc11244ab3ffd25b2ec02c3
     internalID: 0
     vertices: []
     indices: 
