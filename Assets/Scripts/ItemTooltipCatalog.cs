@@ -66,6 +66,7 @@ public static class ItemTooltipCatalog
         if (prefab == null) return default;
         var info = prefab.GetComponent<ItemTooltipInfo>();
         string body = info != null ? info.Description : "";
+        if (!string.IsNullOrEmpty(body) && prefab.GetComponent<PotionItem>() != null) body = "Effect: " + body;
         if (amount > 0) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Quantity: " + amount;
         if (unitPrice.HasValue) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Unit price: " + Mathf.Max(0, unitPrice.Value) + " coins";
         return new ItemTooltipContent(GetName(prefab), body, GetIcon(prefab));
@@ -100,6 +101,6 @@ public static class ItemTooltipCatalog
         string title = index < upgradeNames.Length ? upgradeNames[index] : "Upgrade " + (index + 1);
         string description = index < upgradeDescriptions.Length ? upgradeDescriptions[index] : "Coming soon.";
         string status = purchased ? "Purchased" : pending ? "Selected - confirm purchase" : "Price: " + Mathf.Max(0, price) + " coins";
-        return new ItemTooltipContent(title, description + "\n" + status, sprite);
+        return new ItemTooltipContent(title, "Effect: " + description + "\n" + status, sprite);
     }
 }
