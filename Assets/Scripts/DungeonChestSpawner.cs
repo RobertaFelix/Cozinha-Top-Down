@@ -6,6 +6,7 @@ using UnityEngine;
 public sealed class DungeonChestSpawner : MonoBehaviour
 {
     [SerializeField] private DungeonChest chestPrefab;
+    [SerializeField] private GameObject bossKeyPrefab;
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
     [SerializeField, Min(1)] private int minimumChests = 4;
     [SerializeField, Min(1)] private int maximumChests = 6;
@@ -16,7 +17,7 @@ public sealed class DungeonChestSpawner : MonoBehaviour
 
     private readonly List<DungeonChest> spawnedChests = new List<DungeonChest>();
     private bool generated;
-    public bool HasBossKey { get; private set; }
+    public bool HasBossKey => BossKeyItem.Has(bossKeyPrefab);
     public IReadOnlyList<Transform> SpawnPoints => spawnPoints;
     public IReadOnlyList<DungeonChest> SpawnedChests => spawnedChests;
 
@@ -108,18 +109,11 @@ public sealed class DungeonChestSpawner : MonoBehaviour
 
     internal bool CollectBossKey(DungeonChest chest)
     {
-        if (HasBossKey || chest == null || !chest.ContainsBossKey || !spawnedChests.Contains(chest)) return false;
-        HasBossKey = true;
-        return true;
+        if (chest == null || !chest.ContainsBossKey || !spawnedChests.Contains(chest)) return false;
+        return bossKeyPrefab != null && BossKeyItem.TryGive(bossKeyPrefab);
     }
 
-    // The boss-door task can consume the key from this run without using a permanent upgrade.
-    public bool TryUseBossKey()
-    {
-        if (!HasBossKey) return false;
-        HasBossKey = false;
-        return true;
-    }
+    public bool TryUseBossKey() => BossKeyItem.TryConsume(bossKeyPrefab);
 
     private void OnDrawGizmosSelected()
     {

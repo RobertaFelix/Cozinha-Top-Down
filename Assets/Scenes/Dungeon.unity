@@ -12385,6 +12385,8 @@ Transform:
   - {fileID: 993051701}
   - {fileID: 2146099573}
   - {fileID: 2020251070}
+  - {fileID: 2084344918}
+  - {fileID: 267761301}
   m_Father: {fileID: 1618150528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &648776903
@@ -24547,6 +24549,8 @@ Transform:
   - {fileID: 582082033}
   - {fileID: 941385336}
   - {fileID: 285650000}
+  - {fileID: 874999147}
+  - {fileID: 122555785}
   m_Father: {fileID: 1618150528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1540168539
@@ -29460,6 +29464,8 @@ Transform:
   - {fileID: 554695928}
   - {fileID: 1706029840}
   - {fileID: 187038440}
+  - {fileID: 966531730}
+  - {fileID: 1591729233}
   m_Father: {fileID: 1618150528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1755983451
@@ -32876,6 +32882,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::DungeonChestSpawner
   chestPrefab: {fileID: 5833557218111697781, guid: c601f22dd78afde4c9b2079f380287d9, type: 3}
+  bossKeyPrefab: {fileID: 5341128377165934872, guid: f9009668eca44a34db061492584c1b48, type: 3}
   spawnPoints:
   - {fileID: 1176313929}
   - {fileID: 603735070}
@@ -33067,6 +33074,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::DungeonChestSpawner
   chestPrefab: {fileID: 5833557218111697781, guid: c601f22dd78afde4c9b2079f380287d9, type: 3}
+  bossKeyPrefab: {fileID: 5341128377165934872, guid: f9009668eca44a34db061492584c1b48, type: 3}
   spawnPoints:
   - {fileID: 319387449}
   - {fileID: 2124951172}
@@ -33295,6 +33303,324 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1646320214}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &122555784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122555785}
+  m_Layer: 0
+  m_Name: Boss Door Return Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &122555785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122555784}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.48999, y: 33.52997, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1540168538}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &267761300
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 648776902}
+    m_Modifications:
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.021851
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 46.51953
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1430888932002393434, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_Name
+      value: Boss Room Return Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: requiresKey
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+--- !u!4 &267761301 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+  m_PrefabInstance: {fileID: 267761300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &267761302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+  m_PrefabInstance: {fileID: 267761300}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e814d55d8a23146b0a90873025ae4b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBossDoor
+--- !u!1001 &874999146
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1540168538}
+    m_Modifications:
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.48999
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 35.72998
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1430888932002393434, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_Name
+      value: Boss Room Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: returnDoor
+      value:
+      objectReference: {fileID: 267761302}
+    - target: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: destination
+      value:
+      objectReference: {fileID: 2084344918}
+    - target: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: returnSpawn
+      value:
+      objectReference: {fileID: 122555785}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+--- !u!4 &874999147 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+  m_PrefabInstance: {fileID: 874999146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &966531729
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1755983450}
+    m_Modifications:
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 36.799988
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1430888932002393434, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: m_Name
+      value: Boss Room Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: returnDoor
+      value:
+      objectReference: {fileID: 267761302}
+    - target: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: destination
+      value:
+      objectReference: {fileID: 2084344918}
+    - target: {fileID: 1593816213595363073, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+      propertyPath: returnSpawn
+      value:
+      objectReference: {fileID: 1591729233}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+--- !u!4 &966531730 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 692180379437961024, guid: d98d05bdaf9466f4a8db8062d1a0458d, type: 3}
+  m_PrefabInstance: {fileID: 966531729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1591729232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1591729233}
+  m_Layer: 0
+  m_Name: Boss Door Return Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1591729233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591729232}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.5, y: 34.599976, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1755983450}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2084344917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2084344918}
+  m_Layer: 0
+  m_Name: Boss Room Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2084344918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084344917}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.021851, y: 50.729492, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 648776902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
