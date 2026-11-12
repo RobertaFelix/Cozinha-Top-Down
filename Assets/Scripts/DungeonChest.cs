@@ -41,7 +41,11 @@ public sealed class DungeonChest : MonoBehaviour
     // Uses the same proximity/E interaction as the other objects in the game.
     public void Interact()
     {
-        if (!TryOpen()) return;
+        if (!TryOpen())
+        {
+            if (!IsOpened && containsBossKey) MarketHoursNotice.Show("Make room in your inventory for the boss room key.");
+            return;
+        }
         MarketHoursNotice.Show(containsBossKey ? "Boss room key found!" : "The chest is empty.");
     }
 
