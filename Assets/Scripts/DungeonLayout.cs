@@ -36,6 +36,7 @@ public sealed class DungeonLayout : MonoBehaviour
         spawn = points[Random.Range(0, points.Count)];
         foreach (var layout in layouts)
             layout.gameObject.SetActive(layout == selected);
+        selected.GetComponent<DungeonChestSpawner>()?.GenerateForRun(spawn);
         return true;
     }
 
