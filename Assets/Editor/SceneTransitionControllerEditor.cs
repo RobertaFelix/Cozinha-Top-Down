@@ -48,6 +48,13 @@ public sealed class SceneTransitionControllerEditor : Editor
                     }
                     if (GUILayout.Button("Create spawn point — " + layout.DisplayName))
                         CreateSpawnPoint(layout);
+                    var chests = layout.GetComponent<DungeonChestSpawner>();
+                    if (chests != null)
+                    {
+                        EditorGUILayout.ObjectField("Chest spawner", chests, typeof(DungeonChestSpawner), true);
+                        if (GUILayout.Button("Create chest spawn point - " + layout.DisplayName))
+                            DungeonChestSpawnerEditor.CreateSpawnPoint(chests);
+                    }
                 }
             EditorGUILayout.HelpBox("Move each spawn point to a walkable location in the Scene view. Before Play, the dungeon scene is automatically saved and closed. Entry randomly selects a dungeon, then one of its points.", MessageType.Info);
         }
