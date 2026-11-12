@@ -12,12 +12,14 @@ public class ItemTooltipTarget : MonoBehaviour, IPointerEnterHandler, IPointerEx
         var component = target.GetComponent<ItemTooltipTarget>();
         if (component == null) component = target.AddComponent<ItemTooltipTarget>();
         component.provider = content;
+        InventoryHoverSelection.EnsureRunning();
     }
 
     public ItemTooltipContent GetContent() => provider != null ? provider() : default;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        InventoryHoverSelection.PointerEntered(this);
         if (!ItemTooltipView.IsDragging)
             ItemTooltipView.Show(this, eventData.position);
     }
