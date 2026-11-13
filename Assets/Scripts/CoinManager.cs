@@ -14,10 +14,12 @@ public class CoinManager : MonoBehaviour
 
     public int TotalCoins => totalCoins;
     public int RewardMultiplier => rewardMultiplier;
+    public float PendingCoinFraction { get; private set; }
 
-    public void RestoreEconomy(int coins, int multiplier, bool doubleDishPrices)
+    public void RestoreEconomy(int coins, int multiplier, bool doubleDishPrices, float pendingCoinFraction = 0f)
     {
         totalCoins = Mathf.Max(0, coins);
+        PendingCoinFraction = pendingCoinFraction >= 0f && pendingCoinFraction < 1f ? pendingCoinFraction : 0f;
         rewardMultiplier = Mathf.Max(1, multiplier);
         AreDishPricesDoubled = doubleDishPrices;
         UpdateUI();
@@ -57,7 +59,14 @@ public class CoinManager : MonoBehaviour
         if (amount <= 0)
             return;
 
-        totalCoins += amount * rewardMultiplier;
+        float potionMultiplier = TimedPotionEffects.Instance != null
+            ? TimedPotionEffects.Instance.GetMultiplier(TimedPotionKind.CoinGain) : 1f;
+        // Carry fractional coins across rewards so two 1-coin pickups at 1.5x yield exactly 3.
+        decimal reward = (decimal)amount * rewardMultiplier * (decimal)potionMultiplier + (decimal)PendingCoinFraction;
+        decimal whole = System.Math.Floor(reward);
+        PendingCoinFraction = (float)(reward - whole);
+        totalCoins = (int)System.Math.Min(int.MaxValue, totalCoins + whole);
+        if (totalCoins == int.MaxValue) PendingCoinFraction = 0f;
         UpdateUI();
     }
 

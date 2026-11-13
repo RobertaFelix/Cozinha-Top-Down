@@ -6,12 +6,16 @@ using UnityEngine.EventSystems;
 public class ItemTooltipTarget : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private Func<ItemTooltipContent> provider;
+    public bool ShowInventorySelection { get; private set; } = true;
+    public RectTransform TooltipAnchor { get; private set; }
 
-    public static void Bind(GameObject target, Func<ItemTooltipContent> content)
+    public static void Bind(GameObject target, Func<ItemTooltipContent> content, bool showInventorySelection = true, RectTransform tooltipAnchor = null)
     {
         var component = target.GetComponent<ItemTooltipTarget>();
         if (component == null) component = target.AddComponent<ItemTooltipTarget>();
         component.provider = content;
+        component.ShowInventorySelection = showInventorySelection;
+        component.TooltipAnchor = tooltipAnchor;
         InventoryHoverSelection.EnsureRunning();
     }
 

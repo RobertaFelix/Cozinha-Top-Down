@@ -208,7 +208,7 @@ public class ItemTooltipView : MonoBehaviour
             SetRect(title.rectTransform, new Vector2(contentLeft, -titleTop), new Vector2(textWidth, titleHeight));
             SetRect(body.rectTransform, new Vector2(contentLeft, -bodyTop), new Vector2(textWidth, bodyHeight));
         }
-        var slotBounds = BoundsInTooltipCanvas((RectTransform)owner.transform);
+        var slotBounds = BoundsInTooltipCanvas(owner.TooltipAnchor != null ? owner.TooltipAnchor : (RectTransform)owner.transform);
         var inventoryBounds = FindInventoryBounds(owner.transform);
         panel.anchoredPosition = SlotPosition(slotBounds, inventoryBounds, panel.sizeDelta, canvasRect.rect);
         panel.gameObject.SetActive(true);

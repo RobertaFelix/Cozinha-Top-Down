@@ -66,6 +66,7 @@ public static class ItemTooltipCatalog
         if (prefab == null) return default;
         var info = prefab.GetComponent<ItemTooltipInfo>();
         string body = info != null ? info.Description : "";
+        if (prefab.GetComponent<PotionItem>()?.Effect is TimedPotionEffect timed) body = timed.Description;
         if (!string.IsNullOrEmpty(body) && prefab.GetComponent<PotionItem>() != null) body = "Effect: " + body;
         if (amount > 0) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Quantity: " + amount;
         if (unitPrice.HasValue) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Unit price: " + Mathf.Max(0, unitPrice.Value) + " coins";
