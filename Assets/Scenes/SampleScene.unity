@@ -6370,6 +6370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae27b1459085c8541a65ef8846cfad71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoveInventoryController
+  backpack: {fileID: 1682252331}
   stovePanel: {fileID: 996038660}
   slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
   slotCount: 6
@@ -55701,7 +55702,6 @@ GameObject:
   - component: {fileID: 1851738074}
   - component: {fileID: 1851738075}
   - component: {fileID: 1851738076}
-  - component: {fileID: 1851738077}
   m_Layer: 0
   m_Name: InteractionArea
   m_TagString: Untagged
@@ -55782,28 +55782,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109a2a50d98902c41a74ea73c1b1a1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stove
+  flameSprite: {fileID: 21300000, guid: 44021b9f2ea64f49b532ad34e3c470ae, type: 3}
   stoveController: {fileID: 981803283}
   stoveInventoryController: {fileID: 443527096}
   hotbarController: {fileID: 132417190}
---- !u!114 &1851738077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851738073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a64c7d7216c5ad4eb5cc2c484408716, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
-  target: {fileID: 5284287874470152412}
-  offsetAdicional: {x: 0, y: -0.4, z: 0}
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
-  useSceneTransition: 0
-  returnToFirstScene: 0
 --- !u!1 &1852754210
 GameObject:
   m_ObjectHideFlags: 0

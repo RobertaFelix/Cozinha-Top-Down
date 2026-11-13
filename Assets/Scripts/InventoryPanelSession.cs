@@ -9,16 +9,18 @@ public sealed class InventoryPanelSession : MonoBehaviour
     public static bool HasOpenPanel => active != null && active.gameObject.activeInHierarchy;
     private Action close;
     private Transform player;
+    private Collider2D interactingPlayer;
     private bool requiresProximity;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetSession() { active = null; }
 
-    public static InventoryPanelSession Bind(GameObject panel, Collider2D area)
+    public static InventoryPanelSession Bind(GameObject panel, Collider2D area, Collider2D actor = null)
     {
         var session = panel.GetComponent<InventoryPanelSession>();
         if (session == null) session = panel.AddComponent<InventoryPanelSession>();
         session.interactionArea = area;
+        session.interactingPlayer = actor;
         return session;
     }
 
@@ -54,6 +56,11 @@ public sealed class InventoryPanelSession : MonoBehaviour
         if (interactionArea == null || !interactionArea.enabled || !interactionArea.gameObject.activeInHierarchy)
         {
             Close();
+            return;
+        }
+        if (interactingPlayer)
+        {
+            if (!interactionArea.IsTouching(interactingPlayer)) Close();
             return;
         }
         if (player == null)
