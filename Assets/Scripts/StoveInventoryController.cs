@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +9,9 @@ public class StoveInventoryController : MonoBehaviour
     public GameObject slotPrefab;
     public int slotCount = 6;
     [SerializeField] private RectTransform backpack;
+    [SerializeField] private Sprite confirmIcon;
+    [SerializeField] private Sprite cancelIcon;
+    private Button confirmButton;
     private Transform previousParent;
     private int previousIndex;
     private Vector2 previousPosition;
@@ -45,28 +47,30 @@ public class StoveInventoryController : MonoBehaviour
         stovePanel.transform.SetAsLastSibling();
         var panel = (RectTransform)stovePanel.transform;
         panel.anchoredPosition = new Vector2(465, 0);
-        var button = panel.GetComponentInChildren<Button>(true);
-        if (!button)
+        if (!confirmButton)
         {
-            var obj = new GameObject("Cook", typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
-            obj.transform.SetParent(panel, false);
-            obj.GetComponent<LayoutElement>().ignoreLayout = true;
-            var rect = (RectTransform)obj.transform;
-            rect.anchoredPosition = new Vector2(0, -145);
-            rect.sizeDelta = new Vector2(200, 72);
-            obj.GetComponent<Image>().color = new Color(.4f,.23f,.13f);
-            button = obj.GetComponent<Button>();
-            var label = new GameObject("Label", typeof(TextMeshProUGUI)).GetComponent<TextMeshProUGUI>();
-            label.transform.SetParent(rect, false);
-            label.rectTransform.anchorMin = Vector2.zero;
-            label.rectTransform.anchorMax = Vector2.one;
-            label.rectTransform.sizeDelta = Vector2.zero;
-            label.text = "Cook";
-            label.alignment = TextAlignmentOptions.Center;
-            label.raycastTarget = false;
+            confirmButton = CreateButton(panel, "Confirm", confirmIcon, -78);
+            var cancel = CreateButton(panel, "Cancel", cancelIcon, 78);
+            cancel.onClick.AddListener(CloseStoveInventory);
         }
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(() => cook());
+        confirmButton.onClick.RemoveAllListeners();
+        confirmButton.onClick.AddListener(() => cook());
+    }
+
+    private static Button CreateButton(RectTransform panel, string name, Sprite sprite, float x)
+    {
+        var obj = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
+        obj.transform.SetParent(panel, false);
+        obj.GetComponent<LayoutElement>().ignoreLayout = true;
+        var rect = (RectTransform)obj.transform;
+        rect.anchorMin = rect.anchorMax = new Vector2(.5f, 0);
+        rect.pivot = new Vector2(.5f, 1);
+        rect.anchoredPosition = new Vector2(x, -8);
+        rect.sizeDelta = new Vector2(120, 120);
+        var icon = obj.GetComponent<Image>();
+        icon.sprite = sprite;
+        icon.preserveAspect = true;
+        return obj.GetComponent<Button>();
     }
 
     public void CloseStoveInventory()
