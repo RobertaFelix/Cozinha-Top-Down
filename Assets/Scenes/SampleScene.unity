@@ -72110,6 +72110,22 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::FarmInteractor
   interactionRange: 1.75
+  diggingFrames:
+  - {fileID: -3677087516298301415, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 4623845973190001408, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 2004014452420278968, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: -329688556440737327, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: -8588701083844007916, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 34718423040708329, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 1815400208610717946, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 4619169432588469207, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: -7060267415029451316, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 6905529744125103569, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 4855368790753312999, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 3159034058424252961, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  - {fileID: 7900851351202279684, guid: d5681590ad911e148945019ab38d65ea, type: 3}
+  diggingFrameSeconds: 0.08
+  diggingImpactFrame: 10
   wateringFrames:
   - {fileID: 4505345161974301649, guid: 6e011ffba1d917d4aacea1d4180eb6ee, type: 3}
   - {fileID: -111852446461392545, guid: 6e011ffba1d917d4aacea1d4180eb6ee, type: 3}

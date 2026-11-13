@@ -7,6 +7,11 @@ using UnityEngine.InputSystem;
 public sealed class FarmInteractor : MonoBehaviour
 {
     [SerializeField, Min(.1f)] private float interactionRange = 1.75f;
+    [Header("Digging animation")]
+    [SerializeField] private Sprite[] diggingFrames;
+    [SerializeField, Min(.01f)] private float diggingFrameSeconds = .08f;
+    [SerializeField, Min(0)] private int diggingImpactFrame = 10;
+    [Header("Watering animation")]
     [SerializeField] private Sprite[] wateringFrames;
     [SerializeField, Min(.01f)] private float wateringFrameSeconds = .1f;
     [SerializeField] private HotbarController hotbar;
@@ -109,13 +114,19 @@ public sealed class FarmInteractor : MonoBehaviour
         }
         var tool = slot.inventoryItem.itemPrefab.GetComponent<FarmToolItem>();
         if (tool == null) return false;
-        if (tool.Kind == FarmToolKind.Hoe) return farm.TryTill(area, cell);
+        if (tool.Kind == FarmToolKind.Hoe)
+        {
+            if (farm.GetPlot(area.AreaId, cell) != null) return false;
+            StartCoroutine(PlayToolAnimation(area.CellCenter(cell), diggingFrames, diggingFrameSeconds,
+                () => { if (farm != null && area != null) farm.TryTill(area, cell); }, diggingImpactFrame));
+            return true;
+        }
         if (!farm.TryWater(area, cell))
         {
             if (farm.GetPlot(area.AreaId, cell) == null) MarketHoursNotice.Show("Prepare this plot with the hoe first.");
             return false;
         }
-        StartCoroutine(Water(area.CellCenter(cell)));
+        StartCoroutine(PlayToolAnimation(area.CellCenter(cell), wateringFrames, wateringFrameSeconds));
         return true;
     }
     public bool TryHarvestAt(FarmArea area, Vector3Int cell)
@@ -123,21 +134,31 @@ public sealed class FarmInteractor : MonoBehaviour
         return CanAct() && InRange(area, cell) && FarmingSaveModule.Instance != null &&
             FarmingSaveModule.Instance.TryHarvest(area, cell, Object.FindAnyObjectByType<InventoryController>());
     }
-    private IEnumerator Water(Vector3 target)
+    private IEnumerator PlayToolAnimation(Vector3 target, Sprite[] frames, float frameSeconds,
+        System.Action onImpact = null, int impactFrame = 0)
     {
-        if (wateringFrames == null || wateringFrames.Length == 0 || actor == null) yield break;
+        if (frames == null || frames.Length == 0 || actor == null)
+        {
+            onImpact?.Invoke();
+            yield break;
+        }
         busy = true; previousMovement = movement.enabled; previousAnimator = animator != null && animator.enabled;
         previousSprite = actor.sprite; previousFlip = actor.flipX;
         movement.enabled = false;
         if (body != null) body.linearVelocity = Vector2.zero;
         if (animator != null) animator.enabled = false;
         actor.flipX = target.x < transform.position.x;
-        foreach (var frame in wateringFrames)
+        try
         {
-            if (frame != null) actor.sprite = frame;
-            yield return new WaitForSeconds(wateringFrameSeconds);
+            int impact = Mathf.Clamp(impactFrame, 0, frames.Length - 1);
+            for (int i = 0; i < frames.Length; i++)
+            {
+                if (frames[i] != null) actor.sprite = frames[i];
+                if (i == impact) onImpact?.Invoke();
+                yield return new WaitForSeconds(Mathf.Max(.01f, frameSeconds));
+            }
         }
-        RestoreActor();
+        finally { RestoreActor(); }
     }
     private void RestoreActor()
     {
