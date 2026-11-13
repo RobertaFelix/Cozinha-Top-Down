@@ -138,7 +138,7 @@ public class StoveController : MonoBehaviour
             }
             if (!valid || required.Count != available.Count) continue;
             foreach (var pair in required)
-                if (!available.TryGetValue(pair.Key, out var count) || count < pair.Value) { valid = false; break; }
+                if (!available.TryGetValue(pair.Key, out var count) || count != pair.Value) { valid = false; break; }
             if (valid) return recipe;
         }
         return null;
