@@ -24,7 +24,7 @@ public class HotbarController : MonoBehaviour
             var prefab = slot?.inventoryItem?.itemPrefab;
             return prefab != null && slot.inventoryItem.amount > 0 && slot.currentItem != null &&
                 slot.currentItem.transform.parent == slot.transform &&
-                (prefab.GetComponent<FarmToolItem>() != null || prefab.GetComponent<SeedItem>() != null) ? slot : null;
+                (prefab.GetComponent<CookwareItem>() != null || prefab.GetComponent<FarmToolItem>() != null || prefab.GetComponent<SeedItem>() != null) ? slot : null;
         }
     }
 
@@ -72,7 +72,7 @@ public class HotbarController : MonoBehaviour
             slot.inventoryItem.amount <= 0 || slot.currentItem == null ||
             slot.currentItem.transform.parent != slot.transform) return false;
 
-        if (slot.inventoryItem.itemPrefab.GetComponent<FarmToolItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<SeedItem>() != null)
+        if (slot.inventoryItem.itemPrefab.GetComponent<CookwareItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<FarmToolItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<SeedItem>() != null)
         {
             equippedIndex = index;
             return true;
@@ -159,14 +159,14 @@ public class HotbarController : MonoBehaviour
         if (success)
         {
             Debug.Log(
-                "Item adicionado à hotbar: " +
+                "Item adicionado Ã  hotbar: " +
                 item.itemPrefab.name +
-                " ×" + item.amount
+                " Ã—" + item.amount
             );
         }
         else
         {
-            Debug.Log("Hotbar sem espaço suficiente.");
+            Debug.Log("Hotbar sem espaÃ§o suficiente.");
         }
 
         return success;

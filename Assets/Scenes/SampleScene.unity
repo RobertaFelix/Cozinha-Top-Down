@@ -6370,6 +6370,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae27b1459085c8541a65ef8846cfad71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoveInventoryController
+  confirmIcon: {fileID: 21300000, guid: 8efb0a348dc749f8868511b6b3b479f7, type: 3}
+  cancelIcon: {fileID: 21300000, guid: 09c2c7ac031b431d9dc5b9094abf6835, type: 3}
+  backpack: {fileID: 1682252331}
   stovePanel: {fileID: 996038660}
   slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
   slotCount: 6
@@ -27210,7 +27213,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -5, y: -159}
-  m_SizeDelta: {x: 906.25, y: 187.5}
+  m_SizeDelta: {x: 481.25, y: 337.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &996038662
 MonoBehaviour:
@@ -27234,8 +27237,8 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 44, y: 44}
-  m_Constraint: 2
-  m_ConstraintCount: 1
+  m_Constraint: 1
+  m_ConstraintCount: 3
 --- !u!114 &996038663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27256,7 +27259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5240404496113911933, guid: 4813b6cf8c55e8840b47c945b30de870, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 96f00b57416f4f92b30506f15521f261, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -55701,7 +55704,6 @@ GameObject:
   - component: {fileID: 1851738074}
   - component: {fileID: 1851738075}
   - component: {fileID: 1851738076}
-  - component: {fileID: 1851738077}
   m_Layer: 0
   m_Name: InteractionArea
   m_TagString: Untagged
@@ -55782,28 +55784,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109a2a50d98902c41a74ea73c1b1a1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stove
+  flameSprite: {fileID: 21300000, guid: 44021b9f2ea64f49b532ad34e3c470ae, type: 3}
   stoveController: {fileID: 981803283}
   stoveInventoryController: {fileID: 443527096}
   hotbarController: {fileID: 132417190}
---- !u!114 &1851738077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851738073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a64c7d7216c5ad4eb5cc2c484408716, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractionPromptTrigger
-  target: {fileID: 5284287874470152412}
-  offsetAdicional: {x: 0, y: -0.4, z: 0}
-  onInteract:
-    m_PersistentCalls:
-      m_Calls: []
-  useSceneTransition: 0
-  returnToFirstScene: 0
 --- !u!1 &1852754210
 GameObject:
   m_ObjectHideFlags: 0

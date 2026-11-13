@@ -938,6 +938,7 @@ GameObject:
   - component: {fileID: 4933793757560682789}
   - component: {fileID: 1002243127661012534}
   - component: {fileID: 354393749069243925}
+  - component: {fileID: 688891521788876997}
   m_Layer: 0
   m_Name: dishes
   m_TagString: Untagged
@@ -2403,3 +2404,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4515467370999489317, guid: 268565f8795001d4fae61f9c7a8e6792, type: 3}
   m_PrefabInstance: {fileID: 7374401546629543973}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &688891521788876997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4836468001083978234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6e8afe78384e179662a05d40a23914, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  plate: {fileID: 2029307285019830437, guid: 9b993a6c1e91484f933e4a8833e67045, type: 3}
