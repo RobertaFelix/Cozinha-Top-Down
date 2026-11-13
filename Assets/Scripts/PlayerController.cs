@@ -60,6 +60,13 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerInput()
     {
+        var keys = Keyboard.current;
+        if (InventoryPanelSession.HasOpenPanel && keys != null &&
+            (keys.upArrowKey.isPressed || keys.downArrowKey.isPressed || keys.leftArrowKey.isPressed || keys.rightArrowKey.isPressed))
+        {
+            movement = Vector2.zero;
+            return;
+        }
         movement = playerControls.Movement.Move.ReadValue<Vector2>();
     }
 

@@ -14,7 +14,8 @@ public class HotbarController : MonoBehaviour
 
     [SerializeField] private GameObject potionUser;
 
-    private int equippedIndex = -1;
+    private int equippedIndex;
+    public Slot SelectedSlot => GetPhysicalSlot(equippedIndex);
     public int EquippedIndex => equippedIndex;
     public Slot EquippedSlot
     {
@@ -51,7 +52,7 @@ public class HotbarController : MonoBehaviour
 
     private bool CanUseHotbar()
     {
-        if (!isActiveAndEnabled || hotbarPanel == null || !hotbarPanel.activeInHierarchy ||
+        if (!InventoryWorkspace.HotbarAcceptsInput || !isActiveAndEnabled || hotbarPanel == null || !hotbarPanel.activeInHierarchy ||
             Time.timeScale <= 0 || ItemTooltipView.IsDragging) return false;
         var transition = FindFirstObjectByType<EnvironmentTransition>();
         if (transition != null && transition.IsTransitioning) return false;
@@ -66,15 +67,15 @@ public class HotbarController : MonoBehaviour
     public bool TryUseSlot(int index)
     {
         if (!CanUseHotbar() || index < 0 || index >= numberKeys.Length || index >= slotCount) return false;
-        equippedIndex = -1;
         Slot slot = GetPhysicalSlot(index);
-        if (slot == null || !slot.gameObject.activeInHierarchy || slot.inventoryItem?.itemPrefab == null ||
+        if (!slot || !slot.gameObject.activeInHierarchy) return false;
+        equippedIndex = index;
+        if (slot.inventoryItem?.itemPrefab == null ||
             slot.inventoryItem.amount <= 0 || slot.currentItem == null ||
             slot.currentItem.transform.parent != slot.transform) return false;
 
         if (slot.inventoryItem.itemPrefab.GetComponent<CookwareItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<FarmToolItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<SeedItem>() != null)
         {
-            equippedIndex = index;
             return true;
         }
 
@@ -108,17 +109,7 @@ public class HotbarController : MonoBehaviour
     private void CreateSlots()
     {
         for (int i = 0; i < slotCount; i++)
-        {
-            Slot slot = Instantiate(
-                slotPrefab,
-                hotbarPanel.transform
-            ).GetComponent<Slot>();
-
-            slot.currentItem = null;
-            slot.inventoryItem = null;
-
-            slot.UpdateQuantityDisplay();
-        }
+            InventoryStacking.CreateSlot(slotPrefab, hotbarPanel.transform);
     }
 
     public InventoryItem[] GetHotbarItems()

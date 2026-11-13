@@ -33,6 +33,7 @@ public class MenuController : MonoBehaviour
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            if (InventoryPanelSession.CloseCurrent()) return;
             if (menuCanvas == null)
                 return;
 
@@ -56,7 +57,7 @@ public class MenuController : MonoBehaviour
                     restaurantMenuPanel.SetActive(false);
 
                 if (hotbarPanel != null)
-                    hotbarPanel.SetActive(true);
+                    InventoryWorkspace.SetShopHotbarVisible(true);
             }
         }
     }
@@ -64,9 +65,10 @@ public class MenuController : MonoBehaviour
     public void CloseMenu()
     {
         InventoryPanelSession.Closed(menuCanvas);
+        InventoryWorkspace.RestoreHud();
         if (menuCanvas != null) menuCanvas.SetActive(false);
         if (restaurantMenuPanel != null) restaurantMenuPanel.SetActive(false);
-        if (hotbarPanel != null) hotbarPanel.SetActive(true);
+        if (hotbarPanel != null) InventoryWorkspace.SetShopHotbarVisible(true);
     }
 
     public void OpenRestaurantMenu() { OpenRestaurantMenu(null); }
@@ -93,6 +95,6 @@ public class MenuController : MonoBehaviour
             restaurantMenuPanel.SetActive(true);
 
         if (hotbarPanel != null)
-            hotbarPanel.SetActive(false);
+            InventoryWorkspace.SetShopHotbarVisible(false);
     }
 }
