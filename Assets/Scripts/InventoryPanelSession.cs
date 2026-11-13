@@ -7,11 +7,11 @@ public sealed class InventoryPanelSession : MonoBehaviour
     [SerializeField] private Collider2D interactionArea;
     private static InventoryPanelSession active;
     public static bool HasOpenPanel => active != null && active.gameObject.activeInHierarchy;
+    public static Transform CurrentPanel => HasOpenPanel ? active.transform : null;
     private Action close;
     private Transform player;
     private Collider2D interactingPlayer;
     private bool requiresProximity;
-
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetSession() { active = null; }
 
@@ -39,6 +39,7 @@ public sealed class InventoryPanelSession : MonoBehaviour
     public static void Closed(GameObject panel)
     {
         if (active == null || active.gameObject != panel) return;
+        InventoryWorkspace.CloseStorage(panel);
         active.close = null;
         active = null;
         CancelMovement();
@@ -52,7 +53,8 @@ public sealed class InventoryPanelSession : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (active != this || !requiresProximity) return;
+        if (active != this) return;
+        if (!requiresProximity) return;
         if (interactionArea == null || !interactionArea.enabled || !interactionArea.gameObject.activeInHierarchy)
         {
             Close();
@@ -76,6 +78,13 @@ public sealed class InventoryPanelSession : MonoBehaviour
         Close();
     }
 
+    public static bool CloseCurrent()
+    {
+        if (!HasOpenPanel) return false;
+        active.Close();
+        return true;
+    }
+
     private void Close()
     {
         if (active != this) return;
@@ -83,6 +92,7 @@ public sealed class InventoryPanelSession : MonoBehaviour
         close = null;
         active = null;
         CancelMovement();
+        InventoryWorkspace.CloseStorage(gameObject);
         callback?.Invoke();
     }
 

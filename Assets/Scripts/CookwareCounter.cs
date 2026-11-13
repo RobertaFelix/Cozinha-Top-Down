@@ -45,14 +45,24 @@ public abstract class CookwareCounter : MonoBehaviour
 
     protected void Update()
     {
-        if (!InteractPressed || Time.timeScale <= 0 || InventoryPanelSession.HasOpenPanel ||
+        if (Time.timeScale <= 0 || InventoryPanelSession.HasOpenPanel ||
             InventoryStackCursor.IsHolding || ItemTooltipView.IsDragging || lastInteraction == Time.frameCount ||
             !player || !GetComponent<Collider2D>().IsTouching(player)) return;
-        var nearest = this;
+        bool click = Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame &&
+            Camera.main && Stove.CanClickWorld();
+        if (!click && !InteractPressed) return;
+        Vector2 target = click ? (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : (Vector2)player.bounds.center;
+        CookwareCounter nearest = null;
+        float best = float.PositiveInfinity;
         foreach (var spot in FindObjectsByType<CookwareCounter>(FindObjectsSortMode.None))
-            if (spot != this && spot.enabled && spot.GetComponent<Collider2D>().IsTouching(player) &&
-                (spot.GetComponent<Collider2D>().bounds.center-player.bounds.center).sqrMagnitude <
-                (nearest.GetComponent<Collider2D>().bounds.center-player.bounds.center).sqrMagnitude) nearest = spot;
+        {
+            var area = spot.GetComponent<Collider2D>();
+            if (!spot.enabled || !area.IsTouching(player)) continue;
+            if (click && !area.OverlapPoint(target) && !(spot.display && spot.Stored &&
+                spot.display.bounds.Contains(new Vector3(target.x, target.y, spot.display.bounds.center.z)))) continue;
+            float distance = ((Vector2)area.bounds.center - target).sqrMagnitude;
+            if (distance < best) { best = distance; nearest = spot; }
+        }
         if (nearest != this) return;
         lastInteraction = Time.frameCount;
         if (Stored)

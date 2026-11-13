@@ -16,61 +16,12 @@ public class InventoryController : MonoBehaviour
 
     private void InitializeInventory()
     {
-        // Remove slots antigos, caso já existam.
-        foreach (Transform child in inventoryPanel.transform)
-        {
-            Destroy(child.gameObject);
-        }
-
         for (int i = 0; i < slotCount; i++)
         {
-            GameObject slotObject = Instantiate(
-                slotPrefab,
-                inventoryPanel.transform
-            );
-
-            Slot slot = slotObject.GetComponent<Slot>();
-
-            if (slot == null)
-            {
-                Debug.LogError("O prefab Slot não possui Slot.cs!");
-                continue;
-            }
-
-            // Inicializa o slot completamente vazio.
-            slot.currentItem = null;
-            slot.inventoryItem = null;
-
-            slot.UpdateQuantityDisplay();
-
-            // Só adiciona itens iniciais se estiverem configurados.
-            if (itemPrefabs != null &&
-                i < itemPrefabs.Length &&
-                itemPrefabs[i] != null)
-            {
-                GameObject item = Instantiate(
-                    itemPrefabs[i],
-                    slot.transform
-                );
-
-                RectTransform rect = item.GetComponent<RectTransform>();
-
-                if (rect != null)
-                    rect.anchoredPosition = Vector2.zero;
-
-                slot.currentItem = item;
-
-                slot.inventoryItem = new InventoryItem
-                {
-                    itemPrefab = itemPrefabs[i],
-                    amount = 1
-                };
-
-                slot.UpdateQuantityDisplay();
-            }
+            var initial = itemPrefabs != null && i < itemPrefabs.Length ? itemPrefabs[i] : null;
+            InventoryStacking.CreateSlot(slotPrefab, inventoryPanel.transform,
+                initial ? new InventoryItem { itemPrefab = initial, amount = 1 } : null);
         }
-
-        Debug.Log("[INVENTÁRIO] " + slotCount + " slots inicializados.");
     }
 
     public InventoryItem[] GetInventoryItems()

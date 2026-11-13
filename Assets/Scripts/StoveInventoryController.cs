@@ -12,21 +12,13 @@ public class StoveInventoryController : MonoBehaviour
     [SerializeField] private Sprite confirmIcon;
     [SerializeField] private Sprite cancelIcon;
     private Button confirmButton;
-    private Transform previousParent;
-    private int previousIndex;
-    private Vector2 previousPosition;
-    private bool previouslyActive;
     public bool IsOpen => stovePanel && stovePanel.activeInHierarchy;
 
     public void EnsureSlots()
     {
         if (stovePanel.GetComponentInChildren<Slot>(true)) return;
         for (int i = 0; i < slotCount; i++)
-        {
-            var slot = Instantiate(slotPrefab, stovePanel.transform).GetComponent<Slot>();
-            slot.inventoryItem = null;
-            slot.UpdateQuantityDisplay();
-        }
+            InventoryStacking.CreateSlot(slotPrefab, stovePanel.transform);
     }
 
     public void Open(Action cook)
@@ -36,17 +28,10 @@ public class StoveInventoryController : MonoBehaviour
             backpack = FindAnyObjectByType<InventoryController>().inventoryPanel.GetComponent<RectTransform>();
         InventoryPanelSession.Open(stovePanel, CloseStoveInventory);
         EnsureSlots();
-        previousParent = backpack.parent;
-        previousIndex = backpack.GetSiblingIndex();
-        previousPosition = backpack.anchoredPosition;
-        previouslyActive = backpack.gameObject.activeSelf;
-        backpack.SetParent(stovePanel.transform.parent, false);
-        backpack.anchoredPosition = new Vector2(-465, 0);
-        backpack.gameObject.SetActive(true);
+        InventoryWorkspace.OpenStorage(stovePanel);
         stovePanel.SetActive(true);
         stovePanel.transform.SetAsLastSibling();
         var panel = (RectTransform)stovePanel.transform;
-        panel.anchoredPosition = new Vector2(465, 0);
         if (!confirmButton)
         {
             confirmButton = CreateButton(panel, "Confirm", confirmIcon, -78);
@@ -76,14 +61,6 @@ public class StoveInventoryController : MonoBehaviour
     public void CloseStoveInventory()
     {
         InventoryPanelSession.Closed(stovePanel);
-        if (previousParent)
-        {
-            backpack.SetParent(previousParent, false);
-            backpack.SetSiblingIndex(previousIndex);
-            backpack.anchoredPosition = previousPosition;
-            backpack.gameObject.SetActive(previouslyActive);
-            previousParent = null;
-        }
         stovePanel.SetActive(false);
     }
 

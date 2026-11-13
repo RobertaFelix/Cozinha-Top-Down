@@ -84,36 +84,35 @@ public class Stove : MonoBehaviour
             }
             return;
         }
-        if (InventoryPanelSession.HasOpenPanel || stoveController.IsCooking || stoveController.CookingFinished) return;
-        if (Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) { UseUtensil(); return; }
+        if (InventoryPanelSession.HasOpenPanel || stoveController.IsCooking) return;
+        if (!stoveController.CookingFinished && Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) { UseUtensil(); return; }
         if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame || !CanClickWorld() || !Camera.main) return;
         var point = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         point.z = stoveSprite.bounds.center.z;
         if (!stoveSprite.bounds.Contains(point)) return;
-        UseUtensil();
+        if (stoveController.CookingFinished) Serve();
+        else UseUtensil();
     }
 
     private void Serve()
     {
         var slot = hotbarController.EquippedSlot;
         var held = slot?.inventoryItem?.itemPrefab;
-        if (stoveController.CookingFinished)
-        {
-            if (!held || !held.TryGetComponent<CookwareItem>(out var item) || !item.isPlate) return;
-            var food = stoveController.GetCookedFood();
-            if (slot.inventoryItem.amount == 1)
-            {
-                ConsumeOne(slot);
-                InventoryStacking.AddItem(slot.transform, food);
-            }
-            else
-            {
-                if (!GiveItem(food)) return;
-                ConsumeOne(slot);
-            }
-            stoveController.UnlockCurrentRecipe();
-            stoveController.ClearCookedFood();
-        }
+        if (!held || !held.TryGetComponent<CookwareItem>(out var item) || !item.isPlate) return;
+        var food = stoveController.GetCookedFood();
+        if (food?.itemPrefab == null || food.amount <= 0 || food.amount > InventoryStacking.MaxStackSize) return;
+        var remaining = new InventoryItem { itemPrefab = held, amount = slot.inventoryItem.amount - 1 };
+        var bag = hotbarController.GetComponent<InventoryController>();
+        var destinations = new List<Slot>();
+        if (bag) destinations.AddRange(bag.inventoryPanel.GetComponentsInChildren<Slot>(true));
+        destinations.AddRange(hotbarController.hotbarPanel.GetComponentsInChildren<Slot>(true));
+        destinations.Remove(slot);
+        if (remaining.amount > 0 && !InventoryStacking.AddToSlots(destinations.ToArray(), remaining)) return;
+        slot.inventoryItem.amount = 1;
+        ConsumeOne(slot);
+        InventoryStacking.AddItem(slot.transform, food);
+        stoveController.UnlockCurrentRecipe();
+        stoveController.ClearCookedFood();
     }
 
     private void UseUtensil()

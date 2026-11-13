@@ -27,6 +27,7 @@ public class InventoryVegetablesController : MonoBehaviour
         // Garante que não existam slots antigos
         if (vegetablesPanel == null) return;
         InventoryPanelSession.Open(vegetablesPanel, CloseVegetables);
+        InventoryWorkspace.OpenStorage(vegetablesPanel);
         if (vegetablesPanel.GetComponentsInChildren<Slot>(true).Length > 0)
         {
             vegetablesPanel.SetActive(true);
@@ -35,49 +36,9 @@ public class InventoryVegetablesController : MonoBehaviour
 
         vegetablesPanel.SetActive(true);
 
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (items[i] == null)
-                continue;
-
-            if (items[i].itemPrefab == null)
-                continue;
-
-            Slot slot = Instantiate(
-                slotPrefab,
-                vegetablesPanel.transform
-            ).GetComponent<Slot>();
-
-            // Cria o item visual
-            GameObject item = Instantiate(
-                items[i].itemPrefab,
-                slot.transform
-            );
-
-            RectTransform rect =
-                item.GetComponent<RectTransform>();
-
-            if (rect != null)
-            {
-                rect.anchoredPosition =
-                    Vector2.zero;
-            }
-
-            // Guarda o objeto visual
-            slot.currentItem = item;
-
-            // Guarda os dados do item
-            slot.inventoryItem =
-                new InventoryItem();
-
-            slot.inventoryItem.itemPrefab =
-                items[i].itemPrefab;
-
-            slot.inventoryItem.amount =
-                items[i].amount;
-
-            slot.UpdateQuantityDisplay();
-        }
+        int count = Mathf.Max(slotCount, items?.Length ?? 0);
+        for (int i = 0; i < count; i++)
+            InventoryStacking.CreateSlot(slotPrefab, vegetablesPanel.transform, items != null && i < items.Length ? items[i] : null);
     }
 
     // Fecha os vegetais
