@@ -9,6 +9,7 @@ public sealed class FarmPlotData
     public int x, y;
     public string cropId = "";
     public int stage;
+    public int pendingHarvestAmount;
     public int wateredDay = -1;
     public int processedDay;
     public FarmPlotData Copy() => (FarmPlotData)MemberwiseClone();
@@ -19,6 +20,10 @@ public sealed class FarmPlotData
 public sealed class FarmingSaveModule : SaveParticipant<FarmSaveState>
 {
     [SerializeField] private CropCatalog catalog;
+    [Header("Upgrade de colheita")]
+    [SerializeField, Range(0f, 1f)] private float upgradedDoubleHarvestChance = .25f;
+    public float CurrentDoubleHarvestChance => UpgradePurchases.Has(UpgradePurchases.HarvestCrate)
+        ? Mathf.Clamp01(upgradedDoubleHarvestChance) : 0f;
     private readonly Dictionary<string, FarmPlotData> plots = new Dictionary<string, FarmPlotData>();
     public static FarmingSaveModule Instance { get; private set; }
     public event Action Changed;
@@ -91,6 +96,7 @@ public sealed class FarmingSaveModule : SaveParticipant<FarmSaveState>
             !plots.TryGetValue(Key(area.AreaId, cell), out var plot) || !string.IsNullOrEmpty(plot.cropId)) return false;
         plot.cropId = crop.id;
         plot.stage = 0;
+        plot.pendingHarvestAmount = 0;
         plot.processedDay = CurrentDay;
         Changed?.Invoke();
         return true;
@@ -112,13 +118,20 @@ public sealed class FarmingSaveModule : SaveParticipant<FarmSaveState>
             !plots.TryGetValue(Key(area.AreaId, cell), out var plot)) return false;
         var crop = catalog != null ? catalog.Find(plot.cropId) : null;
         if (crop == null || !crop.IsMature(plot.stage) || crop.harvestPrefab == null) return false;
-        if (!inventory.AddItem(new InventoryItem { itemPrefab = crop.harvestPrefab, amount = 1 }))
+        // Preserve the roll if there is no room, including across save/load; retries cannot reroll the reward.
+        if (plot.pendingHarvestAmount == 0)
+        {
+            float chance = CurrentDoubleHarvestChance;
+            plot.pendingHarvestAmount = chance >= 1f || (chance > 0f && UnityEngine.Random.value < chance) ? 2 : 1;
+        }
+        if (!inventory.AddItem(new InventoryItem { itemPrefab = crop.harvestPrefab, amount = plot.pendingHarvestAmount }))
         {
             MarketHoursNotice.Show("Make room in your inventory to harvest.");
             return false;
         }
         plot.cropId = "";
         plot.stage = 0;
+        plot.pendingHarvestAmount = 0;
         // Keep this day's watering and the tilled plot available for another seed.
         Changed?.Invoke();
         return true;
@@ -150,6 +163,9 @@ public sealed class FarmingSaveModule : SaveParticipant<FarmSaveState>
             var crop = catalog != null ? catalog.Find(plot.cropId) : null;
             Require(string.IsNullOrEmpty(plot.cropId) ? plot.stage == 0 : crop != null && crop.growthStages != null && plot.stage >= 0 && plot.stage < crop.growthStages.Length,
                 "Unknown crop or invalid growth stage.");
+            Require(plot.pendingHarvestAmount >= 0 && plot.pendingHarvestAmount <= 2 &&
+                (plot.pendingHarvestAmount == 0 || (crop != null && crop.IsMature(plot.stage))),
+                "Invalid pending harvest reward.");
         }
     }
     protected override void Restore(FarmSaveState state)

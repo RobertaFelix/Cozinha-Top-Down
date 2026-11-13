@@ -11,6 +11,8 @@ public static class UpgradePurchases
     public const int Wristwatch = 3;
     public const int Wallet = 4;
     public const int VillageKey = 7;
+    public const int HarvestCrate = 8;
+    public const int Thermometer = 10;
     public const int Television = 11;
     public const int Magnet = 12;
 
