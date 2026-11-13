@@ -59,7 +59,7 @@ public sealed class InventoryHoverSelection : MonoBehaviour
 
     private void Show(ItemTooltipTarget target)
     {
-        if (target == null || !target.isActiveAndEnabled || !(target.transform is RectTransform))
+        if (target == null || !target.isActiveAndEnabled || !target.ShowInventorySelection || !(target.transform is RectTransform))
         {
             hoveredTarget = null;
             if (frame != null) frame.gameObject.SetActive(false);

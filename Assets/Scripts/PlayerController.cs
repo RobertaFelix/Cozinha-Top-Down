@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Min(1f)] private float upgradedMoveSpeedMultiplier = 1.25f;
 
     public float CurrentMoveSpeed => moveSpeed * (UpgradePurchases.Has(UpgradePurchases.Shoes)
-        ? Mathf.Max(1f, upgradedMoveSpeedMultiplier) : 1f);
+        ? Mathf.Max(1f, upgradedMoveSpeedMultiplier) : 1f) *
+        (TimedPotionEffects.Instance != null ? TimedPotionEffects.Instance.GetMultiplier(TimedPotionKind.MovementSpeed) : 1f);
 
     private PlayerControls playerControls;
     private Vector2 movement;

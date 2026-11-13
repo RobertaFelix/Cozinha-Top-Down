@@ -4,6 +4,8 @@ public sealed class PotionItem : MonoBehaviour
 {
     [SerializeField] private PotionEffect effect;
 
+    public PotionEffect Effect => effect;
+
     public bool TryUse(GameObject user)
     {
         // Potions without an assigned effect already support consumption from the hotbar.
