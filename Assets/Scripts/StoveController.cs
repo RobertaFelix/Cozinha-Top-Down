@@ -20,6 +20,11 @@ public class StoveController : MonoBehaviour
     [Header("Upgrade de preparo")]
     [SerializeField, Range(0.01f, 1f)] private float upgradedCookingTimeMultiplier = 0.75f;
 
+    [Header("Upgrade de temperatura")]
+    [SerializeField, Min(1f)] private float upgradedBurnTimeMultiplier = 1.5f;
+    public float CurrentBurnDuration => Mathf.Max(.01f, burnDuration *
+        (UpgradePurchases.Has(UpgradePurchases.Thermometer) ? Mathf.Max(1f, upgradedBurnTimeMultiplier) : 1f));
+
     public float CurrentCookingDuration => currentRecipe == null ? 0f : Mathf.Max(0.01f,
         currentRecipe.cookingTime * (UpgradePurchases.Has(UpgradePurchases.CookingClock)
             ? Mathf.Clamp(upgradedCookingTimeMultiplier, 0.01f, 1f) : 1f));
@@ -77,7 +82,7 @@ public class StoveController : MonoBehaviour
 
                 Debug.Log(
                     "Comida pronta! Você tem " +
-                    burnDuration +
+                    CurrentBurnDuration +
                     " segundos para recolhê-la."
                 );
             }
@@ -91,7 +96,7 @@ public class StoveController : MonoBehaviour
             burnTimer += Time.deltaTime;
 
             float burnProgress = Mathf.Clamp01(
-                burnTimer / burnDuration
+                burnTimer / CurrentBurnDuration
             );
 
             if (cookingProgressUI != null)
@@ -99,7 +104,7 @@ public class StoveController : MonoBehaviour
                 cookingProgressUI.SetBurnProgress(burnProgress);
             }
 
-            if (burnTimer >= burnDuration)
+            if (burnTimer >= CurrentBurnDuration)
             {
                 BurnCurrentFood();
             }
@@ -197,7 +202,7 @@ public class StoveController : MonoBehaviour
         if (currentRecipe != null && cookingProgressUI != null)
         {
             cookingProgressUI.Show(GetFoodSprite(currentRecipe), Mathf.Clamp01(timer / CurrentCookingDuration));
-            cookingProgressUI.SetBurnProgress(Mathf.Clamp01(burnTimer / Mathf.Max(.01f, burnDuration)));
+            cookingProgressUI.SetBurnProgress(Mathf.Clamp01(burnTimer / CurrentBurnDuration));
         }
     }
 

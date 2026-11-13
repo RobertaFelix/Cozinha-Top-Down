@@ -27,7 +27,7 @@ public static class ItemTooltipCatalog
     {
         "Faster Cooking", "Faster Movement", "Expanded Backpack", "More Patience",
         "Market Discount", "Magnifying Glass", "Harvesting Glove", "Village Key",
-        "Upgrade 09", "Double Dish Prices", "Knife", "TV Advertising", "Magnet", "Upgrade 14"
+        "Double Harvest", "Double Dish Prices", "Thermometer", "TV Advertising", "Magnet", "Upgrade 14"
     };
 
     private static readonly string[] upgradeDescriptions =
@@ -36,8 +36,8 @@ public static class ItemTooltipCatalog
         "Increases the stack limit for identical items from 10 to 99 per slot.", "Customers wait longer for their food.",
         "Reduces item prices at the market.", "More resources from enemies. Coming soon.",
         "Chance of a double harvest. Coming soon.", "Unlocks shop access outside opening hours. After-hours purchases cost more.",
-        "Coming soon.", "Doubles the payment for dishes served to customers.",
-        "Coming soon.", "Customers arrive more frequently while the restaurant is open.",
+        "Chance to harvest two ingredients from a mature plant without consuming another seed.", "Doubles the payment for dishes served to customers.",
+        "Increases the time to collect cooked food before it burns.", "Customers arrive more frequently while the restaurant is open.",
         "Increases coin collection range.", "Coming soon."
     };
 
