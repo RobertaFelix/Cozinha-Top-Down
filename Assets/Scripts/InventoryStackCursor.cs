@@ -95,6 +95,19 @@ public sealed class InventoryStackCursor : MonoBehaviour
         return picked;
     }
 
+    private static RectTransform keyboardAnchor;
+    public static void AnchorTo(RectTransform anchor) => keyboardAnchor = anchor;
+
+    public static void ActivateSlot(Slot slot)
+    {
+        if (IsHolding) { TryPlace(slot); return; }
+        if (!Selectable(slot) || ItemTooltipView.IsDragging || Time.timeScale <= 0) return;
+        var held = GetCursor();
+        held.Begin(slot);
+        held.allowSwap = true;
+        held.Take(slot, slot.inventoryItem.amount);
+    }
+
     public static void PointerDown(Slot slot, PointerEventData data)
     {
         if (Time.timeScale <= 0) return;
@@ -107,6 +120,11 @@ public sealed class InventoryStackCursor : MonoBehaviour
             return;
         }
         if (data.button != PointerEventData.InputButton.Left) return;
+        if (!IsHolding && ShiftHeld)
+        {
+            InventoryWorkspace.QuickMove(slot);
+            return;
+        }
         if (instance != null && instance.handledLeftFrame == Time.frameCount) return;
         if (IsHolding)
         {
@@ -282,7 +300,7 @@ public sealed class InventoryStackCursor : MonoBehaviour
         if (!IsHolding) return;
         if (!SourcesValid() || Time.timeScale <= 0 || Mouse.current == null) { Cancel(); return; }
         var mouse = Mouse.current;
-        var position = mouse.position.ReadValue();
+        var position = keyboardAnchor ? (Vector2)keyboardAnchor.position : mouse.position.ReadValue();
         cursor.position = position;
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) { Cancel(); return; }
         var slot = SlotAt(position);

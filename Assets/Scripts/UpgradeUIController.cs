@@ -283,6 +283,7 @@ public class UpgradeUIController : MonoBehaviour
         InventoryPanelSession.Open(upgradePanel, CancelPurchase);
         ClearPending();
         upgradePanel.SetActive(true);
+        InventoryWorkspace.SetShopHotbarVisible(false);
 
         UpdateRightSlots();
         UpdateTotal();
@@ -291,6 +292,7 @@ public class UpgradeUIController : MonoBehaviour
     public void CancelPurchase()
     {
         InventoryPanelSession.Closed(upgradePanel);
+        InventoryWorkspace.SetShopHotbarVisible(true);
         ClearPending();
 
         UpdateRightSlots();

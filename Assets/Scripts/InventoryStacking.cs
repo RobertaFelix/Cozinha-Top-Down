@@ -5,6 +5,45 @@ public static class InventoryStacking
 {
     public static int MaxStackSize => UpgradePurchases.Has(UpgradePurchases.Backpack) ? 99 : 10;
 
+    public static Slot CreateSlot(GameObject prefab, Transform parent, InventoryItem item = null)
+    {
+        var slot = Object.Instantiate(prefab, parent).GetComponent<Slot>();
+        slot.inventoryItem = null;
+        if (item?.itemPrefab != null && item.amount > 0)
+        {
+            slot.inventoryItem = new InventoryItem { itemPrefab = item.itemPrefab, amount = item.amount };
+            slot.currentItem = Object.Instantiate(item.itemPrefab, slot.transform);
+            if (slot.currentItem.TryGetComponent<RectTransform>(out var rect)) rect.anchoredPosition = Vector2.zero;
+        }
+        slot.UpdateQuantityDisplay();
+        return slot;
+    }
+
+    public static void Transfer(Slot source, Transform destination, bool existingStacksOnly = false)
+    {
+        var item = source.inventoryItem;
+        if (item?.itemPrefab == null || destination == null || source.transform.parent == destination) return;
+        int capacity = 0;
+        foreach (Transform child in destination)
+        {
+            if (!child.TryGetComponent<Slot>(out var slot)) continue;
+            if (slot.inventoryItem?.itemPrefab == null) capacity += existingStacksOnly ? 0 : MaxStackSize;
+            else if (slot.inventoryItem.itemPrefab == item.itemPrefab)
+                capacity += Mathf.Max(0, MaxStackSize - slot.inventoryItem.amount);
+        }
+        int moved = Mathf.Min(capacity, item.amount);
+        if (moved == 0 || !AddItem(destination, new InventoryItem { itemPrefab = item.itemPrefab, amount = moved })) return;
+        item.amount -= moved;
+        if (item.amount == 0)
+        {
+            source.currentItem.SetActive(false);
+            Object.Destroy(source.currentItem);
+            source.currentItem = null;
+            source.inventoryItem = null;
+        }
+        source.UpdateQuantityDisplay();
+    }
+
     public static bool AddItem(
         Transform container,
         InventoryItem item)
@@ -20,9 +59,11 @@ public static class InventoryStacking
             return false;
         }
 
-        Slot[] slots =
-            container.GetComponentsInChildren<Slot>(true);
+        return AddToSlots(container.GetComponentsInChildren<Slot>(true), item);
+    }
 
+    internal static bool AddToSlots(Slot[] slots, InventoryItem item)
+    {
         // Corrige slots com referências visuais inconsistentes.
         foreach (Slot slot in slots)
         {

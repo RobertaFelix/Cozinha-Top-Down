@@ -43,16 +43,29 @@ public sealed class InventorySaveModule : SaveParticipant<InventorySaveState>
     protected override void Restore(InventorySaveState state)
     {
         var slots = Slots();
-        while (slots.Count < state.slots.Length) slots.Add(Instantiate(slotPrefab, container).GetComponent<Slot>());
+        // Old backpacks had an extra row. Compact occupied overflow into empty slots first.
+        var saved = (SavedSlot[])state.slots.Clone();
+        if (inventoryId == "backpack")
+        {
+            for (int i = slots.Count; i < saved.Length; i++)
+            {
+                if (saved[i].amount == 0) continue;
+                int empty = Array.FindIndex(saved, 0, slots.Count, entry => entry.amount == 0);
+                if (empty < 0) break;
+                (saved[i], saved[empty]) = (saved[empty], saved[i]);
+            }
+        }
+        int needed = Array.FindLastIndex(saved, entry => entry.amount > 0) + 1;
+        while (slots.Count < needed) slots.Add(Instantiate(slotPrefab, container).GetComponent<Slot>());
         for (int i = 0; i < slots.Count; i++)
         {
             var slot = slots[i];
             if (slot.currentItem != null) { slot.currentItem.SetActive(false); Destroy(slot.currentItem); }
             slot.currentItem = null;
             slot.inventoryItem = null;
-            if (i < state.slots.Length && state.slots[i].amount > 0)
+            if (i < saved.Length && saved[i].amount > 0)
             {
-                var data = state.slots[i];
+                var data = saved[i];
                 var prefab = SaveItemCatalog.Instance.Prefab(data.itemId);
                 slot.inventoryItem = new InventoryItem { itemPrefab = prefab, amount = data.amount };
                 slot.currentItem = Instantiate(prefab, slot.transform);

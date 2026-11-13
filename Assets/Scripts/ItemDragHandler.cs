@@ -24,6 +24,8 @@ public class ItemDragHandler : MonoBehaviour,
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left || InventoryStackCursor.IsHolding || Time.timeScale <= 0) return;
+        var keyboard = UnityEngine.InputSystem.Keyboard.current;
+        if (keyboard != null && (keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed)) return;
         originalParent = transform.parent;
 
         Canvas parentCanvas = GetComponentInParent<Canvas>();

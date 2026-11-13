@@ -1,46 +1,61 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoveInventoryController : MonoBehaviour
 {
-    [Header("Interface do fogão")]
     public GameObject stovePanel;
-
-    [Header("Slots")]
     public GameObject slotPrefab;
     public int slotCount = 6;
+    [SerializeField] private RectTransform backpack;
+    [SerializeField] private Sprite confirmIcon;
+    [SerializeField] private Sprite cancelIcon;
+    private Button confirmButton;
+    public bool IsOpen => stovePanel && stovePanel.activeInHierarchy;
 
-    public bool IsOpen
+    public void EnsureSlots()
     {
-        get
-        {
-            return stovePanel != null &&
-                   stovePanel.activeSelf;
-        }
-    }
-
-    private void Start()
-    {
-        if (stovePanel != null)
-        {
-            stovePanel.SetActive(false);
-        }
-    }
-
-    public void OpenStoveInventory()
-    {
-        if (stovePanel == null) return;
-        InventoryPanelSession.Open(stovePanel, CloseStoveInventory);
-        stovePanel.SetActive(true);
-        if (stovePanel.GetComponentsInChildren<Slot>(true).Length > 0) return;
-
+        if (stovePanel.GetComponentInChildren<Slot>(true)) return;
         for (int i = 0; i < slotCount; i++)
+            InventoryStacking.CreateSlot(slotPrefab, stovePanel.transform);
+    }
+
+    public void Open(Action cook)
+    {
+        if (IsOpen) return;
+        if (!backpack)
+            backpack = FindAnyObjectByType<InventoryController>().inventoryPanel.GetComponent<RectTransform>();
+        InventoryPanelSession.Open(stovePanel, CloseStoveInventory);
+        EnsureSlots();
+        InventoryWorkspace.OpenStorage(stovePanel);
+        stovePanel.SetActive(true);
+        stovePanel.transform.SetAsLastSibling();
+        var panel = (RectTransform)stovePanel.transform;
+        if (!confirmButton)
         {
-            Instantiate(
-                slotPrefab,
-                stovePanel.transform
-            ).GetComponent<Slot>();
+            confirmButton = CreateButton(panel, "Confirm", confirmIcon, -78);
+            var cancel = CreateButton(panel, "Cancel", cancelIcon, 78);
+            cancel.onClick.AddListener(CloseStoveInventory);
         }
+        confirmButton.onClick.RemoveAllListeners();
+        confirmButton.onClick.AddListener(() => cook());
+    }
+
+    private static Button CreateButton(RectTransform panel, string name, Sprite sprite, float x)
+    {
+        var obj = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
+        obj.transform.SetParent(panel, false);
+        obj.GetComponent<LayoutElement>().ignoreLayout = true;
+        var rect = (RectTransform)obj.transform;
+        rect.anchorMin = rect.anchorMax = new Vector2(.5f, 0);
+        rect.pivot = new Vector2(.5f, 1);
+        rect.anchoredPosition = new Vector2(x, -8);
+        rect.sizeDelta = new Vector2(120, 120);
+        var icon = obj.GetComponent<Image>();
+        icon.sprite = sprite;
+        icon.preserveAspect = true;
+        return obj.GetComponent<Button>();
     }
 
     public void CloseStoveInventory()
@@ -49,55 +64,6 @@ public class StoveInventoryController : MonoBehaviour
         stovePanel.SetActive(false);
     }
 
-    public InventoryItem[] GetStoveItems()
-    {
-        List<InventoryItem> items =
-            new List<InventoryItem>();
-
-        Slot[] slots =
-            stovePanel.GetComponentsInChildren<Slot>(true);
-
-        foreach (Slot slot in slots)
-        {
-            if (slot.inventoryItem != null &&
-                slot.inventoryItem.itemPrefab != null)
-            {
-                items.Add(slot.inventoryItem);
-            }
-        }
-
-        return items.ToArray();
-    }
-
-    public void ClearIngredients()
-    {
-        Slot[] slots =
-            stovePanel.GetComponentsInChildren<Slot>(true);
-
-        foreach (Slot slot in slots)
-        {
-            if (slot.currentItem != null)
-            {
-                Destroy(slot.currentItem);
-            }
-
-            slot.currentItem = null;
-            slot.inventoryItem = null;
-            slot.UpdateQuantityDisplay();
-        }
-    }
-
-    private void ClearSlots()
-    {
-        if (stovePanel == null)
-            return;
-
-        Slot[] slots =
-            stovePanel.GetComponentsInChildren<Slot>(true);
-
-        foreach (Slot slot in slots)
-        {
-            Destroy(slot.gameObject);
-        }
-    }
+    public InventoryItem[] GetStoveItems() => stovePanel.GetComponentsInChildren<Slot>(true)
+        .Select(slot => slot.inventoryItem).Where(item => item?.itemPrefab != null).ToArray();
 }

@@ -15,11 +15,22 @@ public class MarketUIController : MonoBehaviour
     private bool sessionAfterHours;
     public bool IsTradingAllowed => tradingSessionActive && IsOpen;
 
+    [System.Serializable] private struct Product
+    {
+        public GameObject prefab;
+        [Min(0)] public int price;
+    }
     [Header("Slots da loja")]
-    [SerializeField] private MarketIngredientSlot[] ingredientSlots;
+    [SerializeField] private MarketIngredientSlot ingredientTemplate;
+    [SerializeField] private Transform ingredientGrid;
+    [SerializeField] private Product[] products;
+    private MarketIngredientSlot[] ingredientSlots;
 
     [Header("Carrinho")]
-    [SerializeField] private MarketCartSlot[] cartSlots;
+    [SerializeField] private MarketCartSlot cartTemplate;
+    [SerializeField] private Transform cartGrid;
+    [SerializeField, Min(1)] private int cartCapacity = 12;
+    private MarketCartSlot[] cartSlots;
     [SerializeField] private TMP_Text totalText;
 
     [Header("Sistemas existentes")]
@@ -67,16 +78,20 @@ public class MarketUIController : MonoBehaviour
         if (marketPanel != null)
             marketPanel.SetActive(false);
 
-        foreach (MarketIngredientSlot slot in ingredientSlots)
+        ingredientSlots = new MarketIngredientSlot[products.Length];
+        for (int i = 0; i < products.Length; i++)
         {
-            if (slot != null)
-                slot.Initialize(this);
+            var slot = Instantiate(ingredientTemplate, ingredientGrid);
+            slot.ingredientPrefab = products[i].prefab;
+            slot.price = products[i].price;
+            slot.Initialize(this);
+            ingredientSlots[i] = slot;
         }
-
-        foreach (MarketCartSlot slot in cartSlots)
+        cartSlots = new MarketCartSlot[cartCapacity];
+        for (int i = 0; i < cartSlots.Length; i++)
         {
-            if (slot != null)
-                slot.SetMarket(this);
+            cartSlots[i] = Instantiate(cartTemplate, cartGrid);
+            cartSlots[i].SetMarket(this);
         }
 
         UpdateTotal();
@@ -170,6 +185,7 @@ public class MarketUIController : MonoBehaviour
         sessionMarkup = sessionAfterHours ? openingHours.AfterHoursMarkup : 0f;
         tradingSessionActive = true;
         marketPanel.SetActive(true);
+        InventoryWorkspace.SetShopHotbarVisible(false);
         RefreshVendorPresence();
         RefreshPrices();
     }
@@ -177,6 +193,7 @@ public class MarketUIController : MonoBehaviour
     public void CloseMarket()
     {
         InventoryPanelSession.Closed(marketPanel);
+        InventoryWorkspace.SetShopHotbarVisible(true);
         tradingSessionActive = false;
         RefreshVendorPresence();
         ClearCart();
