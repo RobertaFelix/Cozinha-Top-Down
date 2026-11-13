@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d456a9c33e5a284419340812102dba01, type: 3}
+  m_Name: Beetroot
+  m_EditorClassIdentifier: Assembly-CSharp::CropDefinition
+  id: beetroot
+  displayName: Beetroot
+  growthStages:
+  - {fileID: -2579345287125946691, guid: f3badc2fe6436d84bb7dcdc6791d0f7d, type: 3}
+  - {fileID: -5174621469920535069, guid: f3badc2fe6436d84bb7dcdc6791d0f7d, type: 3}
+  - {fileID: -1499853996682765334, guid: f3badc2fe6436d84bb7dcdc6791d0f7d, type: 3}
+  - {fileID: 2120527987105728061, guid: f3badc2fe6436d84bb7dcdc6791d0f7d, type: 3}
+  harvestPrefab: {fileID: 8008127976990012123, guid: e3b9fc26dc7221f429951262d8250807, type: 3}
+  seedPrefab: {fileID: 826151215261325242, guid: 29ec46a81d663d04db15635b6b41dd64, type: 3}

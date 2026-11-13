@@ -14,6 +14,29 @@ public class HotbarController : MonoBehaviour
 
     [SerializeField] private GameObject potionUser;
 
+    private int equippedIndex = -1;
+    public int EquippedIndex => equippedIndex;
+    public Slot EquippedSlot
+    {
+        get
+        {
+            var slot = GetPhysicalSlot(equippedIndex);
+            var prefab = slot?.inventoryItem?.itemPrefab;
+            return prefab != null && slot.inventoryItem.amount > 0 && slot.currentItem != null &&
+                slot.currentItem.transform.parent == slot.transform &&
+                (prefab.GetComponent<FarmToolItem>() != null || prefab.GetComponent<SeedItem>() != null) ? slot : null;
+        }
+    }
+
+    private Slot GetPhysicalSlot(int index)
+    {
+        if (index < 0 || hotbarPanel == null) return null;
+        int count = 0;
+        foreach (Transform child in hotbarPanel.transform)
+            if (child.TryGetComponent<Slot>(out var slot) && count++ == index) return slot;
+        return null;
+    }
+
     private static readonly Key[] numberKeys = { Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4, Key.Digit5, Key.Digit6 };
     private static readonly Key[] numpadKeys = { Key.Numpad1, Key.Numpad2, Key.Numpad3, Key.Numpad4, Key.Numpad5, Key.Numpad6 };
 
@@ -43,17 +66,17 @@ public class HotbarController : MonoBehaviour
     public bool TryUseSlot(int index)
     {
         if (!CanUseHotbar() || index < 0 || index >= numberKeys.Length || index >= slotCount) return false;
-        int slotIndex = 0;
-        Slot slot = null;
-        foreach (Transform child in hotbarPanel.transform)
-        {
-            var candidate = child.GetComponent<Slot>();
-            if (candidate == null) continue;
-            if (slotIndex++ == index) { slot = candidate; break; }
-        }
+        equippedIndex = -1;
+        Slot slot = GetPhysicalSlot(index);
         if (slot == null || !slot.gameObject.activeInHierarchy || slot.inventoryItem?.itemPrefab == null ||
             slot.inventoryItem.amount <= 0 || slot.currentItem == null ||
             slot.currentItem.transform.parent != slot.transform) return false;
+
+        if (slot.inventoryItem.itemPrefab.GetComponent<FarmToolItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<SeedItem>() != null)
+        {
+            equippedIndex = index;
+            return true;
+        }
 
         var potion = slot.inventoryItem.itemPrefab.GetComponent<PotionItem>();
         if (potion == null) return false;
@@ -79,6 +102,7 @@ public class HotbarController : MonoBehaviour
     private void Start()
     {
         CreateSlots();
+        if (GetComponent<HotbarEquippedIndicator>() == null) gameObject.AddComponent<HotbarEquippedIndicator>();
     }
 
     private void CreateSlots()
