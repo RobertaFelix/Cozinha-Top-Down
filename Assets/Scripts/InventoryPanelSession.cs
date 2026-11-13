@@ -6,6 +6,7 @@ public sealed class InventoryPanelSession : MonoBehaviour
 {
     [SerializeField] private Collider2D interactionArea;
     private static InventoryPanelSession active;
+    public static bool HasOpenPanel => active != null && active.gameObject.activeInHierarchy;
     private Action close;
     private Transform player;
     private bool requiresProximity;
