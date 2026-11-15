@@ -1,0 +1,356 @@
+fileFormatVersion: 2
+guid: 349734d3883e5344588cacb937b8a75f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5626671595129647071
+    second: ArmadilhaEspinhos_0
+  - first:
+      213: 6601037690857610508
+    second: ArmadilhaEspinhos_1
+  - first:
+      213: 825680799371904000
+    second: ArmadilhaEspinhos_2
+  - first:
+      213: -8987025820059267403
+    second: ArmadilhaEspinhos_3
+  - first:
+      213: 5914171998282973991
+    second: ArmadilhaEspinhos_4
+  - first:
+      213: 6382980053842978437
+    second: ArmadilhaEspinhos_5
+  - first:
+      213: -1124435112855760293
+    second: ArmadilhaEspinhos_6
+  - first:
+      213: 1475435320455917132
+    second: ArmadilhaEspinhos_7
+  - first:
+      213: 5030154649906817695
+    second: ArmadilhaEspinhos_8
+  - first:
+      213: -1717458348195099376
+    second: ArmadilhaEspinhos_9
+  - first:
+      213: -5697447022121861845
+    second: ArmadilhaEspinhos_10
+  - first:
+      213: -6802247063986459425
+    second: ArmadilhaEspinhos_11
+  - first:
+      213: -9104831256343148016
+    second: ArmadilhaEspinhos_12
+  - first:
+      213: 8898516343964709731
+    second: ArmadilhaEspinhos_13
+  - first:
+      213: 7443955145516017044
+    second: ArmadilhaEspinhos_14
+  - first:
+      213: -8167203987957973492
+    second: ArmadilhaEspinhos_15
+  - first:
+      213: 2913364102900153122
+    second: ArmadilhaEspinhos_16
+  - first:
+      213: 5304981784054480776
+    second: ArmadilhaEspinhos_17
+  - first:
+      213: 9100274215940670261
+    second: ArmadilhaEspinhos_18
+  - first:
+      213: -8231941869393540240
+    second: ArmadilhaEspinhos_19
+  - first:
+      213: 1436330913937849595
+    second: ArmadilhaEspinhos_20
+  - first:
+      213: 7507016848866723537
+    second: ArmadilhaEspinhos_21
+  - first:
+      213: -915639726033033071
+    second: ArmadilhaEspinhos_22
+  - first:
+      213: -5424469409473656098
+    second: ArmadilhaEspinhos_23
+  - first:
+      213: 6121387645615051081
+    second: ArmadilhaEspinhos_24
+  - first:
+      213: 8630277250583484381
+    second: ArmadilhaEspinhos_25
+  - first:
+      213: 8487312420868063534
+    second: ArmadilhaEspinhos_26
+  - first:
+      213: 7632071897868414459
+    second: ArmadilhaEspinhos_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ArmadilhaEspinhos_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdfab7f1104f51e40800000000000000
+      internalID: 5626671595129647071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmadilhaEspinhos_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0d58885ec89b9b50800000000000000
+      internalID: 6601037690857610508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmadilhaEspinhos_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0044c68ff48657b00800000000000000
+      internalID: 825680799371904000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmadilhaEspinhos_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5be8a18c1aba74380800000000000000
+      internalID: -8987025820059267403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmadilhaEspinhos_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 723083a091c531250800000000000000
+      internalID: 5914171998282973991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArmadilhaEspinhos_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 586e6bd5a86e49850800000000000000
+      internalID: 6382980053842978437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0cffb4323a541b64ab0e7c922d3ba666
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":25.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      ArmadilhaEspinhos_0: 5626671595129647071
+      ArmadilhaEspinhos_1: 6601037690857610508
+      ArmadilhaEspinhos_2: 825680799371904000
+      ArmadilhaEspinhos_3: -8987025820059267403
+      ArmadilhaEspinhos_4: 5914171998282973991
+      ArmadilhaEspinhos_5: 6382980053842978437
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
