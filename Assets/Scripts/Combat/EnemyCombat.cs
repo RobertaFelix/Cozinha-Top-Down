@@ -20,6 +20,12 @@ public sealed class EnemyCombat : MonoBehaviour
     [SerializeField] private Sprite[] idleFrames, walkFrames, attackFrames, hurtFrames, deathFrames;
     [SerializeField, Min(.01f)] private float frameSeconds = .1f;
     public int CurrentHealth { get; private set; }
+    public int SpawnIndex { get; set; } = -1;
+    public void RestoreCheckpoint(int health)
+    {
+        CurrentHealth = Mathf.Clamp(health, 1, maximumHealth);
+        ChangeState(EnemyState.Idle);
+    }
     public EnemyState State { get; private set; }
     private Rigidbody2D body;
     private CircleCollider2D feet;

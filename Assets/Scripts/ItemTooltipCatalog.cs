@@ -35,7 +35,7 @@ public static class ItemTooltipCatalog
         "Reduces recipe cooking time.", "Increases movement speed.",
         "Increases the stack limit for identical items from 10 to 99 per slot.", "Customers wait longer for their food.",
         "Reduces item prices at the market.", "More resources from enemies. Coming soon.",
-        "Chance of a double harvest. Coming soon.", "Unlocks shop access outside opening hours. After-hours purchases cost more.",
+        "Halves the number of watered days crops need to mature, rounded up.", "Unlocks shop access outside opening hours. After-hours purchases cost more.",
         "Chance to harvest two ingredients from a mature plant without consuming another seed.", "Doubles the payment for dishes served to customers.",
         "Increases the time to collect cooked food before it burns.", "Customers arrive more frequently while the restaurant is open.",
         "Increases coin collection range.", "Coming soon."
@@ -69,6 +69,7 @@ public static class ItemTooltipCatalog
         if (prefab.GetComponent<PotionItem>()?.Effect is TimedPotionEffect timed) body = timed.Description;
         if (prefab.GetComponent<PotionItem>()?.Effect is HealingPotionEffect healing) body = healing.Description;
         if (prefab.GetComponent<PotionItem>()?.Effect is StaminaPotionEffect stamina) body = stamina.Description;
+        if (prefab.GetComponent<PotionItem>()?.Effect is SavePotionEffect checkpoint) body = checkpoint.Description;
         if (!string.IsNullOrEmpty(body) && prefab.GetComponent<PotionItem>() != null) body = "Effect: " + body;
         if (amount > 0) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Quantity: " + amount;
         if (unitPrice.HasValue) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Unit price: " + Mathf.Max(0, unitPrice.Value) + " coins";
@@ -79,6 +80,10 @@ public static class ItemTooltipCatalog
     {
         if (recipe?.result?.itemPrefab == null) return default;
         var content = ForItem(recipe.result.itemPrefab);
+        if (!unlocked)
+        {
+            return new ItemTooltipContent("Unknown Recipe", "Cook dishes to discover their recipes.", null);
+        }
         var text = new StringBuilder("Ingredients: ");
         bool first = true;
         if (recipe.ingredients != null)
@@ -87,13 +92,13 @@ public static class ItemTooltipCatalog
                 if (ingredient?.itemPrefab == null) continue;
                 if (!first) text.Append(", ");
                 text.Append(GetName(ingredient.itemPrefab));
-                if (ingredient.amount > 1) text.Append(" Ã—").Append(ingredient.amount);
+                text.Append(" x").Append(Mathf.Max(1, ingredient.amount));
                 first = false;
             }
         text.Append("\nBase cooking time: ").Append(recipe.cookingTime.ToString("0.#")).Append(" s");
         int price = CoinManager.Instance != null ? CoinManager.Instance.GetDishSalePrice(recipe.basePrice) : Mathf.Max(0, recipe.basePrice);
         text.Append("\nSale price: ").Append(price).Append(" coins");
-        if (!unlocked) text.Append("\nCook this dish to unlock the recipe.");
+        text.Append("\nPreparation: Place cookware on the stove, add exactly these ingredients and select Cook. Collect the finished dish with an empty plate.");
         content.Body = text.ToString();
         return content;
     }

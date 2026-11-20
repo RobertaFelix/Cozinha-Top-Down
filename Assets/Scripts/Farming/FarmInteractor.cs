@@ -27,6 +27,7 @@ public sealed class FarmInteractor : MonoBehaviour
     private bool busy, previousMovement, previousAnimator, previousFlip;
     private Sprite previousSprite;
     private Transform marker;
+    private Transform harvestTarget;
     private InventorySelectionStyle markerStyle;
 
     private void Awake()
@@ -69,6 +70,7 @@ public sealed class FarmInteractor : MonoBehaviour
     }
     private void Update()
     {
+        UpdateHarvestInteraction();
         if (!FarmArea.HasActiveArea) { ShowMarker(null, default); return; }
         ResolveHotbar();
         var mouse = Mouse.current;
@@ -84,6 +86,25 @@ public sealed class FarmInteractor : MonoBehaviour
         if (!valid) return;
         if (mouse.leftButton.wasPressedThisFrame) TryUseAt(area, cell);
         else if (mouse.rightButton.wasPressedThisFrame) TryHarvestAt(area, cell);
+    }
+    private void UpdateHarvestInteraction()
+    {
+        var prompts = InteractionPromptManager.Instance;
+        if (!CanAct() || !FarmArea.TryFindHarvest(transform.position, interactionRange, out var area, out var cell))
+        {
+            if (harvestTarget != null) prompts?.Hide(harvestTarget);
+            return;
+        }
+        if (harvestTarget == null) harvestTarget = new GameObject("Harvest Interaction").transform;
+        harvestTarget.position = area.CellCenter(cell);
+        // Existing furniture/door interactions retain ownership of their prompt.
+        if (prompts != null && prompts.CurrentTarget != null && prompts.CurrentTarget != harvestTarget) return;
+        prompts?.Show(harvestTarget);
+        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            TryHarvestAt(area, cell);
+            prompts?.Hide(harvestTarget);
+        }
     }
     private bool InRange(FarmArea area, Vector3Int cell) => area != null && area.CanPlantAt(cell) &&
         Vector2.Distance(transform.position, area.CellCenter(cell)) <= interactionRange;
@@ -170,10 +191,15 @@ public sealed class FarmInteractor : MonoBehaviour
     }
     private void OnDisable()
     {
+        if (harvestTarget != null) InteractionPromptManager.Instance?.Hide(harvestTarget);
         StopAllCoroutines(); RestoreActor();
         if (marker != null) marker.gameObject.SetActive(false);
     }
-    private void OnDestroy() { if (marker != null) Destroy(marker.gameObject); }
+    private void OnDestroy()
+    {
+        if (marker != null) Destroy(marker.gameObject);
+        if (harvestTarget != null) Destroy(harvestTarget.gameObject);
+    }
     private void ShowMarker(FarmArea area, Vector3Int cell)
     {
         if (area == null) { if (marker != null) marker.gameObject.SetActive(false); return; }

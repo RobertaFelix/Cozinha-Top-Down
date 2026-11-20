@@ -17,6 +17,27 @@ public sealed class FarmArea : MonoBehaviour
     private static readonly List<FarmArea> areas = new List<FarmArea>();
     private FarmingSaveModule farm;
     public static bool HasActiveArea => areas.Count > 0;
+    public static bool TryFindHarvest(Vector3 position, float range, out FarmArea area, out Vector3Int cell)
+    {
+        area = null; cell = default;
+        var farm = FarmingSaveModule.Instance;
+        if (farm == null) return false;
+        float closest = range * range;
+        foreach (var candidate in areas)
+        {
+            if (candidate == null || !candidate.isActiveAndEnabled || candidate.ground == null) continue;
+            foreach (var at in candidate.allowed)
+            {
+                float distance = ((Vector2)(candidate.CellCenter(at) - position)).sqrMagnitude;
+                if (distance > closest) continue;
+                var plot = farm.GetPlot(candidate.AreaId, at);
+                var crop = plot != null ? farm.Catalog?.Find(plot.cropId) : null;
+                if (crop == null || !crop.IsMature(plot.stage)) continue;
+                closest = distance; area = candidate; cell = at;
+            }
+        }
+        return area != null;
+    }
     public string AreaId => areaId;
     public IReadOnlyList<Vector3Int> PlantableCells => plantableCells;
     public Tilemap Ground => ground;

@@ -16,6 +16,7 @@ public class InteractionPromptManager : MonoBehaviour
     [SerializeField] private float floatSpeed = 2f;
 
     private Transform currentTarget;
+    public Transform CurrentTarget => currentTarget;
     private Vector3 currentOffsetAdicional;
 
     private void Awake()

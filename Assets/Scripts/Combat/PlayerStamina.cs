@@ -25,6 +25,14 @@ public sealed class PlayerStamina : MonoBehaviour
     private static readonly int[] rowWidths = { 43, 44, 45, 44, 43 };
 
     private void Awake() { health = GetComponent<PlayerHealth>(); }
+    public void RestoreCheckpoint(float value)
+    {
+        if (!InDungeon) return;
+        activeVisit = true;
+        if (!hud) BuildHud();
+        Current = Mathf.Clamp(value, 0, maximum);
+        lastSpend = Time.time;
+    }
     private void Update()
     {
         if (InDungeon != activeVisit)
@@ -66,6 +74,7 @@ public sealed class PlayerStamina : MonoBehaviour
         var scaler = hud.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
         var rect = new GameObject("Stamina", typeof(RectTransform)).GetComponent<RectTransform>();
         rect.SetParent(hud.transform, false);
         rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.up;

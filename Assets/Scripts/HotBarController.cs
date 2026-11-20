@@ -8,6 +8,19 @@ using TMPro;
 
 public class HotbarController : MonoBehaviour
 {
+    public static bool Resolve(ref HotbarController controller)
+    {
+        if (controller && controller.isActiveAndEnabled && controller.hotbarPanel) return true;
+        controller = null;
+        foreach (var candidate in FindObjectsByType<HotbarController>(FindObjectsSortMode.None))
+            if (candidate.isActiveAndEnabled && candidate.hotbarPanel && candidate.slotCount > 0)
+            {
+                controller = candidate;
+                return true;
+            }
+        return false;
+    }
+
     public GameObject hotbarPanel;
     public GameObject slotPrefab;
     public int slotCount;
@@ -88,9 +101,15 @@ public class HotbarController : MonoBehaviour
             var player = FindFirstObjectByType<PlayerController>();
             if (player != null) potionUser = player.gameObject;
         }
-        if (!potion.TryUse(potionUser)) return false;
-
-        slot.inventoryItem.amount--;
+        // Capture the consumed stack in checkpoint potions; restore it if the effect fails.
+        bool checkpointPotion = potion.Effect is SavePotionEffect;
+        if (checkpointPotion) slot.inventoryItem.amount--;
+        if (!potion.TryUse(potionUser))
+        {
+            if (checkpointPotion) slot.inventoryItem.amount++;
+            return false;
+        }
+        if (!checkpointPotion) slot.inventoryItem.amount--;
         if (slot.inventoryItem.amount == 0)
         {
             slot.currentItem.SetActive(false);

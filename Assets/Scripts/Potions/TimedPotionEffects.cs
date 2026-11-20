@@ -65,6 +65,8 @@ public sealed class TimedPotionEffects : SaveParticipant<TimedPotionSaveState>
         if (Instance != this || definitions == null || Time.deltaTime <= 0) return;
         var saves = GetComponent<SaveGameService>();
         if (saves != null && !saves.IsReady) return;
+        var transition = GetComponent<SceneTransitionController>();
+        if (transition != null && transition.IsLoading) return;
         foreach (var effect in definitions)
             if (effect != null && remaining.TryGetValue(effect.EffectId, out float seconds))
             {
@@ -88,7 +90,9 @@ public sealed class TimedPotionEffects : SaveParticipant<TimedPotionSaveState>
     {
         var state = new TimedPotionSaveState();
         foreach (var effect in remaining)
-            if (effect.Value > 0 && Find(effect.Key).Kind != TimedPotionKind.Regeneration) state.active.Add(new SavedPotionEffect { effectId = effect.Key, remainingSeconds = effect.Value });
+            if (effect.Value > 0 && (Find(effect.Key).Kind != TimedPotionKind.Regeneration ||
+                (regenerationTarget && regenerationTarget.InDungeon)))
+                state.active.Add(new SavedPotionEffect { effectId = effect.Key, remainingSeconds = effect.Value });
         state.active.Sort((a,b) => string.CompareOrdinal(a.effectId,b.effectId));
         return state;
     }
@@ -105,6 +109,7 @@ public sealed class TimedPotionEffects : SaveParticipant<TimedPotionSaveState>
     protected override void Restore(TimedPotionSaveState state)
     {
         remaining.Clear();
+        regenerationTarget = FindAnyObjectByType<PlayerHealth>();
         foreach (var effect in state.active) if (effect.remainingSeconds > 0) remaining.Add(effect.effectId, effect.remainingSeconds);
     }
 }
