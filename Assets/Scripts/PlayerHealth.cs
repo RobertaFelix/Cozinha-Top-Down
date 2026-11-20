@@ -48,6 +48,7 @@ public sealed class PlayerHealth : MonoBehaviour
         var scaler = hud.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 
         for (int i = 0; i < HeartCount; i++)
         {

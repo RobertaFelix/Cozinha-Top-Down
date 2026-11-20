@@ -66,6 +66,7 @@ public sealed class PlayerStamina : MonoBehaviour
         var scaler = hud.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
         var rect = new GameObject("Stamina", typeof(RectTransform)).GetComponent<RectTransform>();
         rect.SetParent(hud.transform, false);
         rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.up;
