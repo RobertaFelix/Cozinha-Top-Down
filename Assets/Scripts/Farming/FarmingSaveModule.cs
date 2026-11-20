@@ -20,6 +20,10 @@ public sealed class FarmPlotData
 public sealed class FarmingSaveModule : SaveParticipant<FarmSaveState>
 {
     [SerializeField] private CropCatalog catalog;
+    [Header("Growth glove")]
+    [SerializeField, Min(1)] private int upgradedGrowthStagesPerDay = 2;
+    public int GrowthStagesPerDay => UpgradePurchases.Has(UpgradePurchases.GrowthGlove)
+        ? Mathf.Max(1, upgradedGrowthStagesPerDay) : 1;
     [Header("Upgrade de colheita")]
     [SerializeField, Range(0f, 1f)] private float upgradedDoubleHarvestChance = .25f;
     public float CurrentDoubleHarvestChance => UpgradePurchases.Has(UpgradePurchases.HarvestCrate)
@@ -71,7 +75,8 @@ public sealed class FarmingSaveModule : SaveParticipant<FarmSaveState>
         if (day > plot.processedDay && plot.wateredDay == plot.processedDay)
         {
             var crop = catalog != null ? catalog.Find(plot.cropId) : null;
-            if (crop != null && !crop.IsMature(plot.stage)) plot.stage++;
+            if (crop != null && !crop.IsMature(plot.stage))
+                plot.stage = Mathf.Min(crop.growthStages.Length - 1, plot.stage + GrowthStagesPerDay);
         }
         // A jump grants only the day actually watered. Rewinding the dev clock never creates water.
         plot.processedDay = day;

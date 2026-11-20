@@ -19959,6 +19959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FarmingSaveModule
   catalog: {fileID: 11400000, guid: ddd1e364b2fa701418f0edca18aaf9f1, type: 2}
+  upgradedGrowthStagesPerDay: 2
   upgradedDoubleHarvestChance: 0.25
 --- !u!1 &919926617 stripped
 GameObject:

@@ -35,7 +35,7 @@ public static class ItemTooltipCatalog
         "Reduces recipe cooking time.", "Increases movement speed.",
         "Increases the stack limit for identical items from 10 to 99 per slot.", "Customers wait longer for their food.",
         "Reduces item prices at the market.", "More resources from enemies. Coming soon.",
-        "Chance of a double harvest. Coming soon.", "Unlocks shop access outside opening hours. After-hours purchases cost more.",
+        "Halves the number of watered days crops need to mature, rounded up.", "Unlocks shop access outside opening hours. After-hours purchases cost more.",
         "Chance to harvest two ingredients from a mature plant without consuming another seed.", "Doubles the payment for dishes served to customers.",
         "Increases the time to collect cooked food before it burns.", "Customers arrive more frequently while the restaurant is open.",
         "Increases coin collection range.", "Coming soon."
