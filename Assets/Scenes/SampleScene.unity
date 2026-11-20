@@ -59796,6 +59796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1860243223}
+  - component: {fileID: 1860243224}
   m_Layer: 0
   m_Name: Exterior
   m_TagString: Untagged
@@ -59819,6 +59820,25 @@ Transform:
   - {fileID: 1433624877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1860243224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860243222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468d61b16728fec43bb90cefb7226d11, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CameraBoundaryRegion
+  localBounds:
+    serializedVersion: 2
+    x: -1127.992
+    y: -696.78046
+    width: 83
+    height: 32
+  priority: 0
 --- !u!4 &1865577451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5404421196725940634, guid: 03e35994de064934585984e6770d38a7, type: 3}
@@ -74211,6 +74231,7 @@ GameObject:
   - component: {fileID: 2074708296}
   - component: {fileID: 2074708295}
   - component: {fileID: 920000001}
+  - component: {fileID: 2074708299}
   m_Layer: 0
   m_Name: CM Principal
   m_TagString: Untagged
@@ -74324,6 +74345,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2074708299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074708294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010181196804097419b3312a9282bed9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::WorldCameraBounds
 --- !u!1 &2094747058
 GameObject:
   m_ObjectHideFlags: 0
