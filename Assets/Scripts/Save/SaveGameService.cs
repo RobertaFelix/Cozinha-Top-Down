@@ -81,15 +81,19 @@ public sealed class SaveGameService : MonoBehaviour
                 var document = Store.Read();
                 foreach (var participant in participants)
                 {
+                    if (participant is ISceneSaveParticipant unavailable && !unavailable.SceneStateAvailable) continue;
                     var section = document.sections.Find(s => s.key == participant.SaveKey);
                     if (section != null) participant.ValidateState(section.json, section.version);
                 }
                 var rollback = new Dictionary<ISaveParticipant, string>();
-                foreach (var participant in participants) rollback.Add(participant, participant.CaptureState());
+                foreach (var participant in participants)
+                    if (!(participant is ISceneSaveParticipant unavailable) || unavailable.SceneStateAvailable)
+                        rollback.Add(participant, participant.CaptureState());
                 try
                 {
                     foreach (var participant in participants)
                     {
+                        if (!rollback.ContainsKey(participant)) continue;
                         var section = document.sections.Find(s => s.key == participant.SaveKey);
                         if (section != null) participant.RestoreState(section.json, section.version);
                     }
@@ -97,10 +101,17 @@ public sealed class SaveGameService : MonoBehaviour
                 catch
                 {
                     foreach (var participant in participants)
-                        participant.RestoreState(rollback[participant], participant.SaveVersion);
+                        if (rollback.ContainsKey(participant)) participant.RestoreState(rollback[participant], participant.SaveVersion);
                     throw;
                 }
                 current = document;
+                sceneState.Clear();
+                foreach (var participant in participants)
+                    if (participant is ISceneSaveParticipant)
+                    {
+                        var section = document.sections.Find(s => s.key == participant.SaveKey);
+                        if (section != null) sceneState[participant.SaveKey] = section;
+                    }
             }
             LoadFailed = false;
             LastError = null;
@@ -111,13 +122,14 @@ public sealed class SaveGameService : MonoBehaviour
         }
         catch (Exception error)
         {
-            LastError = error.Message;
-            LoadFailed = true;
-            IsReady = false;
-            Time.timeScale = 0;
-            Debug.LogError("Could not load checkpoint: " + error);
-            GetComponent<DayEndScreen>().ShowError("Could not load your save. Your files have been preserved.", LoadCheckpoint);
+            ReportLoadFailure(error);
         }
+    }
+    public void ReportLoadFailure(Exception error)
+    {
+        LastError = error.Message; LoadFailed = true; IsReady = false; Time.timeScale = 0;
+        Debug.LogError("Could not load checkpoint: " + error);
+        GetComponent<DayEndScreen>().ShowError("Could not load your save. Your files have been preserved.", LoadCheckpoint);
     }
 
     public bool SaveCheckpoint()
@@ -129,6 +141,15 @@ public sealed class SaveGameService : MonoBehaviour
             var next = JsonUtility.FromJson<SaveDocument>(JsonUtility.ToJson(current));
             foreach (var participant in Participants())
             {
+                if (participant is ISceneSaveParticipant unavailable && !unavailable.SceneStateAvailable)
+                {
+                    if (sceneState.TryGetValue(participant.SaveKey, out var cached))
+                    {
+                        next.sections.RemoveAll(s => s.key == participant.SaveKey);
+                        next.sections.Add(cached);
+                    }
+                    continue;
+                }
                 string json = participant.CaptureState();
                 participant.ValidateState(json, participant.SaveVersion);
                 next.sections.RemoveAll(s => s.key == participant.SaveKey);
@@ -166,6 +187,8 @@ public sealed class SaveGameService : MonoBehaviour
     private IEnumerator RestoreSceneState()
     {
         yield return null;
+        try
+        {
         foreach (var participant in Participants())
             if (participant is ISceneSaveParticipant sceneParticipant && sceneParticipant.SceneStateAvailable &&
                 sceneState.TryGetValue(participant.SaveKey, out var section))
@@ -174,6 +197,8 @@ public sealed class SaveGameService : MonoBehaviour
             if (participant is ISceneSaveParticipant sceneParticipant && sceneParticipant.SceneStateAvailable &&
                 sceneState.TryGetValue(participant.SaveKey, out var section))
                 participant.RestoreState(section.json, section.version);
+        }
+        catch (Exception error) { ReportLoadFailure(error); }
     }
 
     private void OnDestroy()

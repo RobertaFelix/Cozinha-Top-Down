@@ -45,6 +45,7 @@ public abstract class CookwareCounter : MonoBehaviour
 
     protected void Update()
     {
+        if (!HotbarController.Resolve(ref hotbarController)) return;
         if (Time.timeScale <= 0 || InventoryPanelSession.HasOpenPanel ||
             InventoryStackCursor.IsHolding || ItemTooltipView.IsDragging || lastInteraction == Time.frameCount ||
             !player || !GetComponent<Collider2D>().IsTouching(player)) return;

@@ -32,6 +32,9 @@ public class InteractionPromptTrigger : MonoBehaviour
         if (!playerNearby)
             return;
 
+        var combat = FindAnyObjectByType<PlayerCombat>();
+        if (combat && combat.OwnsMotion) return;
+
         if (Keyboard.current != null &&
             Keyboard.current.eKey.wasPressedThisFrame)
         {

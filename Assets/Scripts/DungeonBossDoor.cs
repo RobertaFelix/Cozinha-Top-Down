@@ -10,6 +10,11 @@ public sealed class DungeonBossDoor : MonoBehaviour
     [SerializeField] private DungeonBossDoor returnDoor;
     public bool IsUnlocked { get; private set; }
     public Transform Destination => destination;
+    public void RestoreCheckpoint(bool unlocked, Transform savedDestination)
+    {
+        IsUnlocked = unlocked;
+        destination = savedDestination;
+    }
 
     public bool TryEnter(GameObject player)
     {

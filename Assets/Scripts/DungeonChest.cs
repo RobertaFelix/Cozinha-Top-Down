@@ -37,6 +37,14 @@ public sealed class DungeonChest : MonoBehaviour
         }
         return true;
     }
+    public void RestoreOpened(bool opened)
+    {
+        IsOpened = opened;
+        var trigger = GetComponentInChildren<InteractionPromptTrigger>();
+        if (trigger != null) trigger.enabled = !opened;
+        if (openingFrames != null && openingFrames.Length > 0)
+            chestRenderer.sprite = openingFrames[opened ? openingFrames.Length - 1 : 0];
+    }
 
     // Uses the same proximity/E interaction as the other objects in the game.
     public void Interact()

@@ -23,7 +23,24 @@ public class SceneTransitionController : MonoBehaviour
 
     private bool returnHomeAfterLoad;
     private bool isLoading;
-    public bool IsLoading => isLoading;
+    public bool IsLoading => isLoading || restoringCheckpoint != null;
+    private PlayerLocationSaveState restoringCheckpoint;
+    public void RestoreCheckpoint(PlayerLocationSaveState checkpoint)
+    {
+        StopCoroutine(nameof(RestoreSavedScene));
+        restoringCheckpoint = checkpoint;
+        if (playerMovement != null) playerMovement.enabled = false;
+        StartCoroutine(nameof(RestoreSavedScene));
+    }
+    private IEnumerator RestoreSavedScene()
+    {
+        // Finish restoring persistent modules before replacing scene objects.
+        yield return null;
+        var saved = restoringCheckpoint;
+        string scene = string.IsNullOrEmpty(saved.sceneName) ? firstSceneName : saved.sceneName;
+        pendingRandomDungeonSpawn = false;
+        LoadScene(scene, scene == dungeonSceneName ? dungeonSpawnTag : firstSceneSpawnTag);
+    }
 
     public bool TryReturnHome()
     {
@@ -62,7 +79,9 @@ public class SceneTransitionController : MonoBehaviour
         if (isLoading)
             return;
 
-        SaveGameService.Instance?.CaptureSceneState();
+        // Return the backpack/hotbar to their persistent canvas before scene UI is destroyed.
+        InventoryPanelSession.CloseCurrent();
+        if (restoringCheckpoint == null) SaveGameService.Instance?.CaptureSceneState();
         isLoading = true;
 
         pendingSceneName = sceneName;
@@ -107,6 +126,12 @@ public class SceneTransitionController : MonoBehaviour
         }
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        if (restoringCheckpoint != null)
+        {
+            StartCoroutine(FinishCheckpointRestore(scene, restoringCheckpoint));
+            return;
+        }
 
         GameObject spawnObject = null;
         if (pendingRandomDungeonSpawn)
@@ -196,6 +221,39 @@ public class SceneTransitionController : MonoBehaviour
     {
         if (playerMovement != null)
             playerMovement.enabled = true;
+    }
+    private IEnumerator FinishCheckpointRestore(Scene scene, PlayerLocationSaveState saved)
+    {
+        yield return null;
+        try
+        {
+            if (scene.name == dungeonSceneName)
+            {
+                saved.dungeon.Restore(scene);
+                player.position = saved.position;
+                if (playerRb != null) { playerRb.position = saved.position; playerRb.linearVelocity = Vector2.zero; }
+                player.GetComponent<PlayerHealth>().RestoreCheckpoint(saved.dungeon.health);
+                player.GetComponent<PlayerStamina>().RestoreCheckpoint(saved.dungeon.stamina);
+            }
+            else
+            {
+                var environment = FindFirstObjectByType<EnvironmentTransition>();
+                if (environment == null || !environment.RestorePlayerCheckpoint(saved.interiorId, saved.position))
+                    throw new System.InvalidOperationException("Could not restore saved interior.");
+            }
+            var camera = FindAnyObjectByType<CinemachineCamera>();
+            if (camera != null) { camera.Target.TrackingTarget = player; camera.PreviousStateIsValid = false; }
+            Physics2D.SyncTransforms();
+            EnablePlayerMovement();
+            isLoading = false;
+            restoringCheckpoint = null;
+        }
+        catch (System.Exception error)
+        {
+            isLoading = false;
+            restoringCheckpoint = null;
+            SaveGameService.Instance.ReportLoadFailure(error);
+        }
     }
 
     private void OnDestroy()
