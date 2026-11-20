@@ -79,6 +79,10 @@ public static class ItemTooltipCatalog
     {
         if (recipe?.result?.itemPrefab == null) return default;
         var content = ForItem(recipe.result.itemPrefab);
+        if (!unlocked)
+        {
+            return new ItemTooltipContent("Unknown Recipe", "Cook dishes to discover their recipes.", null);
+        }
         var text = new StringBuilder("Ingredients: ");
         bool first = true;
         if (recipe.ingredients != null)
@@ -87,13 +91,13 @@ public static class ItemTooltipCatalog
                 if (ingredient?.itemPrefab == null) continue;
                 if (!first) text.Append(", ");
                 text.Append(GetName(ingredient.itemPrefab));
-                if (ingredient.amount > 1) text.Append(" Ã—").Append(ingredient.amount);
+                text.Append(" x").Append(Mathf.Max(1, ingredient.amount));
                 first = false;
             }
         text.Append("\nBase cooking time: ").Append(recipe.cookingTime.ToString("0.#")).Append(" s");
         int price = CoinManager.Instance != null ? CoinManager.Instance.GetDishSalePrice(recipe.basePrice) : Mathf.Max(0, recipe.basePrice);
         text.Append("\nSale price: ").Append(price).Append(" coins");
-        if (!unlocked) text.Append("\nCook this dish to unlock the recipe.");
+        text.Append("\nPreparation: Place cookware on the stove, add exactly these ingredients and select Cook. Collect the finished dish with an empty plate.");
         content.Body = text.ToString();
         return content;
     }
