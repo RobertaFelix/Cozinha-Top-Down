@@ -19755,7 +19755,6 @@ GameObject:
   - component: {fileID: 905555460}
   - component: {fileID: 905555459}
   - component: {fileID: 905555458}
-  - component: {fileID: 2108400007}
   - component: {fileID: 905555457}
   - component: {fileID: 905555466}
   - component: {fileID: 905555467}
@@ -75594,21 +75593,6 @@ MonoBehaviour:
   panelRoot: {fileID: 2108400000}
   slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
   slotCount: 6
---- !u!114 &2108400007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905555453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4437ebd181fc96340a38d5a7106ac8fd, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::InventorySaveModule
-  inventoryId: restaurantTrash
-  container: {fileID: 2108400001}
-  slotPrefab: {fileID: 2029307285019830437, guid: b417f0498b48e114db1ae8e51e54409e, type: 3}
 --- !u!1 &2108400008 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1084054477462834961, guid: 03e35994de064934585984e6770d38a7, type: 3}

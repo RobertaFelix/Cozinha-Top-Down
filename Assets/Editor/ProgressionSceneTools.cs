@@ -109,6 +109,11 @@ public static class ProgressionSceneTools
             "night uses the darker configured intensity");
         var recipe = FindFirstObjectByType<StoveController>().recipes.First(r => r.result?.itemPrefab != null);
         Check(!ItemTooltipCatalog.ForRecipe(recipe, false).Body.Contains("Ingredients:"), "locked recipes hide ingredients");
+        var recipeController = FindFirstObjectByType<StoveController>();
+        var exactIngredients = recipe.ingredients.Select(i => new InventoryItem { itemPrefab = i.itemPrefab, amount = i.amount }).ToArray();
+        Check(recipeController.FindRecipe(exactIngredients) == recipe, "merged stove accepts exact recipe quantities");
+        exactIngredients[0].amount++;
+        Check(recipeController.FindRecipe(exactIngredients) == null, "merged stove rejects surplus ingredients");
         Check(ItemTooltipCatalog.ForRecipe(recipe, true).Body.Contains("Preparation:") &&
             ItemTooltipCatalog.ForRecipe(recipe, true).Body.Contains(" x1"), "unlocked recipes show quantities and preparation");
         var area = FindFirstObjectByType<FarmArea>();
@@ -259,6 +264,37 @@ public static class ProgressionSceneTools
                 refrigerator.OpenRefrigerator(null);
                 yield return null;
                 Check(bag.inventoryPanel.activeInHierarchy, "leave storage open before scene transition regression");
+            }
+            else
+            {
+                var trash = FindAnyObjectByType<RestaurantTrash>();
+                var trashPanel = new SerializedObject(trash).FindProperty("inventory").objectReferenceValue as ConfirmableInventoryPanel;
+                Check(trashPanel != null, "merged restaurant trash retains its panel reference");
+                var trashSlots = trashPanel.panelRoot.GetComponentsInChildren<Slot>(true);
+                trashPanel.EnsureSlots();
+                trashSlots = trashPanel.panelRoot.GetComponentsInChildren<Slot>(true);
+                var source = bag.inventoryPanel.GetComponentsInChildren<Slot>(true).First(s => s.inventoryItem?.itemPrefab != null);
+                var ingredient = source.inventoryItem.itemPrefab;
+                int amount = source.inventoryItem.amount;
+                var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+                Action returnItems = () => typeof(RestaurantTrash).GetMethod("ReturnItems", flags).Invoke(trash, null);
+                Action discard = () => typeof(RestaurantTrash).GetMethod("Discard", flags).Invoke(trash, null);
+                InventoryPanelSession.Bind(trashPanel.panelRoot, null);
+                trashPanel.Open(discard, returnItems);
+                InventoryWorkspace.QuickMove(source);
+                Check(trashSlots.Any(s => s.inventoryItem?.itemPrefab == ingredient), "trash receives pending items after dungeon return");
+                trashPanel.Close(); yield return null;
+                Check(trashSlots.All(s => s.inventoryItem?.itemPrefab == null) &&
+                    bag.GetInventoryItems().Where(i => i.itemPrefab == ingredient).Sum(i => i.amount) == amount,
+                    "closing merged trash returns pending items to backpack");
+                trashPanel.Open(discard, returnItems);
+                source = bag.inventoryPanel.GetComponentsInChildren<Slot>(true).First(s => s.inventoryItem?.itemPrefab == ingredient);
+                InventoryWorkspace.QuickMove(source);
+                int hotbarCount = bar.GetHotbarItems().Sum(i => i.amount);
+                discard(); yield return null;
+                Check(trashSlots.All(s => s.inventoryItem?.itemPrefab == null) && bar.GetHotbarItems().Sum(i => i.amount) == hotbarCount,
+                    "confirming merged trash removes only pending items");
+                Check(service.SaveCheckpoint(), "village save remains valid after merged trash interactions");
             }
         }
     }
