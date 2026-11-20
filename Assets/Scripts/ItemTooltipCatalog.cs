@@ -67,6 +67,7 @@ public static class ItemTooltipCatalog
         var info = prefab.GetComponent<ItemTooltipInfo>();
         string body = info != null ? info.Description : "";
         if (prefab.GetComponent<PotionItem>()?.Effect is TimedPotionEffect timed) body = timed.Description;
+        if (prefab.GetComponent<PotionItem>()?.Effect is HealingPotionEffect healing) body = healing.Description;
         if (!string.IsNullOrEmpty(body) && prefab.GetComponent<PotionItem>() != null) body = "Effect: " + body;
         if (amount > 0) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Quantity: " + amount;
         if (unitPrice.HasValue) body += (string.IsNullOrEmpty(body) ? "" : "\n") + "Unit price: " + Mathf.Max(0, unitPrice.Value) + " coins";
@@ -85,7 +86,7 @@ public static class ItemTooltipCatalog
                 if (ingredient?.itemPrefab == null) continue;
                 if (!first) text.Append(", ");
                 text.Append(GetName(ingredient.itemPrefab));
-                if (ingredient.amount > 1) text.Append(" ×").Append(ingredient.amount);
+                if (ingredient.amount > 1) text.Append(" Ã—").Append(ingredient.amount);
                 first = false;
             }
         text.Append("\nBase cooking time: ").Append(recipe.cookingTime.ToString("0.#")).Append(" s");

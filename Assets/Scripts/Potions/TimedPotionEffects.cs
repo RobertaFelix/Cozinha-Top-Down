@@ -45,12 +45,18 @@ public sealed class TimedPotionEffects : SaveParticipant<TimedPotionSaveState>
                 value = Mathf.Max(value, effect.Multiplier);
         return value;
     }
-    public bool TryApply(TimedPotionEffect effect)
+    private PlayerHealth regenerationTarget;
+    public bool TryApply(TimedPotionEffect effect, PlayerHealth target = null)
     {
         var saves = GetComponent<SaveGameService>();
         if (Instance != this || !isActiveAndEnabled || Time.timeScale <= 0 || (saves != null && !saves.IsReady) ||
             effect == null || Find(effect.EffectId) != effect || !Valid(effect.DurationSeconds) || effect.DurationSeconds <= 0 ||
             !Valid(effect.Multiplier) || effect.Multiplier < 1f) return false;
+        if (effect.Kind == TimedPotionKind.Regeneration)
+        {
+            if (!target || !target.InDungeon) return false;
+            regenerationTarget = target;
+        }
         remaining[effect.EffectId] = effect.DurationSeconds;
         return true;
     }
@@ -62,7 +68,18 @@ public sealed class TimedPotionEffects : SaveParticipant<TimedPotionSaveState>
         foreach (var effect in definitions)
             if (effect != null && remaining.TryGetValue(effect.EffectId, out float seconds))
             {
+                float previous = seconds;
                 seconds = Mathf.Max(0, seconds - Time.deltaTime);
+                if (effect.Kind == TimedPotionKind.Regeneration)
+                {
+                    if (!regenerationTarget || !regenerationTarget.InDungeon) seconds = 0;
+                    else
+                    {
+                        int ticks = Mathf.FloorToInt((effect.DurationSeconds - seconds) / effect.TickSeconds)
+                                  - Mathf.FloorToInt((effect.DurationSeconds - previous) / effect.TickSeconds);
+                        if (ticks > 0) regenerationTarget.Heal(ticks * effect.HealPerTick);
+                    }
+                }
                 if (seconds <= 0) remaining.Remove(effect.EffectId);
                 else remaining[effect.EffectId] = seconds;
             }
@@ -71,7 +88,7 @@ public sealed class TimedPotionEffects : SaveParticipant<TimedPotionSaveState>
     {
         var state = new TimedPotionSaveState();
         foreach (var effect in remaining)
-            if (effect.Value > 0) state.active.Add(new SavedPotionEffect { effectId = effect.Key, remainingSeconds = effect.Value });
+            if (effect.Value > 0 && Find(effect.Key).Kind != TimedPotionKind.Regeneration) state.active.Add(new SavedPotionEffect { effectId = effect.Key, remainingSeconds = effect.Value });
         state.active.Sort((a,b) => string.CompareOrdinal(a.effectId,b.effectId));
         return state;
     }

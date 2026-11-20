@@ -30,7 +30,7 @@ public sealed class ActivePotionEffectsHud : MonoBehaviour
             var track = Image("Duration Track", rect, new Color32(29, 22, 24, 255));
             TopLeft(track.rectTransform, new Vector2(4, -4), new Vector2(8, 50));
             var fill = Image("Duration Fill", track.transform,
-                effect.Kind == TimedPotionKind.MovementSpeed
+                effect.Kind == TimedPotionKind.Regeneration ? new Color32(102, 195, 86, 255) : effect.Kind == TimedPotionKind.MovementSpeed
                     ? new Color32(181, 111, 222, 255) : new Color32(250, 204, 69, 255));
             fill.rectTransform.anchorMin = Vector2.zero;
             fill.rectTransform.anchorMax = Vector2.one;
@@ -43,7 +43,7 @@ public sealed class ActivePotionEffectsHud : MonoBehaviour
             icon.preserveAspect = true;
             TopLeft(icon.rectTransform, new Vector2(20, -2), new Vector2(54, 54));
             ItemTooltipTarget.Bind(group.gameObject, () => effects != null && effects.RemainingSeconds(effect.EffectId) > 0
-                ? new ItemTooltipContent(effect.Kind == TimedPotionKind.MovementSpeed ? "Speed Boost" : "Coin Boost",
+                ? new ItemTooltipContent(effect.Kind == TimedPotionKind.Regeneration ? "Regeneration" : effect.Kind == TimedPotionKind.MovementSpeed ? "Speed Boost" : "Coin Boost",
                     "Effect: " + effect.Description, effect.Icon) : default, false, (RectTransform)transform);
             group.gameObject.SetActive(false);
             entries.Add(new Entry { effect = effect, root = group.gameObject, fill = fill.rectTransform });

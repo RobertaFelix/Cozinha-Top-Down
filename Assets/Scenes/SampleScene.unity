@@ -74720,11 +74720,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f162d5d05e58f0b4baca951fdbdc7ac4, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::TimedPotionEffects
   definitions:
   - {fileID: 11400000, guid: 8b7c5d00178688a48b89390aceae35f1, type: 2}
   - {fileID: 11400000, guid: 8b2b269eb62707742833948567714af0, type: 2}
+  - {fileID: 11400000, guid: c33ce75e9370418da06787139bdaea02, type: 2}
 --- !u!114 &992771115346
 MonoBehaviour:
   m_ObjectHideFlags: 0
