@@ -12,6 +12,12 @@ public sealed class PlayerHealth : MonoBehaviour
     public int Current { get; private set; }
     public bool InDungeon { get; private set; }
     public event System.Action<int> Damaged;
+    public void RestoreCheckpoint(int value)
+    {
+        if (!InDungeon) return;
+        Current = Mathf.Clamp(value, 1, Maximum);
+        RefreshHearts();
+    }
 
     private const int HeartCount = 5;
     private readonly Image[] hearts = new Image[HeartCount];

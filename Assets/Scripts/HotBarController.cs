@@ -88,9 +88,15 @@ public class HotbarController : MonoBehaviour
             var player = FindFirstObjectByType<PlayerController>();
             if (player != null) potionUser = player.gameObject;
         }
-        if (!potion.TryUse(potionUser)) return false;
-
-        slot.inventoryItem.amount--;
+        // Capture the consumed stack in checkpoint potions; restore it if the effect fails.
+        bool checkpointPotion = potion.Effect is SavePotionEffect;
+        if (checkpointPotion) slot.inventoryItem.amount--;
+        if (!potion.TryUse(potionUser))
+        {
+            if (checkpointPotion) slot.inventoryItem.amount++;
+            return false;
+        }
+        if (!checkpointPotion) slot.inventoryItem.amount--;
         if (slot.inventoryItem.amount == 0)
         {
             slot.currentItem.SetActive(false);

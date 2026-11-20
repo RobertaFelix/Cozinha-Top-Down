@@ -20,6 +20,19 @@ public sealed class DungeonChestSpawner : MonoBehaviour
     public bool HasBossKey => BossKeyItem.Has(bossKeyPrefab);
     public IReadOnlyList<Transform> SpawnPoints => spawnPoints;
     public IReadOnlyList<DungeonChest> SpawnedChests => spawnedChests;
+    public void RestoreRun(List<SavedDungeonChest> saved)
+    {
+        foreach (var old in GetComponentsInChildren<DungeonChest>()) { old.gameObject.SetActive(false); Destroy(old.gameObject); }
+        spawnedChests.Clear(); generated = true;
+        var root = new GameObject("Restored Chests").transform; root.SetParent(transform, false);
+        foreach (var entry in saved)
+        {
+            var chest = Instantiate(chestPrefab, entry.position, Quaternion.identity, root);
+            chest.Initialize(this, entry.hasKey);
+            chest.RestoreOpened(entry.opened);
+            spawnedChests.Add(chest);
+        }
+    }
 
     public List<Transform> GetValidSpawnPoints()
     {

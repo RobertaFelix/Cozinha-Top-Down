@@ -25,6 +25,14 @@ public sealed class PlayerStamina : MonoBehaviour
     private static readonly int[] rowWidths = { 43, 44, 45, 44, 43 };
 
     private void Awake() { health = GetComponent<PlayerHealth>(); }
+    public void RestoreCheckpoint(float value)
+    {
+        if (!InDungeon) return;
+        activeVisit = true;
+        if (!hud) BuildHud();
+        Current = Mathf.Clamp(value, 0, maximum);
+        lastSpend = Time.time;
+    }
     private void Update()
     {
         if (InDungeon != activeVisit)
