@@ -51,6 +51,7 @@ public class Stove : MonoBehaviour
 
     private void Update()
     {
+        if (!HotbarController.Resolve(ref hotbarController)) return;
         var mounted = stoveController.Mounted;
         utensil.sprite = mounted ? mounted.GetComponent<Image>().sprite : null;
         float bounce = stoveController.IsCooking ? .04f * Mathf.Abs(Mathf.Sin(Time.time * 9f)) : 0;

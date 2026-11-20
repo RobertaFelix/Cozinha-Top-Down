@@ -79,6 +79,8 @@ public class SceneTransitionController : MonoBehaviour
         if (isLoading)
             return;
 
+        // Return the backpack/hotbar to their persistent canvas before scene UI is destroyed.
+        InventoryPanelSession.CloseCurrent();
         if (restoringCheckpoint == null) SaveGameService.Instance?.CaptureSceneState();
         isLoading = true;
 

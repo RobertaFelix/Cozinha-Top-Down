@@ -8,6 +8,19 @@ using TMPro;
 
 public class HotbarController : MonoBehaviour
 {
+    public static bool Resolve(ref HotbarController controller)
+    {
+        if (controller && controller.isActiveAndEnabled && controller.hotbarPanel) return true;
+        controller = null;
+        foreach (var candidate in FindObjectsByType<HotbarController>(FindObjectsSortMode.None))
+            if (candidate.isActiveAndEnabled && candidate.hotbarPanel && candidate.slotCount > 0)
+            {
+                controller = candidate;
+                return true;
+            }
+        return false;
+    }
+
     public GameObject hotbarPanel;
     public GameObject slotPrefab;
     public int slotCount;

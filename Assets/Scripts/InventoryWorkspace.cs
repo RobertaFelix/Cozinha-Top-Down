@@ -41,6 +41,7 @@ public sealed class InventoryWorkspace : MonoBehaviour
 
     private void Awake()
     {
+        if (current && current != this) return;
         current = this;
         bag = (RectTransform)GetComponent<InventoryController>().inventoryPanel.transform;
         bar = (RectTransform)GetComponent<HotbarController>().hotbarPanel.transform;
@@ -50,6 +51,11 @@ public sealed class InventoryWorkspace : MonoBehaviour
         if (!hudGroup) hudGroup = bar.gameObject.AddComponent<CanvasGroup>();
         bagGrid = bag.GetComponent<GridLayoutGroup>();
         barGrid = bar.GetComponent<GridLayoutGroup>();
+    }
+
+    private void OnDestroy()
+    {
+        if (current == this) current = null;
     }
 
     public static void OpenStorage(GameObject panel)
