@@ -11,6 +11,7 @@ public sealed class PlayerHealth : MonoBehaviour
     public int Maximum => maximum;
     public int Current { get; private set; }
     public bool InDungeon { get; private set; }
+    public event System.Action<int> Damaged;
 
     private const int HeartCount = 5;
     private readonly Image[] hearts = new Image[HeartCount];
@@ -73,14 +74,18 @@ public sealed class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (!InDungeon || amount <= 0) return;
-        Current -= Mathf.Min(Current, amount);
+        if (!InDungeon || amount <= 0 || Current <= 0) return;
+        var combat = GetComponent<PlayerCombat>();
+        if (combat && combat.IsInvulnerable) return;
+        int applied = Mathf.Min(Current, amount);
+        Current -= applied;
         RefreshHearts();
+        Damaged?.Invoke(applied);
     }
 
     public void Heal(int amount)
     {
-        if (!InDungeon || amount <= 0) return;
+        if (!InDungeon || amount <= 0 || Current <= 0) return;
         Current += Mathf.Min(Maximum - Current, amount);
         RefreshHearts();
     }

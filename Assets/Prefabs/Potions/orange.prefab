@@ -112,6 +112,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27a79bd051404d9f95868f92721b8d27, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PotionItem
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: f02a3bb511a9856469a25cc71e418244, type: 2}

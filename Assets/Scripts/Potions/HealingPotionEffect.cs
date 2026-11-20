@@ -9,7 +9,7 @@ public sealed class HealingPotionEffect : PotionEffect
     public override bool TryApply(GameObject user)
     {
         if (!user || !user.TryGetComponent<PlayerHealth>(out var health) ||
-            !health.InDungeon || health.Current >= health.Maximum) return false;
+            !health.InDungeon || health.Current <= 0 || health.Current >= health.Maximum) return false;
         health.Heal(amount);
         return true;
     }
