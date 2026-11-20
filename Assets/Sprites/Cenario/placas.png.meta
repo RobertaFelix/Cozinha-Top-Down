@@ -1,0 +1,391 @@
+fileFormatVersion: 2
+guid: c7719bc3e7629a04e9d62ab3a9e4cf99
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6695833291572891575
+    second: placas_0
+  - first:
+      213: 7673923363857085224
+    second: placas_1
+  - first:
+      213: 6961680738245765103
+    second: placas_2
+  - first:
+      213: 3100852430438259082
+    second: placas_3
+  - first:
+      213: 7794184427609431221
+    second: placas_4
+  - first:
+      213: -4626242980205529406
+    second: placas_5
+  - first:
+      213: 3693243573053386940
+    second: placas_6
+  - first:
+      213: 3042717142601122288
+    second: placas_7
+  - first:
+      213: -8605208609863238767
+    second: placas_8
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: placas_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 103
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bfcf6317e06cec50800000000000000
+      internalID: 6695833291572891575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 103
+        width: 16
+        height: 14
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 823b54824a04f7a60800000000000000
+      internalID: 7673923363857085224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_2
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 103
+        width: 16
+        height: 14
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe761d23fbbdc9060800000000000000
+      internalID: 6961680738245765103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 59
+        width: 16
+        height: 38
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a89dd214bd0780b20800000000000000
+      internalID: 3100852430438259082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_4
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 65
+        width: 29
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -6.5, y: -16}
+        - {x: -6.5, y: -13}
+        - {x: -6.5, y: -11}
+        - {x: -6.5, y: -9}
+        - {x: -8.5, y: -9}
+        - {x: -14.5, y: -9}
+        - {x: -14.5, y: -16}
+        - {x: -10.5, y: -16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bc9a8901718a2c60800000000000000
+      internalID: 7794184427609431221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 32
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c6743835884ccfb0800000000000000
+      internalID: -4626242980205529406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_6
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 17
+        width: 29
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 14.5, y: -9}
+        - {x: 10.5, y: -9}
+        - {x: 6.5, y: -9}
+        - {x: 6.5, y: -12}
+        - {x: 6.5, y: -16}
+        - {x: 14.5, y: -16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb077d84679014330800000000000000
+      internalID: 3693243573053386940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_7
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 23
+        width: 21
+        height: 40
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 8.5, y: -15}
+        - {x: 8.5, y: -12}
+        - {x: 5.5, y: -12}
+        - {x: 3.5, y: -12}
+        - {x: 0.5, y: -12}
+        - {x: -1.5, y: -12}
+        - {x: -1.5, y: -16}
+        - {x: -1.5, y: -20}
+        - {x: 8.5, y: -20}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f14bb4ce17e93a20800000000000000
+      internalID: 3042717142601122288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: placas_8
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 5
+        width: 22
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19bf7f69c58249880800000000000000
+      internalID: -8605208609863238767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 58308ba9b1d1c814c9df668258189716
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      placas_0: 6695833291572891575
+      placas_1: 7673923363857085224
+      placas_2: 6961680738245765103
+      placas_3: 3100852430438259082
+      placas_4: 7794184427609431221
+      placas_5: -4626242980205529406
+      placas_6: 3693243573053386940
+      placas_7: 3042717142601122288
+      placas_8: -8605208609863238767
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
