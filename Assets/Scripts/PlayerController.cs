@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private PlayerControls playerControls;
     private Vector2 movement;
     private Vector2 lastMovement;
+    public Vector2 MoveDirection => movement;
+    public Vector2 FacingDirection => lastMovement.normalized;
+    private PlayerCombat combat;
 
     private Rigidbody2D rb;
     private Animator myAnimator;
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour
         playerControls = new PlayerControls();
 
         rb = GetComponent<Rigidbody2D>();
+        combat = GetComponent<PlayerCombat>();
         // Render between physics ticks; Cinemachine follows this interpolated pose in LateUpdate.
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         myAnimator = GetComponent<Animator>();
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         PlayerInput();
+        if (combat != null && combat.OwnsMotion) return;
         UpdateAnimation();
         AdjustPlayerFacingDirection();
     }
@@ -72,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
+        if (combat != null && combat.OwnsMotion) return;
         rb.MovePosition(
             rb.position + movement * (CurrentMoveSpeed * Time.fixedDeltaTime)
         );
@@ -95,6 +101,7 @@ public class PlayerController : MonoBehaviour
 
     private void AdjustPlayerFacingDirection()
     {
+        if (Mouse.current == null || Camera.main == null) return;
         Vector3 mousePos = Mouse.current.position.ReadValue();
 
         Vector3 playerScreenPoint =

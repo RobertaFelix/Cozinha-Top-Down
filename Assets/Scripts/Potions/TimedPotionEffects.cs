@@ -54,7 +54,7 @@ public sealed class TimedPotionEffects : SaveParticipant<TimedPotionSaveState>
             !Valid(effect.Multiplier) || effect.Multiplier < 1f) return false;
         if (effect.Kind == TimedPotionKind.Regeneration)
         {
-            if (!target || !target.InDungeon) return false;
+            if (!target || !target.InDungeon || target.Current <= 0) return false;
             regenerationTarget = target;
         }
         remaining[effect.EffectId] = effect.DurationSeconds;

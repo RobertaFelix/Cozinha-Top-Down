@@ -25,7 +25,7 @@ public class HotbarController : MonoBehaviour
             var prefab = slot?.inventoryItem?.itemPrefab;
             return prefab != null && slot.inventoryItem.amount > 0 && slot.currentItem != null &&
                 slot.currentItem.transform.parent == slot.transform &&
-                (prefab.GetComponent<CookwareItem>() != null || prefab.GetComponent<FarmToolItem>() != null || prefab.GetComponent<SeedItem>() != null) ? slot : null;
+                (prefab.GetComponent<SwordItem>() != null || prefab.GetComponent<CookwareItem>() != null || prefab.GetComponent<FarmToolItem>() != null || prefab.GetComponent<SeedItem>() != null) ? slot : null;
         }
     }
 
@@ -58,6 +58,8 @@ public class HotbarController : MonoBehaviour
         if (transition != null && transition.IsTransitioning) return false;
         var scenes = FindFirstObjectByType<SceneTransitionController>();
         if (scenes != null && scenes.IsLoading) return false;
+        var combat = potionUser ? potionUser.GetComponent<PlayerCombat>() : FindAnyObjectByType<PlayerCombat>();
+        if (combat && combat.OwnsMotion) return false;
         var selected = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
         return selected == null || (selected.GetComponentInParent<TMP_InputField>() == null &&
             selected.GetComponentInParent<InputField>() == null);
@@ -74,7 +76,7 @@ public class HotbarController : MonoBehaviour
             slot.inventoryItem.amount <= 0 || slot.currentItem == null ||
             slot.currentItem.transform.parent != slot.transform) return false;
 
-        if (slot.inventoryItem.itemPrefab.GetComponent<CookwareItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<FarmToolItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<SeedItem>() != null)
+        if (slot.inventoryItem.itemPrefab.GetComponent<SwordItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<CookwareItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<FarmToolItem>() != null || slot.inventoryItem.itemPrefab.GetComponent<SeedItem>() != null)
         {
             return true;
         }

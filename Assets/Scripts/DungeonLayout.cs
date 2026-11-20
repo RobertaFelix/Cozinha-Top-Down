@@ -37,6 +37,8 @@ public sealed class DungeonLayout : MonoBehaviour
         foreach (var layout in layouts)
             layout.gameObject.SetActive(layout == selected);
         selected.GetComponent<DungeonChestSpawner>()?.GenerateForRun(spawn);
+        Physics2D.SyncTransforms();
+        selected.GetComponent<DungeonEnemySpawner>()?.GenerateForRun(spawn);
         return true;
     }
 
