@@ -1,0 +1,651 @@
+fileFormatVersion: 2
+guid: 3b11692c8acbf554080142bd1961403e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2294044877801748419
+    second: armadilhaFogo_0
+  - first:
+      213: -3994241387695445166
+    second: armadilhaFogo_1
+  - first:
+      213: -799316944369049547
+    second: armadilhaFogo_2
+  - first:
+      213: 8132913947645442092
+    second: armadilhaFogo_3
+  - first:
+      213: -3458762398674664881
+    second: armadilhaFogo_4
+  - first:
+      213: 6904083855205139546
+    second: armadilhaFogo_5
+  - first:
+      213: -9142273465682464635
+    second: armadilhaFogo_6
+  - first:
+      213: -2508699904345525719
+    second: armadilhaFogo_7
+  - first:
+      213: -7934058639918529127
+    second: armadilhaFogo_8
+  - first:
+      213: -1514616268414354597
+    second: armadilhaFogo_9
+  - first:
+      213: -200145641563055758
+    second: armadilhaFogo_10
+  - first:
+      213: 6489419611199093196
+    second: armadilhaFogo_11
+  - first:
+      213: -3342007440070780999
+    second: armadilhaFogo_12
+  - first:
+      213: 6356153501561489801
+    second: armadilhaFogo_13
+  - first:
+      213: -458494186889828370
+    second: armadilhaFogo_14
+  - first:
+      213: -8620114016493158194
+    second: armadilhaFogo_15
+  - first:
+      213: 3599996588009607627
+    second: armadilhaFogo_16
+  - first:
+      213: -8954760791261000573
+    second: armadilhaFogo_17
+  - first:
+      213: 7262111664358581548
+    second: armadilhaFogo_18
+  - first:
+      213: -4079444613144995084
+    second: armadilhaFogo_19
+  - first:
+      213: 2173272927611275247
+    second: armadilhaFogo_20
+  - first:
+      213: 4528804025517361610
+    second: armadilhaFogo_21
+  - first:
+      213: -8995188543271033401
+    second: armadilhaFogo_22
+  - first:
+      213: -239420524227986037
+    second: armadilhaFogo_23
+  - first:
+      213: 4138111842259574669
+    second: armadilhaFogo_24
+  - first:
+      213: -4380024373932046093
+    second: armadilhaFogo_25
+  - first:
+      213: -5661406086813142530
+    second: armadilhaFogo_26
+  - first:
+      213: -8011042824187979717
+    second: armadilhaFogo_27
+  - first:
+      213: 8310793802309566939
+    second: armadilhaFogo_28
+  - first:
+      213: -5243693660918665614
+    second: armadilhaFogo_29
+  - first:
+      213: -1767337973678539399
+    second: armadilhaFogo_30
+  - first:
+      213: 3712512082450496045
+    second: armadilhaFogo_31
+  - first:
+      213: 5670193153279315744
+    second: armadilhaFogo_32
+  - first:
+      213: 3218671004355423709
+    second: armadilhaFogo_33
+  - first:
+      213: -7709325517353641277
+    second: armadilhaFogo_34
+  - first:
+      213: -437955020921998637
+    second: armadilhaFogo_35
+  - first:
+      213: 6695248934448010194
+    second: armadilhaFogo_36
+  - first:
+      213: 8482996971472127323
+    second: armadilhaFogo_37
+  - first:
+      213: 5172652695722078809
+    second: armadilhaFogo_38
+  - first:
+      213: -1465370140238677693
+    second: armadilhaFogo_39
+  - first:
+      213: 609509758864129590
+    second: armadilhaFogo_40
+  - first:
+      213: 8770031868040651373
+    second: armadilhaFogo_41
+  - first:
+      213: -8713767398356590729
+    second: armadilhaFogo_42
+  - first:
+      213: -6347132894826595669
+    second: armadilhaFogo_43
+  - first:
+      213: 1484420036831409042
+    second: armadilhaFogo_44
+  - first:
+      213: -7569410042742250330
+    second: armadilhaFogo_45
+  - first:
+      213: -316115956426379210
+    second: armadilhaFogo_46
+  - first:
+      213: -2400946493709236258
+    second: armadilhaFogo_47
+  - first:
+      213: -3847969410812201834
+    second: armadilhaFogo_48
+  - first:
+      213: -4595760367471333523
+    second: armadilhaFogo_49
+  - first:
+      213: -3558749932935429848
+    second: armadilhaFogo_50
+  - first:
+      213: -4525975146794651119
+    second: armadilhaFogo_51
+  - first:
+      213: 6969555898034686665
+    second: armadilhaFogo_52
+  - first:
+      213: 3723760170412758328
+    second: armadilhaFogo_53
+  - first:
+      213: -6597965460597664374
+    second: armadilhaFogo_54
+  - first:
+      213: -3477051922889640312
+    second: armadilhaFogo_55
+  - first:
+      213: 3958204778718528171
+    second: armadilhaFogo_56
+  - first:
+      213: 4797177559799451455
+    second: armadilhaFogo_57
+  - first:
+      213: 7107464244670338234
+    second: armadilhaFogo_58
+  - first:
+      213: 1137930185354823372
+    second: armadilhaFogo_59
+  - first:
+      213: 7098725190236276974
+    second: armadilhaFogo_60
+  - first:
+      213: 9212107750473648675
+    second: armadilhaFogo_61
+  - first:
+      213: 6340233187688475267
+    second: armadilhaFogo_62
+  - first:
+      213: 6485275005872575385
+    second: armadilhaFogo_63
+  - first:
+      213: 9176661036668738647
+    second: armadilhaFogo_64
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: armadilhaFogo_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c77d2879a516df10800000000000000
+      internalID: 2294044877801748419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25bef3bce9a9198c0800000000000000
+      internalID: -3994241387695445166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 530aeeb597148e4f0800000000000000
+      internalID: -799316944369049547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c28f936352aedd070800000000000000
+      internalID: 8132913947645442092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f42c4887ce10000d0800000000000000
+      internalID: -3458762398674664881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a540309dfab30df50800000000000000
+      internalID: 6904083855205139546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 580748688be102180800000000000000
+      internalID: -9142273465682464635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 922bd698abe4f2dd0800000000000000
+      internalID: -2508699904345525719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_8
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 995898414bf84e190800000000000000
+      internalID: -7934058639918529127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_9
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5b722657800bfae0800000000000000
+      internalID: -1514616268414354597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_10
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2799a437990f83df0800000000000000
+      internalID: -200145641563055758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_11
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc9b9f301cc0f0a50800000000000000
+      internalID: 6489419611199093196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_12
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b75ed1a0fdce91d0800000000000000
+      internalID: -3342007440070780999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: armadilhaFogo_13
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 0
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9898d6eeee7953850800000000000000
+      internalID: 6356153501561489801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 21d577c6a697c0746b6c586d4cbc6205
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":41.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      armadilhaFogo_0: 2294044877801748419
+      armadilhaFogo_1: -3994241387695445166
+      armadilhaFogo_10: -200145641563055758
+      armadilhaFogo_11: 6489419611199093196
+      armadilhaFogo_12: -3342007440070780999
+      armadilhaFogo_13: 6356153501561489801
+      armadilhaFogo_2: -799316944369049547
+      armadilhaFogo_3: 8132913947645442092
+      armadilhaFogo_4: -3458762398674664881
+      armadilhaFogo_5: 6904083855205139546
+      armadilhaFogo_6: -9142273465682464635
+      armadilhaFogo_7: -2508699904345525719
+      armadilhaFogo_8: -7934058639918529127
+      armadilhaFogo_9: -1514616268414354597
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
