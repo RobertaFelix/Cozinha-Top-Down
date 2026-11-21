@@ -12,6 +12,7 @@ public static class WorldShowcase
     public static void Register(Action<string, string, Func<IEnumerator>> add)
     {
         add("Restaurant furniture", "Click a piece or scroll the construction bar. Place it on the grid. Press B to finish and walk around it.", Furniture);
+        add("Garden soil and planting", "Front row, left to right: plain dirt, tilled soil and watered soil. Select a tool or seeds, then left-click a nearby plot.", Garden);
         add("Residents and orders", "Watch the lunch guests enter and take a seat. Approach a seated guest and press E to reveal their order. The menu dishes are in your hotbar.", () => Restaurant(false));
         add("Restaurant rating", "This demo compares an empty menu with a stocked, well-served restaurant, then opens for lunch. The rating is normally hidden.", () => Restaurant(true));
         foreach (VillageWeatherKind kind in Enum.GetValues(typeof(VillageWeatherKind)))
@@ -38,6 +39,38 @@ public static class WorldShowcase
         var editor = FindAnyObjectByType<RestaurantFurnitureEditor>();
         editor.SendMessage("Toggle", SendMessageOptions.RequireReceiver);
         if (!RestaurantFurnitureEditor.Editing) throw new InvalidOperationException("Could not open the furniture editor.");
+    }
+
+    private static IEnumerator Garden()
+    {
+        Command("tp village");
+        yield return null;
+        var area = FindAnyObjectByType<FarmArea>();
+        var farm = FarmingSaveModule.Instance;
+        if (!area || !farm) throw new InvalidOperationException("The village garden is unavailable.");
+        var front = area.PlantableCells.OrderBy(cell => cell.y).ThenBy(cell => cell.x)
+            .First(cell => area.CanPlantAt(cell + Vector3Int.right) && area.CanPlantAt(cell + 2 * Vector3Int.right));
+        var dry = front + Vector3Int.right;
+        var wet = dry + Vector3Int.right;
+        FindAnyObjectByType<GameClock>().SetTotalGameMinutes(720);
+        if (!farm.TryTill(area, dry) || !farm.TryTill(area, wet) || !farm.TryWater(area, wet))
+            throw new InvalidOperationException("Could not prepare the three soil samples.");
+        if (!FindAnyObjectByType<EnvironmentTransition>().RestorePlayerCheckpoint("", area.CellCenter(dry) + Vector3.up * .85f))
+            throw new InvalidOperationException("Could not reach the garden.");
+
+        var bar = DemoHotbar();
+        int Supply(string prefabName, int amount)
+        {
+            var item = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Farming/{prefabName}.prefab");
+            if (!item || !bar.AddItem(new InventoryItem { itemPrefab = item, amount = amount }))
+                throw new InvalidOperationException("Could not supply " + prefabName + ".");
+            return Array.FindIndex(bar.hotbarPanel.GetComponentsInChildren<Slot>(true), slot => slot.inventoryItem?.itemPrefab == item);
+        }
+        int hoe = Supply("Hoe", 1);
+        int can = Supply("WateringCan", 1);
+        int seed = Supply("CarrotSeeds", 8);
+        if (!bar.TryUseSlot(hoe)) throw new InvalidOperationException("Could not equip the hoe.");
+        ShowcaseLauncher.Note($"{hoe + 1}: Hoe     {can + 1}: Watering can     {seed + 1}: Carrot seeds");
     }
 
     private static IEnumerator Weather(VillageWeatherKind kind)
