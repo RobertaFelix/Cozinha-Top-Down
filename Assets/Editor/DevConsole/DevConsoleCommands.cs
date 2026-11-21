@@ -50,6 +50,7 @@ public static class DevConsoleCommands
         Register("recipes", "recipes [filter]", "List current village recipes and unlock status.", Recipes, true);
         Register("recipe", "recipe unlock <dish|all>", "Unlock recipe-book entries.", UnlockRecipe);
         Register("upgrade", "upgrade list | upgrade add|remove <name|index>", "Grant or revoke implemented upgrades without payment.", Upgrade);
+        Register("weather", "/weather [clear|hot|cloudy|rain|fog|after-rain|auto]", "Show the weather or override the forecast for this Play session.", Weather);
         Register("time", "time set <HH:mm>", "Set time in the current day, using a 24-hour clock.", SetTime);
         Register("day", "day set|add <number>", "Set a one-based day, or add days, keeping the current time.", SetDay);
         Register("save", "save [path|backup|reset]", "Save, inspect the path, archive a backup, or reset to a fresh game.", Save);
@@ -70,6 +71,8 @@ public static class DevConsoleCommands
         {
             var tokens = Tokenize(input);
             if (tokens.Count == 0) { result.Success = true; return result; }
+            tokens[0] = tokens[0].TrimStart('/');
+            if (tokens[0].Equals("wheater", StringComparison.OrdinalIgnoreCase)) tokens[0] = "weather";
             Require(commands.TryGetValue(tokens[0], out var command), "Unknown command. Type help.");
             if (!command.ReadOnly)
             {
@@ -93,6 +96,58 @@ public static class DevConsoleCommands
             result.Lines.Add("Error: " + error.Message);
         }
         return result;
+    }
+
+    public static string[] Completions(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input) || input.Length > 2048) return Array.Empty<string>();
+        int start = 0;
+        char quote = '\0';
+        for (int i = 0; i < input.Length; i++)
+        {
+            var c = input[i];
+            if (c == '\\' && i + 1 < input.Length && (input[i + 1] == quote || input[i + 1] == '\\'))
+            { i++; continue; }
+            if (quote != '\0') { if (c == quote) quote = '\0'; }
+            else if (c == '"' || c == '\'') quote = c;
+            else if (char.IsWhiteSpace(c)) start = i + 1;
+        }
+        string head = input.Substring(0, start);
+        var words = Tokenize(head);
+        string fragment = input.Substring(start).Trim('"', '\'');
+        IEnumerable<string> options;
+        if (words.Count == 0)
+        {
+            if (fragment.StartsWith("/")) { head += "/"; fragment = fragment.Substring(1); }
+            options = CommandNames;
+        }
+        else
+        {
+            string cmd = words[0].TrimStart('/').ToLowerInvariant();
+            options = (cmd, words.Count) switch
+            {
+                ("help", 1) => CommandNames,
+                ("weather" or "wheater", 1) => new[]{"clear","cloudy","hot","rain","fog","after-rain","auto"},
+                ("tp", 1) => new[]{"home","village","restaurant","market","dungeon"},
+                ("money", 1) => new[]{"add","remove","set"},
+                ("day", 1) => new[]{"set","add"},
+                ("time", 1) => new[]{"set"},
+                ("dish", 1) => new[]{"give","remove"},
+                ("recipe", 1) => new[]{"unlock"},
+                ("save", 1) => new[]{"path","backup","reset"},
+                ("upgrade", 1) => new[]{"list","add","remove"},
+                ("upgrade", 2) when words[1] != "list" => upgradeNames.Values,
+                ("inventory", 1) or ("give" or "remove", 3) or ("dish", 4) => new[]{"inventory","hotbar"},
+                ("give" or "remove" or "items", 1) => Catalog().entries.Where(e => e.prefab).Select(e => e.prefab.name),
+                ("dish" or "recipe", 2) => Catalog().entries.Where(e => e.prefab && IsDish(e.prefab))
+                    .Select(e => e.prefab.name).Concat(cmd == "recipe" ? new[]{"all"} : Array.Empty<string>()),
+                _ => Array.Empty<string>()
+            };
+        }
+        return options.Distinct(StringComparer.OrdinalIgnoreCase)
+            .Where(s => s.StartsWith(fragment, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(s => s, StringComparer.OrdinalIgnoreCase)
+            .Select(s => head + (s.Any(char.IsWhiteSpace) ? "\"" + s + "\"" : s)).ToArray();
     }
 
     public static List<string> Tokenize(string input)
@@ -324,7 +379,7 @@ public static class DevConsoleCommands
         Count(args, 0, 1);
         var stove = Need<StoveController>();
         var book = Need<RecipeBookController>();
-        foreach (var recipe in stove.recipes.Where(r => r?.result?.itemPrefab != null))
+        foreach (var recipe in ApplianceRecipeCatalog.AllIncludingStove(stove).Where(r => r?.result?.itemPrefab != null))
         {
             string line = recipe.result.itemPrefab.name + " — " + ItemTooltipCatalog.GetName(recipe.result.itemPrefab) + (!InRecipeBook(recipe) ? " [not in configured book]" : book.HasUnlockedRecipe(recipe) ? " [unlocked]" : " [locked]");
             if (args.Length == 0 || line.IndexOf(args[0], StringComparison.OrdinalIgnoreCase) >= 0) result.Lines.Add(line);
@@ -337,7 +392,7 @@ public static class DevConsoleCommands
         var stove = Need<StoveController>();
         var book = Need<RecipeBookController>();
         GameObject prefab = args[1].Equals("all", StringComparison.OrdinalIgnoreCase) ? null : ResolveItem(args[1]);
-        var matches = stove.recipes.Where(r => r?.result?.itemPrefab != null && InRecipeBook(r) && (prefab == null || r.result.itemPrefab == prefab)).ToArray();
+        var matches = ApplianceRecipeCatalog.AllIncludingStove(stove).Where(r => r?.result?.itemPrefab != null && InRecipeBook(r) && (prefab == null || r.result.itemPrefab == prefab)).ToArray();
         Require(matches.Length > 0, "No matching entry in the configured recipe book. Use recipes to list entries, or dish give to create the dish directly.");
         foreach (var recipe in matches) book.UnlockRecipe(recipe);
         result.Lines.Add("Unlocked " + matches.Length + " recipe(s).");
@@ -368,6 +423,28 @@ public static class DevConsoleCommands
         coins.RestoreEconomy(coins.TotalCoins, coins.RewardMultiplier, owned.Contains(9));
         result.Lines.Add((add ? "Granted " : "Revoked ") + upgradeNames[index] + ". Existing item stacks are preserved.");
     }
+    private static void Weather(string[] args, DevConsoleResult result)
+    {
+        Count(args, 0, 1);
+        int day = (int)(Need<GameClock>().TotalGameMinutes / 1440);
+        if (args.Length > 0)
+        {
+            VillageWeather.Preview = args[0].ToLowerInvariant() switch
+            {
+                "clear" or "sun" or "sunny" => VillageWeatherKind.Sunny,
+                "hot" => VillageWeatherKind.Hot,
+                "cloudy" => VillageWeatherKind.Cloudy,
+                "rain" or "rainy" => VillageWeatherKind.Rainy,
+                "fog" or "foggy" => VillageWeatherKind.Foggy,
+                "after-rain" or "afterrain" => VillageWeatherKind.AfterRain,
+                "auto" => null,
+                _ => throw new ArgumentException("Use clear, hot, cloudy, rain, fog, after-rain or auto.")
+            };
+        }
+        result.Lines.Add("Weather: " + VillageWeather.ForDay(day) +
+            (VillageWeather.Preview.HasValue ? " (override)" : " (daily forecast)"));
+    }
+
     private static void SetTime(string[] args, DevConsoleResult result)
     {
         Count(args, 2);

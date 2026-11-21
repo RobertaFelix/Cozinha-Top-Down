@@ -11,8 +11,8 @@ public abstract class CookwareCounter : MonoBehaviour
     private Collider2D player;
     private static int lastInteraction = -1;
     public GameObject Stored => initialized ? stored : InitialItem;
-    public static bool InteractPressed => (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame) ||
-        (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame);
+    public static bool InteractPressed => !KitchenAppliance.HandledThisFrame && ((Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame) ||
+        (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame));
 
     private SpriteRenderer display;
     protected void Awake() => Store(Stored);

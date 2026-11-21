@@ -52,6 +52,7 @@ public class MenuBoardInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0 || KitchenAppliance.HandledThisFrame) return;
         if (!playerInRange)
             return;
 

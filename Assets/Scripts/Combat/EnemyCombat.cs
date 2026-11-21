@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(SpriteRenderer))]
-public sealed class EnemyCombat : MonoBehaviour
+public sealed class EnemyCombat : SwordTarget
 {
     public enum EnemyState { Idle, Chase, Windup, Recovery, Hurt, Dead }
     [Header("Attributes")]
@@ -134,7 +134,7 @@ public sealed class EnemyCombat : MonoBehaviour
                 distance = Mathf.Min(distance, Mathf.Max(0, hits[i].distance - .02f));
         body.MovePosition(body.position + step.normalized * distance);
     }
-    public bool TakeDamage(int amount, Vector2 direction)
+    public override bool TakeDamage(int amount, Vector2 direction)
     {
         if (State == EnemyState.Dead || amount <= 0) return false;
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);

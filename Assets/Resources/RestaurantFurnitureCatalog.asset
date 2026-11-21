@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cccb1992348049b3bafb41a7d64ec5b8, type: 3}
+  m_Name: RestaurantFurnitureCatalog
+  m_EditorClassIdentifier: 
+  interfaceFont: {fileID: 12800000, guid: f429841d7d3816b48a35d62825e244ae, type: 3}
+  panelFrame: {fileID: 7155509044528257627, guid: a57b1d8e5c14dce46a9b145f085527d5, type: 3}
+  entries:
+  - id: Counter
+    displayName: Counter
+    category: Construction
+    sprite: {fileID: 21300000, guid: 28f735ce9fcc4d729302b370efc2b117, type: 3}
+    startingCount: 4
+    acceptsCountertopItem: 1
+    requiresCounter: 0
+  - id: Sink
+    displayName: Sink
+    category: Construction
+    sprite: {fileID: 21300000, guid: 0c064a1f5e3045c2a4cbd9cf7ccb79a0, type: 3}
+    startingCount: 1
+    acceptsCountertopItem: 0
+    requiresCounter: 0
+  - id: Partition
+    displayName: Partition
+    category: Construction
+    sprite: {fileID: 21300000, guid: 1ffebab3443e45f5946fcb3aa4749d81, type: 3}
+    startingCount: 4
+    acceptsCountertopItem: 0
+    requiresCounter: 0
+  - id: Fern
+    displayName: Fern
+    category: Decoration
+    sprite: {fileID: 21300000, guid: 10b4cf76c88044a299038f0b7d0f328e, type: 3}
+    startingCount: 2
+    acceptsCountertopItem: 0
+    requiresCounter: 0
+  - id: Painting
+    displayName: Painting
+    category: Decoration
+    sprite: {fileID: 21300000, guid: b34204888740420d81585437c49cb26e, type: 3}
+    startingCount: 1
+    acceptsCountertopItem: 0
+    requiresCounter: 0
+  - id: Toolbox
+    displayName: Toolbox
+    category: Utility
+    sprite: {fileID: 21300000, guid: 73c90770bcc64db4b250067cd40d525c, type: 3}
+    startingCount: 1
+    acceptsCountertopItem: 0
+    requiresCounter: 0
+  applianceOffers:
+  - id: cutting board
+    label: Cutting board
+    price: 60
+  - id: mixer
+    label: Stand mixer
+    price: 180
+  - id: blender
+    label: Blender
+    price: 160
+  - id: microwave
+    label: Microwave
+    price: 200
+  - id: coffee maker
+    label: Coffee maker
+    price: 220
+  - id: deep fryer
+    label: Deep fryer
+    price: 300
+  - id: sink
+    label: Sink
+    price: 140

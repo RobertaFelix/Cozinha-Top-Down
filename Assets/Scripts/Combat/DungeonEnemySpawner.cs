@@ -12,6 +12,20 @@ public sealed class DungeonEnemySpawner : MonoBehaviour
     [SerializeField, Min(0)] private float playerExclusionRadius = 3;
     [SerializeField, Min(.1f)] private float clearanceRadius = .35f;
     private bool generated;
+    private int authoredCount;
+    public void DisableAuthoredPoints()
+    {
+        foreach (var entry in spawns) if (entry.point) entry.point.gameObject.SetActive(false);
+    }
+
+    public void AddExpeditionPoint(Transform point, int variant)
+    {
+        if (spawns == null || spawns.Length == 0) return;
+        if (authoredCount == 0) authoredCount = spawns.Length;
+        var entry = new Spawn { point = point, prefab = spawns[variant % authoredCount].prefab };
+        System.Array.Resize(ref spawns, spawns.Length + 1);
+        spawns[spawns.Length - 1] = entry;
+    }
     public void GenerateForRun(Transform playerSpawn)
     {
         if (generated || spawns == null) return;

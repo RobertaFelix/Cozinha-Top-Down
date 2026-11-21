@@ -20,8 +20,7 @@ public class CookingProgressUI : MonoBehaviour
 
         ValidateReferences();
 
-        // O objeto começa escondido.
-        gameObject.SetActive(false);
+
     }
 
     private void Update()

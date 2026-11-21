@@ -16,6 +16,12 @@ public sealed class DungeonBossDoor : MonoBehaviour
         destination = savedDestination;
     }
 
+    public void PositionGate(Vector3 position)
+    {
+        transform.position = position;
+        if (returnSpawn) returnSpawn.position = position + Vector3.down * 2f;
+    }
+
     public bool TryEnter(GameObject player)
     {
         // Validate the destination before consuming anything.
@@ -42,6 +48,7 @@ public sealed class DungeonBossDoor : MonoBehaviour
             camera.OnTargetObjectWarped(player.transform, position - previous);
             camera.PreviousStateIsValid = false;
         }
+        if (requiresKey && returnDoor) FairyArena.At(destination).Enter();
         return true;
     }
 

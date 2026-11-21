@@ -48,6 +48,8 @@ public class UpgradeUIController : MonoBehaviour
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button cancelButton;
 
+    private ComputerApplianceShop applianceShop;
+
     private const int LeftSlotCount = 24;
     private const int RightSlotCount = 12;
 
@@ -73,6 +75,7 @@ public class UpgradeUIController : MonoBehaviour
     private void Awake()
     {
         CreateSlots();
+        if (upgradePanel) applianceShop = new ComputerApplianceShop((RectTransform)upgradePanel.transform, CancelPurchase);
         RestorePurchasedUpgrades();
 
         if (confirmButton != null)
@@ -282,6 +285,7 @@ public class UpgradeUIController : MonoBehaviour
 
         InventoryPanelSession.Open(upgradePanel, CancelPurchase);
         ClearPending();
+        applianceShop?.Show(false);
         upgradePanel.SetActive(true);
         InventoryWorkspace.SetShopHotbarVisible(false);
 
@@ -355,7 +359,7 @@ public class UpgradeUIController : MonoBehaviour
 
     public void ConfirmPurchase()
     {
-        if (!IsOpen)
+        if (!IsOpen || (applianceShop != null && applianceShop.IsShowing))
             return;
 
         int total = CalculateTotal();

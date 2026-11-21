@@ -80,11 +80,10 @@ public class ItemDragHandler : MonoBehaviour,
             return;
         }
 
-        if (TryDeliverToNPC(eventData, sourceSlot))
-            return;
 
         // Procura o slot sob o cursor.
         Slot targetSlot = FindDropSlot(eventData);
+        if (!targetSlot && TryDeliverToNPC(eventData, sourceSlot)) return;
 
         canvasGroup.blocksRaycasts = true;
 
@@ -393,33 +392,10 @@ public class ItemDragHandler : MonoBehaviour,
         Vector3 worldPosition =
             cam.ScreenToWorldPoint(screenPosition);
 
-        foreach (Collider2D hit in
-                 Physics2D.OverlapPointAll(worldPosition))
-        {
-            if (hit == null)
-                continue;
-
-            CustomerOrderController customer =
-                hit.GetComponentInParent<CustomerOrderController>();
-
-            if (customer == null)
-                continue;
-
-            if (!customer.TryServe(sourceSlot.inventoryItem))
-            {
-                ReturnToOriginalPosition();
-                return true;
-            }
-
-            sourceSlot.currentItem = null;
-            sourceSlot.inventoryItem = null;
-            sourceSlot.UpdateQuantityDisplay();
-
-            Destroy(gameObject);
-            return true;
-        }
-
-        return false;
+        if (!CustomerOrderInteraction.TryServeAt(worldPosition, sourceSlot.inventoryItem)) return false;
+        ReturnToOriginalPosition();
+        Stove.ConsumeOne(sourceSlot);
+        return true;
     }
 
     public static void CancelAllDrags()

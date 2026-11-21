@@ -12,7 +12,7 @@ public sealed class RecipeSaveModule : SaveParticipant<RecipeSaveState>, ISceneS
     protected override RecipeSaveState Capture()
     {
         var unlocked = new List<string>();
-        foreach (var recipe in Stove.recipes)
+        foreach (var recipe in ApplianceRecipeCatalog.AllIncludingStove(Stove))
             if (RecipeBookController.Instance.HasUnlockedRecipe(recipe)) unlocked.Add(Id(recipe));
         var menu = new List<string>();
         foreach (var recipe in RestaurantMenuController.Instance.GetSelectedRecipes()) menu.Add(Id(recipe));
@@ -26,11 +26,19 @@ public sealed class RecipeSaveModule : SaveParticipant<RecipeSaveState>, ISceneS
             if (recipe?.result?.itemPrefab != null && Id(recipe) == id) return recipe;
         throw new System.IO.InvalidDataException("Unknown saved recipe: " + id);
     }
+    private CookingRecipe FindMenuRecipe(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return null;
+        foreach (var recipe in ApplianceRecipeCatalog.AllIncludingStove(Stove))
+            if (recipe?.result?.itemPrefab != null && Id(recipe) == id) return recipe;
+        throw new System.IO.InvalidDataException("Unknown menu recipe: " + id);
+    }
+
     protected override void Validate(RecipeSaveState state)
     {
         Require(state.unlocked != null && state.menu != null && state.menu.Length <= RestaurantMenuController.Instance.MaxDishes, "Invalid saved recipes.");
         var unlocked = new HashSet<string>();
-        foreach (var id in state.unlocked) { Require(FindRecipe(Stove, id) != null && unlocked.Add(id), "Invalid unlocked recipe."); }
+        foreach (var id in state.unlocked) { Require(FindMenuRecipe(id) != null && unlocked.Add(id), "Invalid unlocked recipe."); }
         var menu = new HashSet<string>();
         foreach (var id in state.menu) Require(unlocked.Contains(id) && menu.Add(id), "Invalid saved menu.");
     }
@@ -38,8 +46,8 @@ public sealed class RecipeSaveModule : SaveParticipant<RecipeSaveState>, ISceneS
     {
         var menu = RestaurantMenuController.Instance;
         menu.ClearMenu();
-        RecipeBookController.Instance.RestoreUnlockedRecipes(Array.ConvertAll(state.unlocked, id => FindRecipe(Stove, id)));
+        RecipeBookController.Instance.RestoreUnlockedRecipes(Array.ConvertAll(state.unlocked, id => FindMenuRecipe(id)));
         foreach (var id in state.menu)
-            if (!menu.TryAddRecipe(FindRecipe(Stove, id))) throw new InvalidOperationException("Could not restore menu.");
+            if (!menu.TryAddRecipe(FindMenuRecipe(id))) throw new InvalidOperationException("Could not restore menu.");
     }
 }

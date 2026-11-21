@@ -9,6 +9,7 @@ public sealed class DungeonChest : MonoBehaviour
     private DungeonChestSpawner owner;
     private bool containsBossKey;
     private SpriteRenderer chestRenderer;
+    public int RewardCoins { get; internal set; }
     public bool IsOpened { get; private set; }
     public bool ContainsBossKey => containsBossKey && !IsOpened;
 
@@ -27,6 +28,11 @@ public sealed class DungeonChest : MonoBehaviour
     {
         if (IsOpened || owner == null) return false;
         if (containsBossKey && !owner.CollectBossKey(this)) return false;
+        if (RewardCoins > 0)
+        {
+            if (!CoinManager.Instance) return false;
+            CoinManager.Instance.AddCoins(RewardCoins);
+        }
         IsOpened = true;
         var trigger = GetComponentInChildren<InteractionPromptTrigger>();
         if (trigger != null) trigger.enabled = false;
@@ -54,7 +60,7 @@ public sealed class DungeonChest : MonoBehaviour
             if (!IsOpened && containsBossKey) MarketHoursNotice.Show("Make room in your inventory for the boss room key.");
             return;
         }
-        MarketHoursNotice.Show(containsBossKey ? "Boss room key found!" : "The chest is empty.");
+        MarketHoursNotice.Show(RewardCoins > 0 ? $"Fairy treasure: {RewardCoins} coins!" : containsBossKey ? "Boss room key found!" : "The chest is empty.");
     }
 
     private IEnumerator AnimateOpening()

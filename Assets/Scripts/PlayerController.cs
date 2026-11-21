@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -55,7 +53,6 @@ public class PlayerController : MonoBehaviour
         PlayerInput();
         if (combat != null && combat.OwnsMotion) return;
         UpdateAnimation();
-        AdjustPlayerFacingDirection();
     }
 
     private void FixedUpdate()
@@ -89,6 +86,7 @@ public class PlayerController : MonoBehaviour
         if (movement != Vector2.zero)
         {
             lastMovement = movement;
+            mySpriteRender.flipX = movement.x < 0f;
         }
 
         // Envia a direção para o Animator
@@ -97,27 +95,5 @@ public class PlayerController : MonoBehaviour
 
         // Indica se o personagem está andando ou parado
         myAnimator.SetFloat("speed", movement.magnitude);
-    }
-
-    private void AdjustPlayerFacingDirection()
-    {
-        if (Mouse.current == null || Camera.main == null) return;
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-
-        Vector3 playerScreenPoint =
-            Camera.main.WorldToScreenPoint(transform.position);
-
-        // Só usamos flipX para a animação lateral
-        if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
-        {
-            if (mousePos.x < playerScreenPoint.x)
-            {
-                mySpriteRender.flipX = true;
-            }
-            else
-            {
-                mySpriteRender.flipX = false;
-            }
-        }
     }
 }

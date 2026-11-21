@@ -15,6 +15,14 @@ public class ConfirmableInventoryPanel : MonoBehaviour
     private Action onClosed;
     public bool IsOpen => panelRoot && panelRoot.activeInHierarchy;
 
+    internal void CopyStyle(ConfirmableInventoryPanel source)
+    {
+        slotPrefab = source.slotPrefab;
+        slotCount = source.slotCount;
+        confirmIcon = source.confirmIcon;
+        cancelIcon = source.cancelIcon;
+    }
+
     public void EnsureSlots()
     {
         int existing = panelRoot.GetComponentsInChildren<Slot>(true).Length;

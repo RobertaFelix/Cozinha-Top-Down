@@ -47,7 +47,7 @@ public sealed class PlayerCombat : MonoBehaviour
     private bool restoreAnimator;
     private Sprite restingSprite;
     private bool restingFlip;
-    private readonly HashSet<EnemyCombat> struck = new HashSet<EnemyCombat>();
+    private readonly HashSet<SwordTarget> struck = new HashSet<SwordTarget>();
     private readonly RaycastHit2D[] walls = new RaycastHit2D[24];
     private readonly Collider2D[] targets = new Collider2D[32];
 
@@ -168,7 +168,7 @@ public sealed class PlayerCombat : MonoBehaviour
         int count = Physics2D.OverlapCircle(body.position, swordReach, new ContactFilter2D { useTriggers = false }, targets);
         for (int i = 0; i < count; i++)
         {
-            var enemy = targets[i].GetComponentInParent<EnemyCombat>();
+            var enemy = targets[i].GetComponentInParent<SwordTarget>();
             if (!enemy || struck.Contains(enemy)) continue;
             Vector2 delta = (Vector2)enemy.transform.position - body.position;
             if (Vector2.Angle(direction, delta) > swordArc * .5f) continue;
@@ -178,7 +178,7 @@ public sealed class PlayerCombat : MonoBehaviour
             for (int j = 0; j < hits; j++)
             {
                 var collider = walls[j].collider;
-                if (collider && collider.attachedRigidbody != body && !collider.GetComponentInParent<EnemyCombat>()) { occluded = true; break; }
+                if (collider && collider.attachedRigidbody != body && !collider.GetComponentInParent<SwordTarget>()) { occluded = true; break; }
             }
             if (occluded) continue;
             struck.Add(enemy);

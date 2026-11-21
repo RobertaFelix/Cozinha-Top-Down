@@ -1379,10 +1379,6 @@ PrefabInstance:
       propertyPath: m_SpriteSortPoint
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4439377665467257784, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4520098720005187449, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.696
@@ -1406,10 +1402,6 @@ PrefabInstance:
     - target: {fileID: 6903582788862528638, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 7.88
-      objectReference: {fileID: 0}
-    - target: {fileID: 8740330153391283232, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5561,6 +5553,8 @@ MonoBehaviour:
     price: 100
   - prefab: {fileID: 7674268867680077894, guid: 68843fe3311a28d4e9d9ed7b74e74072, type: 3}
     price: 100
+  - prefab: {fileID: 8008127976990012123, guid: 6c27eff6595b4803b94c0a34b0589b87, type: 3}
+    price: 12
   cartTemplate: {fileID: 825632947540497102, guid: 28da55a1eb0c5eb4293c0338e7ed3191, type: 3}
   cartGrid: {fileID: 48820298}
   cartCapacity: 12
@@ -6139,6 +6133,12 @@ MonoBehaviour:
   - {fileID: 1925929490}
   spawnInterval: 8
   advertisedSpawnIntervalMultiplier: 0.75
+  villageStops:
+  - {fileID: 1089171249}
+  - {fileID: 1114689764}
+  - {fileID: 1313418196}
+  restaurantOutside: {fileID: 1394563157}
+  restaurantInside: {fileID: 1743038398}
 --- !u!4 &495892453
 Transform:
   m_ObjectHideFlags: 0
@@ -26448,6 +26448,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 0
     basePrice: 35
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 6b420fe05ded4204db2eab7f183b034d, type: 3}
@@ -26464,6 +26465,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 15800
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 469198977bb787b44bb64dec23150ee2, type: 3}
@@ -26480,6 +26482,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 35
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 49ad30e1042cc61479fae59d8e4edff1, type: 3}
@@ -26498,6 +26501,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 40
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: f25116efe7d95d946bfc8f2c4a7c8daa, type: 3}
@@ -26512,6 +26516,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 25
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 9ff8b83dbc949fd45bd83f9f629fe17b, type: 3}
@@ -26526,6 +26531,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 50
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 6cc670fe4ccc64e4e89f1adb3a9750e1, type: 3}
@@ -26540,6 +26546,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 8008127976990012123, guid: 22e2dc8713a230c4c9ead6fe799bfff3, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 25
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 110b1c5986f89f34ba47b11dac561936, type: 3}
@@ -26554,6 +26561,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 8008127976990012123, guid: 445080eff1f25cb40997dbf612792782, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 40
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: a013132757e73e6408928100aecc4a94, type: 3}
@@ -26570,6 +26578,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 35
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: f19f788acb00c8645a6e124e9f7c524e, type: 3}
@@ -26588,6 +26597,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 0
     basePrice: 50
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 075b9d1d952830c43b9eedac1d83a90e, type: 3}
@@ -26606,6 +26616,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 2
     basePrice: 40
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: cf122774f949f214d8ee897df6a94f24, type: 3}
@@ -26620,6 +26631,7 @@ MonoBehaviour:
     - itemPrefab: {fileID: 2029307285019830437, guid: ce14cd6a1cad93a4696abc573a177adb, type: 3}
       amount: 1
     cookingTime: 15
+    temperature: 1
     basePrice: 40
     result:
       itemPrefab: {fileID: 8008127976990012123, guid: 0b1bf69c7998f504d8c52d6b4966e8bf, type: 3}
@@ -49362,8 +49374,8 @@ Tilemap:
   - first: {x: 9, y: -4, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 9
-      m_TileSpriteIndex: 9
+      m_TileIndex: 7
+      m_TileSpriteIndex: 7
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -49633,13 +49645,13 @@ Tilemap:
     m_RefCount: 5
     m_Data: {fileID: 11400000, guid: 6def7b48abbce774b8d90680899a9ed0, type: 2}
   - serializedVersion: 2
-    m_RefCount: 24
-    m_Data: {fileID: 11400000, guid: 386b022d02fd8b64cbd018c3062cea9f, type: 2}
+    m_RefCount: 25
+    m_Data: {fileID: 11400000, guid: e3773ce4b26e2f64cafc02517ebbdacb, type: 2}
   - serializedVersion: 2
     m_RefCount: 5
     m_Data: {fileID: 11400000, guid: a2a76afffade35f42862a21887f2f3e8, type: 2}
   - serializedVersion: 2
-    m_RefCount: 1
+    m_RefCount: 0
     m_Data: {fileID: 11400000, guid: 4c87a84ca188ab74589e2c4d1677ecfa, type: 2}
   - serializedVersion: 2
     m_RefCount: 0
@@ -49682,13 +49694,13 @@ Tilemap:
     m_RefCount: 5
     m_Data: {fileID: -1229353804, guid: 1c59a76eb45fa374d9801b53331ab8ce, type: 3}
   - serializedVersion: 2
-    m_RefCount: 24
-    m_Data: {fileID: -8862415798039797862, guid: 1c59a76eb45fa374d9801b53331ab8ce, type: 3}
+    m_RefCount: 25
+    m_Data: {fileID: 283086218, guid: 7624601f5c063c8479e4ca3d29dd66d3, type: 3}
   - serializedVersion: 2
     m_RefCount: 5
     m_Data: {fileID: 1791023472, guid: 1c59a76eb45fa374d9801b53331ab8ce, type: 3}
   - serializedVersion: 2
-    m_RefCount: 1
+    m_RefCount: 0
     m_Data: {fileID: 1346161466, guid: 1c59a76eb45fa374d9801b53331ab8ce, type: 3}
   - serializedVersion: 2
     m_RefCount: 0
@@ -49795,9 +49807,9 @@ MonoBehaviour:
   - {x: 9, y: -2, z: 0}
   - {x: 10, y: -2, z: 0}
   - {x: 11, y: -2, z: 0}
-  untilledTile: {fileID: 11400000, guid: 4c87a84ca188ab74589e2c4d1677ecfa, type: 2}
-  tilledTile: {fileID: 11400000, guid: 386b022d02fd8b64cbd018c3062cea9f, type: 2}
-  wateredColor: {r: 0.68, g: 0.68, b: 0.68, a: 1}
+  untilledTile: {fileID: 11400000, guid: e3773ce4b26e2f64cafc02517ebbdacb, type: 2}
+  tilledTile: {fileID: 11400000, guid: 4c87a84ca188ab74589e2c4d1677ecfa, type: 2}
+  wateredTile: {fileID: 11400000, guid: 386b022d02fd8b64cbd018c3062cea9f, type: 2}
 --- !u!1 &1631538714
 GameObject:
   m_ObjectHideFlags: 0
@@ -49984,10 +49996,6 @@ PrefabInstance:
       propertyPath: m_SpriteSortPoint
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4439377665467257784, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4520098720005187449, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.686
@@ -50011,10 +50019,6 @@ PrefabInstance:
     - target: {fileID: 6903582788862528638, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 7.882
-      objectReference: {fileID: 0}
-    - target: {fileID: 8740330153391283232, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -74655,10 +74659,6 @@ PrefabInstance:
       propertyPath: m_SpriteSortPoint
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4439377665467257784, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4520098720005187449, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.684
@@ -74682,10 +74682,6 @@ PrefabInstance:
     - target: {fileID: 6903582788862528638, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 7.886
-      objectReference: {fileID: 0}
-    - target: {fileID: 8740330153391283232, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -74799,6 +74795,7 @@ GameObject:
   - component: {fileID: 2108073568}
   - component: {fileID: 2108073569}
   - component: {fileID: 2108073570}
+  - component: {fileID: 2108073573}
   - component: {fileID: 2108073572}
   - component: {fileID: 2108073571}
   m_Layer: 0
@@ -74872,7 +74869,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1888555374104967673, guid: 92fb6d67cf617af4c848374597aa945a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -74919,7 +74916,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.08190197}
+  m_Offset: {x: 0, y: -0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -74929,7 +74926,53 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.125, y: 1.3986961}
+  m_Size: {x: 1.5, y: 2}
+  m_EdgeRadius: 0
+--- !u!61 &2108073573
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108073567}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: -0.25}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.125, y: 1.5625}
+    newSize: {x: 1.125, y: 1.5625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &2108073571
 MonoBehaviour:
@@ -75419,10 +75462,6 @@ PrefabInstance:
       propertyPath: m_SpriteSortPoint
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4439377665467257784, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4520098720005187449, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.691
@@ -75450,10 +75489,6 @@ PrefabInstance:
     - target: {fileID: 6903582788862528638, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
       propertyPath: m_LocalPosition.y
       value: 7.848
-      objectReference: {fileID: 0}
-    - target: {fileID: 8740330153391283232, guid: ad55c73a4d9be4847aa3c7d67ce31209, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

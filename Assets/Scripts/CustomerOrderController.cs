@@ -59,7 +59,7 @@ public class CustomerOrderController : MonoBehaviour
             ExpireOrder();
     }
 
-    public void Initialize(StoveController controller)
+    public void Initialize(StoveController controller, DishTemperature favorite = DishTemperature.Neutral)
     {
         stoveController = controller;
 
@@ -82,10 +82,10 @@ public class CustomerOrderController : MonoBehaviour
             return;
         }
 
-        ChooseRandomRecipe();
+        ChooseRandomRecipe(favorite);
     }
 
-    private void ChooseRandomRecipe()
+    private void ChooseRandomRecipe(DishTemperature favorite)
     {
         // O NPC consulta somente o cardápio do restaurante.
         RestaurantMenuController menuController =
@@ -152,8 +152,16 @@ public class CustomerOrderController : MonoBehaviour
             return;
         }
 
-        requestedRecipe =
-            validRecipes[Random.Range(0, validRecipes.Count)];
+        var clock = FindAnyObjectByType<GameClock>();
+        int minutes = clock == null ? 720 : (int)clock.TotalGameMinutes;
+        var weather = VillageWeather.ForDay(minutes / 1440);
+        float total = 0f;
+        foreach (var recipe in validRecipes)
+        {
+            float weight = CustomerPreferences.Weight(recipe, favorite, minutes / 60 % 24, weather);
+            total += weight;
+            if (Random.value * total <= weight) requestedRecipe = recipe;
+        }
 
         Debug.Log(
             "Prato escolhido do cardápio para o NPC: " +
@@ -256,6 +264,7 @@ public class CustomerOrderController : MonoBehaviour
 
         patienceRunning = false;
         orderCompleted = true;
+        SaveGameService.Instance?.GetComponent<RestaurantHistoryModule>()?.RecordService(true);
 
         if (orderUI != null)
             orderUI.Hide();
@@ -274,12 +283,19 @@ public class CustomerOrderController : MonoBehaviour
         return true;
     }
 
+    public void EndVisit()
+    {
+        if (orderRevealed) ExpireOrder();
+        else GetComponent<CustomerNPC>().Leave();
+    }
+
     private void ExpireOrder()
     {
         if (orderExpired || orderCompleted)
             return;
 
         orderExpired = true;
+        SaveGameService.Instance?.GetComponent<RestaurantHistoryModule>()?.RecordService(false);
         patienceRunning = false;
         patienceRemaining = 0f;
 

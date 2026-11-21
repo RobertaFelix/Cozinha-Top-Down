@@ -5,6 +5,7 @@ using UnityEngine;
 public class CookingRecipe
 {
     public InventoryItem[] ingredients;
+    public DishTemperature temperature;
 
     public float cookingTime = 5f;
 

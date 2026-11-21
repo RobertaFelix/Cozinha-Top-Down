@@ -8,6 +8,9 @@ public class PlateCounter : MonoBehaviour
 
     private void Awake()
     {
+        // The layout may already have sized the pickup trigger to the counter supporting the plates.
+        foreach (var trigger in GetComponents<BoxCollider2D>())
+            if (trigger.isTrigger) return;
         var area = gameObject.AddComponent<BoxCollider2D>();
         area.isTrigger = true;
         area.size = new Vector2(1.1f, 1.6f);

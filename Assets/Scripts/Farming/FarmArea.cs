@@ -11,7 +11,7 @@ public sealed class FarmArea : MonoBehaviour
     [SerializeField] private Vector3Int[] plantableCells;
     [SerializeField] private TileBase untilledTile;
     [SerializeField] private TileBase tilledTile;
-    [SerializeField] private Color wateredColor = new Color(.68f, .68f, .68f, 1f);
+    [SerializeField] private TileBase wateredTile;
     private readonly HashSet<Vector3Int> allowed = new HashSet<Vector3Int>();
     private readonly Dictionary<Vector3Int, SpriteRenderer> visuals = new Dictionary<Vector3Int, SpriteRenderer>();
     private static readonly List<FarmArea> areas = new List<FarmArea>();
@@ -89,9 +89,9 @@ public sealed class FarmArea : MonoBehaviour
         foreach (var cell in allowed)
         {
             var plot = farm.GetPlot(areaId, cell);
-            ground.SetTile(cell, plot == null ? untilledTile : tilledTile);
-            ground.SetTileFlags(cell, TileFlags.None);
-            ground.SetColor(cell, plot != null && plot.wateredDay == farm.CurrentDay ? wateredColor : Color.white);
+            TileBase soil = untilledTile;
+            if (plot != null) soil = plot.wateredDay == farm.CurrentDay ? wateredTile : tilledTile;
+            if (ground.GetTile(cell) != soil) ground.SetTile(cell, soil);
             var crop = plot != null ? farm.Catalog?.Find(plot.cropId) : null;
             if (crop == null || crop.growthStages == null || crop.growthStages.Length == 0)
             {
