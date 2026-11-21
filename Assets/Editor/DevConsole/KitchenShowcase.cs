@@ -12,6 +12,7 @@ public static class KitchenShowcase
 {
     public static void Register(Action<string, string, Func<IEnumerator>> add)
     {
+        add("Your first service", "Tutorial complete! You served your first customer and made carrot juice in your new blender.", RestaurantTutorial.Run);
         foreach (var offer in RestaurantApplianceOffer.All)
         {
             string station = offer.id;
