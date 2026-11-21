@@ -106,77 +106,24 @@ public class RecipeBookController : MonoBehaviour
             return;
         }
 
-        // Verificar se os slots já existem.
-        RecipeBookSlot[] existingSlots =
-            recipePanel.GetComponentsInChildren<RecipeBookSlot>(true);
+        // The UI survives a trip to the dungeon. Rebind its slots to the
+        // current scene recipes while keeping discoveries from the prior visit.
+        var existingSlots = recipePanel.GetComponentsInChildren<RecipeBookSlot>(true);
+        var discovered = new HashSet<GameObject>();
+        foreach (var slot in existingSlots)
+            if (slot.IsUnlocked() && slot.GetRecipe()?.result?.itemPrefab != null)
+                discovered.Add(slot.GetRecipe().result.itemPrefab);
 
-        if (existingSlots.Length > 0)
+        var recipes = new List<CookingRecipe>(ApplianceRecipeCatalog.AllIncludingStove(stoveController));
+        int count = Mathf.Max(slotCount, recipes.Count);
+        for (int i = 0; i < count; i++)
         {
-            foreach (RecipeBookSlot slot in existingSlots)
-            {
-                if (slot != null && !createdSlots.Contains(slot))
-                {
-                    bool unlocked = slot.IsUnlocked();
-                    var oldRecipe = slot.GetRecipe();
-                    foreach (var recipe in stoveController.recipes)
-                        if (recipe?.result?.itemPrefab != null && oldRecipe?.result?.itemPrefab == recipe.result.itemPrefab)
-                        {
-                            slot.Setup(recipe);
-                            slot.SetUnlocked(unlocked);
-                            break;
-                        }
-                    createdSlots.Add(slot);
-                }
-            }
-
-            Debug.Log(
-                "RecipeBookController: slots existentes recuperados. Total: " +
-                createdSlots.Count
-            );
-
-            return;
-        }
-
-        CookingRecipe[] recipes = stoveController.recipes;
-
-        if (recipes == null)
-        {
-            Debug.LogError(
-                "RecipeBookController: não existem receitas configuradas."
-            );
-
-            return;
-        }
-
-        for (int i = 0; i < slotCount; i++)
-        {
-            GameObject slotObject =
-                Instantiate(slotPrefab, recipePanel.transform);
-
-            RecipeBookSlot slot =
-                slotObject.GetComponent<RecipeBookSlot>();
-
-            if (slot == null)
-            {
-                Debug.LogError(
-                    "O Slot Prefab não possui RecipeBookSlot."
-                );
-
-                Destroy(slotObject);
-                continue;
-            }
-
-            if (i < recipes.Length && recipes[i] != null)
-            {
-                slot.Setup(recipes[i]);
-                createdSlots.Add(slot);
-            }
-            else
-            {
-                Debug.LogWarning(
-                    "Não existe receita configurada para o slot " + i + "."
-                );
-            }
+            var slot = i < existingSlots.Length ? existingSlots[i] :
+                Instantiate(slotPrefab, recipePanel.transform).GetComponent<RecipeBookSlot>();
+            if (i >= recipes.Count || recipes[i]?.result?.itemPrefab == null) continue;
+            slot.Setup(recipes[i]);
+            slot.SetUnlocked(discovered.Contains(recipes[i].result.itemPrefab));
+            createdSlots.Add(slot);
         }
     }
 

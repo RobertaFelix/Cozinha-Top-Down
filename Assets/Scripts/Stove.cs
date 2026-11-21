@@ -37,7 +37,7 @@ public class Stove : MonoBehaviour
         utensil.transform.localScale = Vector3.one;
     }
 
-    internal static bool CanClickWorld() => Time.timeScale > 0 && !InventoryPanelSession.HasOpenPanel &&
+    internal static bool CanClickWorld() => !KitchenAppliance.HandledThisFrame && Time.timeScale > 0 && !InventoryPanelSession.HasOpenPanel &&
         !InventoryStackCursor.IsHolding && !ItemTooltipView.IsDragging &&
         (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject());
 

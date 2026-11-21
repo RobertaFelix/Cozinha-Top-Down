@@ -5553,6 +5553,8 @@ MonoBehaviour:
     price: 100
   - prefab: {fileID: 7674268867680077894, guid: 68843fe3311a28d4e9d9ed7b74e74072, type: 3}
     price: 100
+  - prefab: {fileID: 8008127976990012123, guid: 6c27eff6595b4803b94c0a34b0589b87, type: 3}
+    price: 12
   cartTemplate: {fileID: 825632947540497102, guid: 28da55a1eb0c5eb4293c0338e7ed3191, type: 3}
   cartGrid: {fileID: 48820298}
   cartCapacity: 12

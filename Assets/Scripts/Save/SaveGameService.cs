@@ -44,6 +44,7 @@ public sealed class SaveGameService : MonoBehaviour
         if (Instance != null && Instance != this) { enabled = false; return; }
         Instance = this;
         if (!GetComponent<RestaurantFurnitureEditor>()) gameObject.AddComponent<RestaurantFurnitureEditor>();
+        if (!TryGetComponent<ApplianceCookingSaveModule>(out _)) gameObject.AddComponent<ApplianceCookingSaveModule>();
         startupTimeScale = Time.timeScale > 0 ? Time.timeScale : 1f;
         Time.timeScale = 0;
         SceneManager.sceneLoaded += OnSceneLoaded;

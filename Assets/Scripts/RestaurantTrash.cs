@@ -32,7 +32,7 @@ public sealed class RestaurantTrash : MonoBehaviour
 
     private void Update()
     {
-        if (!player || Time.timeScale <= 0 || Keyboard.current == null ||
+        if (KitchenAppliance.HandledThisFrame || !player || Time.timeScale <= 0 || Keyboard.current == null ||
             !Keyboard.current.eKey.wasPressedThisFrame) return;
         if (inventory.IsOpen)
         {
