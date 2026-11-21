@@ -1,11 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public sealed class DungeonLayout : MonoBehaviour
 {
     [SerializeField] private string displayName = "Dungeon";
+    [SerializeField] private Tilemap expeditionFloor, torchWalls, arenaWalls;
+    public Tilemap ExpeditionFloor => expeditionFloor;
+    public Tilemap TorchWalls => torchWalls;
+    public Tilemap ArenaWalls => arenaWalls;
+    public Transform ArenaArrival => GetComponentInChildren<DungeonBossDoor>()?.Destination;
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
+
+    public void AddExpeditionSpawn(Transform point) => spawnPoints.Add(point);
 
     public string DisplayName => displayName;
     public IReadOnlyList<Transform> SpawnPoints => spawnPoints;
@@ -32,10 +40,11 @@ public sealed class DungeonLayout : MonoBehaviour
         if (eligible.Count == 0) return false;
 
         var selected = eligible[Random.Range(0, eligible.Count)];
-        var points = selected.GetValidSpawnPoints();
-        spawn = points[Random.Range(0, points.Count)];
         foreach (var layout in layouts)
             layout.gameObject.SetActive(layout == selected);
+        DungeonExpedition.Ensure(selected, Random.Range(1, int.MaxValue));
+        var points = selected.GetValidSpawnPoints();
+        spawn = points[Random.Range(0, points.Count)];
         selected.GetComponent<DungeonChestSpawner>()?.GenerateForRun(spawn);
         Physics2D.SyncTransforms();
         selected.GetComponent<DungeonEnemySpawner>()?.GenerateForRun(spawn);

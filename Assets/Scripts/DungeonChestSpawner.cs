@@ -17,6 +17,7 @@ public sealed class DungeonChestSpawner : MonoBehaviour
 
     private readonly List<DungeonChest> spawnedChests = new List<DungeonChest>();
     private bool generated;
+    public void AddExpeditionPoint(Transform point) => spawnPoints.Add(point);
     public bool HasBossKey => BossKeyItem.Has(bossKeyPrefab);
     public IReadOnlyList<Transform> SpawnPoints => spawnPoints;
     public IReadOnlyList<DungeonChest> SpawnedChests => spawnedChests;
@@ -124,6 +125,15 @@ public sealed class DungeonChestSpawner : MonoBehaviour
     {
         if (chest == null || !chest.ContainsBossKey || !spawnedChests.Contains(chest)) return false;
         return bossKeyPrefab != null && BossKeyItem.TryGive(bossKeyPrefab);
+    }
+
+    public DungeonChest CreateReward(Transform parent, Vector3 position, int coins)
+    {
+        var chest = Instantiate(chestPrefab, position, Quaternion.identity, parent);
+        chest.name = "Fairy treasure";
+        chest.Initialize(this,false);
+        chest.RewardCoins = coins;
+        return chest;
     }
 
     public bool TryUseBossKey() => BossKeyItem.TryConsume(bossKeyPrefab);
