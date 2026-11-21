@@ -567,17 +567,11 @@ public sealed class InventoryStackCursor : MonoBehaviour
     {
         if (Camera.main == null || SlotAt(position) != null) return false;
         var world = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, -Camera.main.transform.position.z));
-        foreach (var hit in Physics2D.OverlapPointAll(world))
-        {
-            var customer = hit.GetComponentInParent<CustomerOrderController>();
-            if (customer == null) continue;
-            if (!customer.TryServe(new InventoryItem { itemPrefab = prefab, amount = 1 })) return false;
-            Consume(1);
-            ClearEmptySources();
-            if (amount == 0) Cancel(); else Refresh();
-            return true;
-        }
-        return false;
+        if (!CustomerOrderInteraction.TryServeAt(world, new InventoryItem { itemPrefab = prefab, amount = 1 })) return false;
+        Consume(1);
+        ClearEmptySources();
+        if (amount == 0) Cancel(); else Refresh();
+        return true;
     }
 
     public static void CancelIfSource(Slot slot)
