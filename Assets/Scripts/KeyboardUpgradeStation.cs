@@ -21,6 +21,7 @@ public class KeyboardUpgradeStation : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0) return;
         if (!playerNearby || upgradeUI == null)
             return;
 

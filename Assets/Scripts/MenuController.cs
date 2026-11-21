@@ -27,7 +27,7 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale <= 0) return;
+        if (Time.timeScale <= 0 || RestaurantFurnitureEditor.ClosedThisFrame) return;
         if (Keyboard.current == null)
             return;
 
@@ -47,11 +47,7 @@ public class MenuController : MonoBehaviour
                 InventoryPanelSession.Open(menuCanvas, CloseMenu);
                 menuCanvas.SetActive(true);
 
-                if (inventoryPanel != null)
-                    inventoryPanel.SetActive(true);
-
-                if (recipePanel != null)
-                    recipePanel.SetActive(false);
+                SelectPage(inventoryPanel);
 
                 if (restaurantMenuPanel != null)
                     restaurantMenuPanel.SetActive(false);
@@ -62,11 +58,29 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    private void SelectPage(GameObject page)
+    {
+        var tabs = menuCanvas.GetComponentInChildren<TabController>(true);
+        int index = tabs ? System.Array.IndexOf(tabs.pages, page) : -1;
+        if (index >= 0)
+        {
+            tabs.ActivateTab(index);
+            return;
+        }
+        if (inventoryPanel) inventoryPanel.SetActive(page == inventoryPanel);
+        if (recipePanel) recipePanel.SetActive(page == recipePanel);
+    }
+
     public void CloseMenu()
     {
         InventoryPanelSession.Closed(menuCanvas);
         InventoryWorkspace.RestoreHud();
-        if (menuCanvas != null) menuCanvas.SetActive(false);
+        if (menuCanvas != null)
+        {
+            var tabs = menuCanvas.GetComponentInChildren<TabController>(true);
+            if (tabs && tabs.FurniturePage) tabs.FurniturePage.gameObject.SetActive(false);
+            menuCanvas.SetActive(false);
+        }
         if (restaurantMenuPanel != null) restaurantMenuPanel.SetActive(false);
         if (hotbarPanel != null) InventoryWorkspace.SetShopHotbarVisible(true);
     }
@@ -85,11 +99,7 @@ public class MenuController : MonoBehaviour
         InventoryPanelSession.Open(menuCanvas, CloseMenu);
         menuCanvas.SetActive(true);
 
-        if (inventoryPanel != null)
-            inventoryPanel.SetActive(false);
-
-        if (recipePanel != null)
-            recipePanel.SetActive(true);
+        SelectPage(recipePanel);
 
         if (restaurantMenuPanel != null)
             restaurantMenuPanel.SetActive(true);

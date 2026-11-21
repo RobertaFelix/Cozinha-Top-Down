@@ -25,9 +25,19 @@ public class StoveController : MonoBehaviour
     public float CurrentBurnDuration => Mathf.Max(.01f, burnDuration *
         (UpgradePurchases.Has(UpgradePurchases.Thermometer) ? Mathf.Max(1f, upgradedBurnTimeMultiplier) : 1f));
 
-    public float CurrentCookingDuration => currentRecipe == null ? 0f : Mathf.Max(0.01f,
-        currentRecipe.cookingTime * (UpgradePurchases.Has(UpgradePurchases.CookingClock)
-            ? Mathf.Clamp(upgradedCookingTimeMultiplier, 0.01f, 1f) : 1f));
+    public float PreparationSeconds(CookingRecipe recipe) => Mathf.Max(.01f, recipe.cookingTime *
+        (UpgradePurchases.Has(UpgradePurchases.CookingClock) ? Mathf.Clamp(upgradedCookingTimeMultiplier, .01f, 1f) : 1f));
+    public float CurrentCookingDuration => currentRecipe == null ? 0f : PreparationSeconds(currentRecipe);
+
+    private void Awake() => cookingProgressUI?.Hide();
+
+    internal CookingProgressUI CreateProgressDisplay(Transform station, Vector3 position)
+    {
+        var display = Instantiate(cookingProgressUI, cookingProgressUI.transform.parent);
+        display.transform.SetParent(station, true);
+        display.transform.position = position;
+        return display;
+    }
 
     public GameObject Mounted { get; set; }
     private CookingRecipe currentRecipe;
@@ -114,6 +124,11 @@ public class StoveController : MonoBehaviour
 
     // Procura uma receita que corresponda aos itens do fogÃƒÂ£o.
     public CookingRecipe FindRecipe(InventoryItem[] stoveItems)
+    {
+        return MatchIngredients(stoveItems, recipes);
+    }
+
+    internal static CookingRecipe MatchIngredients(InventoryItem[] stoveItems, System.Collections.Generic.IEnumerable<CookingRecipe> recipes)
     {
         if (stoveItems == null || recipes == null)
             return null;

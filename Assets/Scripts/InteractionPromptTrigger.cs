@@ -28,7 +28,7 @@ public class InteractionPromptTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale <= 0) return;
+        if (Time.timeScale <= 0 || KitchenAppliance.HandledThisFrame) return;
         if (!playerNearby)
             return;
 

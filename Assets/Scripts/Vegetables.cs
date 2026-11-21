@@ -11,6 +11,7 @@ public class Vegetables : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0 || KitchenAppliance.HandledThisFrame) return;
         if (playerNearby && Keyboard.current.eKey.wasPressedThisFrame)
         {
             inventoryVegetablesController.ToggleVegetables(items);

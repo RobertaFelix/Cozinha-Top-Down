@@ -21,6 +21,9 @@ using UnityEngine.SceneManagement;
 [Serializable] public sealed class DungeonRunState
 {
     public string layout;
+    public int expeditionSeed, expeditionVersion, fairyHealth, fairyMaximum;
+    public bool fairyRewardClaimed;
+    public bool fairyEncountered, fairyDefeated;
     public int health;
     public float stamina;
     public List<SavedDungeonChest> chests = new List<SavedDungeonChest>();
@@ -42,6 +45,10 @@ using UnityEngine.SceneManagement;
         if (active == null) throw new InvalidOperationException("No active dungeon layout.");
         var state = new DungeonRunState { layout = active.DisplayName, health = player.GetComponent<PlayerHealth>().Current,
             stamina = player.GetComponent<PlayerStamina>().Current };
+        var expedition = active.GetComponent<DungeonExpedition>();
+        if (expedition) { state.expeditionSeed = expedition.Seed; state.expeditionVersion = expedition.Version; }
+        var bossRoom = UnityEngine.Object.FindFirstObjectByType<FairyArena>();
+        if (bossRoom) bossRoom.Capture(state);
         foreach (var chest in active.GetComponentsInChildren<DungeonChest>())
             state.chests.Add(new SavedDungeonChest { position = chest.transform.position, opened = chest.IsOpened, hasKey = chest.ContainsBossKey });
         foreach (var enemy in active.GetComponentsInChildren<EnemyCombat>())
@@ -62,6 +69,11 @@ using UnityEngine.SceneManagement;
                 if (match) selected = candidate;
             }
         if (selected == null) throw new InvalidOperationException("Saved dungeon layout is unavailable: " + layout);
+        if (expeditionSeed != 0) DungeonExpedition.Ensure(selected, expeditionSeed, expeditionVersion);
+        if (fairyEncountered)
+        {
+            if (selected.ArenaArrival) FairyArena.At(selected.ArenaArrival).Restore(this);
+        }
         selected.GetComponent<DungeonChestSpawner>().RestoreRun(chests);
         selected.GetComponent<DungeonEnemySpawner>().RestoreRun(enemies);
         foreach (var saved in doors)

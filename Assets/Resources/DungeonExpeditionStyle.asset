@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740bfa9aca9445f19de38a4c370ab7eb, type: 3}
+  m_Name: DungeonExpeditionStyle
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonExpeditionStyle
+  floors:
+  - {fileID: 11400000, guid: 96c6509c439361542a9298d47e108ad7, type: 2}
+  - {fileID: 11400000, guid: e120803fc44c2e742a79e76c5f19b491, type: 2}
+  - {fileID: 11400000, guid: 6fff29dc9d66f4546a1a422541754a15, type: 2}
+  - {fileID: 11400000, guid: 3dca4fec00f67d74d8131f2c604585af, type: 2}
+  - {fileID: 11400000, guid: ce8d39041d3fef945891089a5223c1c0, type: 2}
+  - {fileID: 11400000, guid: faef7648283fd7148a89d43f598b1a16, type: 2}
+  - {fileID: 11400000, guid: f137d2a55a8675444b140b37e16d0a2c, type: 2}
+  - {fileID: 11400000, guid: 240502d91f582f84286092a7fb235c09, type: 2}
+  - {fileID: 11400000, guid: bcee0ff17c2512a4bb24370c82d20474, type: 2}
+  wall: {fileID: 11400000, guid: 4a4ce48b3a1b1f543aaf13d754bcedd4, type: 2}
+  torch:
+  - {fileID: 6870108113881788870, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  - {fileID: -6041088021494439291, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  - {fileID: 8252479736271965195, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  - {fileID: 8020571933452778523, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  - {fileID: 5132910792109977547, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  - {fileID: -7486920396222290134, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  - {fileID: -7217658225252441135, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  - {fileID: -5177578354961796149, guid: fccd2f010078b204b9bbfba090ba80a6, type: 3}
+  fairyIdle:
+  - {fileID: 4545614891543676158, guid: b80b84f7432e7f74b87ed6333370965a, type: 3}
+  - {fileID: 554251954705928048, guid: b80b84f7432e7f74b87ed6333370965a, type: 3}
+  - {fileID: -1378090896193989468, guid: b80b84f7432e7f74b87ed6333370965a, type: 3}
+  - {fileID: 7256992765266238785, guid: b80b84f7432e7f74b87ed6333370965a, type: 3}
+  fairyCharge:
+  - {fileID: 6188173954487399556, guid: dd7918aa2fe171242b89136ec6c7becf, type: 3}
+  - {fileID: -7527334254508971762, guid: dd7918aa2fe171242b89136ec6c7becf, type: 3}
+  - {fileID: 5655918395233529338, guid: dd7918aa2fe171242b89136ec6c7becf, type: 3}
+  - {fileID: -162929284319788110, guid: dd7918aa2fe171242b89136ec6c7becf, type: 3}
+  fairyCast:
+  - {fileID: 5565191740287214335, guid: ac20a0e32e137bd4a8989dcf545de009, type: 3}
+  - {fileID: 7141713701893121904, guid: ac20a0e32e137bd4a8989dcf545de009, type: 3}
+  - {fileID: 5098535973466988045, guid: ac20a0e32e137bd4a8989dcf545de009, type: 3}
+  - {fileID: 6146869486004057095, guid: ac20a0e32e137bd4a8989dcf545de009, type: 3}
+  meteor:
+  - {fileID: -2861321901717300595, guid: c13c5e848eb6ac14f864a73ce17d43fe, type: 3}
+  - {fileID: -1223669564337767011, guid: c13c5e848eb6ac14f864a73ce17d43fe, type: 3}
+  - {fileID: -891013478521759739, guid: c13c5e848eb6ac14f864a73ce17d43fe, type: 3}
+  - {fileID: 7586714274613999731, guid: c13c5e848eb6ac14f864a73ce17d43fe, type: 3}
+  fire:
+  - {fileID: -2415210389125140869, guid: eace2531d0b17e74b8c3e1012991e1d7, type: 3}
+  - {fileID: 4048170407644807872, guid: eace2531d0b17e74b8c3e1012991e1d7, type: 3}
+  - {fileID: 5187017182296428748, guid: eace2531d0b17e74b8c3e1012991e1d7, type: 3}
+  - {fileID: -5210771669351374994, guid: eace2531d0b17e74b8c3e1012991e1d7, type: 3}
+  - {fileID: -8182577412399933790, guid: eace2531d0b17e74b8c3e1012991e1d7, type: 3}
+  ice:
+  - {fileID: -5810376146276545939, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: -4173570441920364671, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: 6449428519631014407, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: -2124975849395081527, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: -8940634990259339681, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: 296820774494773061, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: -231812336779314331, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: -5983199795084033269, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: 8750096480860260550, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: 2880962209944734144, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: 5021631559942451221, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  - {fileID: 3272809340064553442, guid: 84f125c53f946a440a6545e4776da4ec, type: 3}
+  ambientIntensity: 0.23
+  lanternRadius: 4.5
+  fairyHealth: 460
+  fairyTreasure: 150
+  fireDamage: 16
+  iceDamage: 12

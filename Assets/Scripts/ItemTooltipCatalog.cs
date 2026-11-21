@@ -98,7 +98,9 @@ public static class ItemTooltipCatalog
         text.Append("\nBase cooking time: ").Append(recipe.cookingTime.ToString("0.#")).Append(" s");
         int price = CoinManager.Instance != null ? CoinManager.Instance.GetDishSalePrice(recipe.basePrice) : Mathf.Max(0, recipe.basePrice);
         text.Append("\nSale price: ").Append(price).Append(" coins");
-        text.Append("\nPreparation: Place cookware on the stove, add exactly these ingredients and select Cook. Collect the finished dish with an empty plate.");
+        string station = ApplianceRecipeCatalog.StationFor(recipe);
+        if (station != null) text.Append("\nAppliance: ").Append(ApplianceRecipeCatalog.StationLabel(station));
+        else text.Append("\nPreparation: Place cookware on the stove, add exactly these ingredients and select Cook. Collect the finished dish with an empty plate.");
         content.Body = text.ToString();
         return content;
     }

@@ -1,0 +1,181 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9cbae08911f41d4b58bf9bac4cfdc47, type: 3}
+  m_Name: ApplianceRecipes
+  m_EditorClassIdentifier: Assembly-CSharp::ApplianceRecipeCatalog
+  stations:
+  - key: mixer
+    displayName: Stand Mixer
+    recipes:
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: e7cae4b83d72415296697196b81145f9, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: f48a6e0cc0f82d740bdba78adbf06f02, type: 3}
+        amount: 1
+      temperature: 1
+      cookingTime: 5
+      basePrice: 55
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 629ca763180f4cccb18a8aa2ba3da665, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: 2bed924dcbc6e23429747aa63fb7bdf7, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: f48a6e0cc0f82d740bdba78adbf06f02, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+        amount: 1
+      temperature: 0
+      cookingTime: 6
+      basePrice: 75
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 2ee4ecaed23145c8bb5b24f1ff464502, type: 3}
+        amount: 1
+  - key: microwave
+    displayName: Microwave
+    recipes:
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: 1de11dbf2374caf4c9620d2dd9dafb7d, type: 3}
+        amount: 1
+      temperature: 1
+      cookingTime: 6
+      basePrice: 28
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: e7cae4b83d72415296697196b81145f9, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+        amount: 1
+      temperature: 1
+      cookingTime: 4
+      basePrice: 52
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 047053106c2540cd9b8f8412a4585f7b, type: 3}
+        amount: 1
+  - key: blender
+    displayName: Blender
+    recipes:
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: c5bf9624353069342a501c20f8b4b70e, type: 3}
+        amount: 2
+      temperature: 2
+      cookingTime: 4
+      basePrice: 42
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 70ddbdd566674ff692155bb4c655a188, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: e3b9fc26dc7221f429951262d8250807, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: f48a6e0cc0f82d740bdba78adbf06f02, type: 3}
+        amount: 1
+      temperature: 2
+      cookingTime: 5
+      basePrice: 42
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 9025b4e0bec84ee79fff03ef3134d1cd, type: 3}
+        amount: 1
+  - key: deep fryer
+    displayName: Deep Fryer
+    recipes:
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: 1de11dbf2374caf4c9620d2dd9dafb7d, type: 3}
+        amount: 1
+      temperature: 1
+      cookingTime: 6
+      basePrice: 32
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 3d74cf2e4d624d8db2355f160f9902bb, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: 2fdbc4466826085408253558744ef058, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: a7cb90f1de0062442bbba66f18d8746a, type: 3}
+        amount: 1
+      temperature: 1
+      cookingTime: 8
+      basePrice: 86
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 25cb3cd111404462af80ee35b6222a1a, type: 3}
+        amount: 1
+  - key: coffee maker
+    displayName: Coffee Maker
+    recipes:
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: 6c27eff6595b4803b94c0a34b0589b87, type: 3}
+        amount: 1
+      temperature: 1
+      cookingTime: 4
+      basePrice: 22
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: d606f5aa9ae34a84849a51072dd73dd3, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: 6c27eff6595b4803b94c0a34b0589b87, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: f48a6e0cc0f82d740bdba78adbf06f02, type: 3}
+        amount: 1
+      temperature: 1
+      cookingTime: 5
+      basePrice: 42
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: b5c3496e2b85466692dfdadd8b5c61d8, type: 3}
+        amount: 1
+  - key: cutting board
+    displayName: Cutting Board
+    recipes:
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: aed38eb5a7704558ad3b78baf312550f, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: e3b9fc26dc7221f429951262d8250807, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: 3ae8bc4189aea024bb3cc2ca62c3ef72, type: 3}
+        amount: 1
+      temperature: 2
+      cookingTime: 3
+      basePrice: 46
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: a7c2e167d50b46628de70abe6b24bd32, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: d6b7f8bcc7653334b8e299028e46a6a4, type: 3}
+        amount: 1
+      - itemPrefab: {fileID: 8008127976990012123, guid: 444f4cbfdcea55d48a4fdd4b8e382ec0, type: 3}
+        amount: 1
+      temperature: 2
+      cookingTime: 3
+      basePrice: 54
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: b6b087831bb54cd8b530c648f383f80d, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: c5bf9624353069342a501c20f8b4b70e, type: 3}
+        amount: 1
+      temperature: 2
+      cookingTime: 2
+      basePrice: 18
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: aed38eb5a7704558ad3b78baf312550f, type: 3}
+        amount: 1
+    - ingredients:
+      - itemPrefab: {fileID: 8008127976990012123, guid: e3b9fc26dc7221f429951262d8250807, type: 3}
+        amount: 1
+      temperature: 2
+      cookingTime: 2
+      basePrice: 17
+      result:
+        itemPrefab: {fileID: 8008127976990012123, guid: 4d6b6cc0641449eca689ce38c57edeef, type: 3}
+        amount: 1
