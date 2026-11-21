@@ -17,7 +17,9 @@ public sealed class DevConsoleOverlay : ScriptableObject
     private readonly Dictionary<Behaviour, bool> suspended = new Dictionary<Behaviour, bool>();
     private TMP_InputField input;
     private TMP_Text log;
-    private TMP_Text title;
+    private TMP_Text title, suggestions;
+    private string[] matches = System.Array.Empty<string>();
+    private int matchIndex;
     private ScrollRect scroll;
     private int historyIndex;
     private string draft = "";
@@ -29,7 +31,7 @@ public sealed class DevConsoleOverlay : ScriptableObject
     private Transform transform => root.transform;
     private bool focusPending;
     private int focusAfterFrame;
-    private int lastInputFrame = -1;
+    private InputActionMap consoleKeys;
     private bool released;
     public bool HasInputFocus => input != null && input.isFocused;
 
@@ -43,7 +45,12 @@ public sealed class DevConsoleOverlay : ScriptableObject
         previousSelection = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
         Time.timeScale = 0;
         BuildUI();
-        Log("Editor only. F8 / Esc closes. Type help. Up/Down: history. Tab: command completion.");
+        consoleKeys = new InputActionMap("Console input");
+        consoleKeys.AddAction("Previous", InputActionType.Button, "<Keyboard>/upArrow").performed += _ => Navigate(-1);
+        consoleKeys.AddAction("Next", InputActionType.Button, "<Keyboard>/downArrow").performed += _ => Navigate(1);
+        consoleKeys.AddAction("Complete", InputActionType.Button, "<Keyboard>/tab").performed += _ => CompleteInput();
+        consoleKeys.Enable();
+        Log("Editor only. F8 / Esc closes. Type help. Up/Down selects a suggestion or recalls history. Tab completes the selection.");
         Refocus();
         SuspendGameplayInput();
         ItemTooltipView.HideAll();
@@ -73,31 +80,46 @@ public sealed class DevConsoleOverlay : ScriptableObject
         if (Time.timeScale != 0) { resumeTimeScale = Time.timeScale; Time.timeScale = 0; }
         SuspendGameplayInput();
         title.text = "EDITOR CONSOLE — " + SceneManager.GetActiveScene().name + " — paused";
-        if (lastInputFrame == Time.frameCount) return;
-        lastInputFrame = Time.frameCount;
-        var keyboard = Keyboard.current;
-        if (keyboard == null) return;
-        if (keyboard.escapeKey.wasPressedThisFrame) { Close(); return; }
-        if (!HasInputFocus) return;
-        if (keyboard.upArrowKey.wasPressedThisFrame)
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) Close();
+    }
+
+    private void Navigate(int direction)
+    {
+        if (closed || !HasInputFocus) return;
+        if (matches.Length > 0)
         {
-            if (historyIndex == history.Count) draft = input.text;
-            if (history.Count > 0) { historyIndex = Mathf.Max(0, historyIndex - 1); input.SetTextWithoutNotify(history[historyIndex]); }
-            Refocus();
+            matchIndex = (matchIndex + direction + matches.Length) % matches.Length;
+            ShowMatches();
+            return;
         }
-        else if (keyboard.downArrowKey.wasPressedThisFrame)
-        {
-            historyIndex = Mathf.Min(history.Count, historyIndex + 1);
-            input.SetTextWithoutNotify(historyIndex < history.Count ? history[historyIndex] : draft);
-            Refocus();
-        }
-        else if (keyboard.tabKey.wasPressedThisFrame)
-        {
-            var matches = DevConsoleCommands.CommandNames.Where(c => c.StartsWith(input.text, System.StringComparison.OrdinalIgnoreCase)).ToArray();
-            if (matches.Length == 1) input.SetTextWithoutNotify(matches[0] + " ");
-            else if (matches.Length > 1) Log(string.Join("  ", matches));
-            Refocus();
-        }
+        if (history.Count == 0) return;
+        if (historyIndex == history.Count) draft = input.text;
+        historyIndex = Mathf.Clamp(historyIndex + direction, 0, history.Count);
+        input.SetTextWithoutNotify(historyIndex < history.Count ? history[historyIndex] : draft);
+        Refocus();
+    }
+
+    private void CompleteInput()
+    {
+        if (closed || !HasInputFocus || matches.Length == 0) return;
+        input.text = matches[matchIndex] + " ";
+        Refocus();
+    }
+
+    private void RefreshMatches(string value)
+    {
+        matches = DevConsoleCommands.Completions(value);
+        matchIndex = 0;
+        ShowMatches();
+    }
+
+    private void ShowMatches()
+    {
+        const int visible = 4;
+        int start = matchIndex / visible * visible;
+        suggestions.text = string.Join("     ", matches.Skip(start).Take(visible)
+            .Select((candidate, i) => start + i == matchIndex ? "› " + candidate : candidate));
+        if (matches.Length > visible) suggestions.text += $"   ({matchIndex + 1}/{matches.Length})";
     }
 
     public void Close()
@@ -119,6 +141,8 @@ public sealed class DevConsoleOverlay : ScriptableObject
         if (released) return;
         released = true;
         EditorApplication.update -= Update;
+        consoleKeys?.Dispose();
+        consoleKeys = null;
         foreach (var pair in suspended) if (pair.Key != null) pair.Key.enabled = pair.Value;
         suspended.Clear();
         if (Application.isPlaying) Time.timeScale = resumeTimeScale;
@@ -147,7 +171,7 @@ public sealed class DevConsoleOverlay : ScriptableObject
     private void SubmitCurrent()
     {
         string command = input.text;
-        input.SetTextWithoutNotify("");
+        input.text = "";
         draft = "";
         Submit(command);
         Refocus();
@@ -234,7 +258,7 @@ public sealed class DevConsoleOverlay : ScriptableObject
         var close = Button("Close", panel, "Close (F8)", Close); var cr = close.GetComponent<RectTransform>();
         cr.anchorMin = cr.anchorMax = cr.pivot = Vector2.one; cr.sizeDelta = new Vector2(110, 36); cr.anchoredPosition = new Vector2(-10, -8);
         var viewport = Rect("LogViewport", panel); Stretch(viewport, Vector2.zero, Vector2.one);
-        viewport.offsetMin = new Vector2(14, 70); viewport.offsetMax = new Vector2(-14, -52); viewport.gameObject.AddComponent<RectMask2D>();
+        viewport.offsetMin = new Vector2(14, 107); viewport.offsetMax = new Vector2(-14, -52); viewport.gameObject.AddComponent<RectMask2D>();
         Image(viewport, Color.clear);
         scroll = viewport.gameObject.AddComponent<ScrollRect>(); scroll.horizontal = false; scroll.viewport = viewport;
         var content = Rect("LogContent", viewport); content.anchorMin = new Vector2(0, 1); content.anchorMax = Vector2.one; content.pivot = new Vector2(.5f, 1); content.sizeDelta = Vector2.zero;
@@ -247,6 +271,12 @@ public sealed class DevConsoleOverlay : ScriptableObject
         var textArea = Rect("TextArea", field); Stretch(textArea, Vector2.zero, Vector2.one); textArea.offsetMin = new Vector2(10, 0); textArea.offsetMax = new Vector2(-10, 0); textArea.gameObject.AddComponent<RectMask2D>();
         var text = Label("Text", textArea, "", 25); Stretch(text.rectTransform, Vector2.zero, Vector2.one); text.alignment = TextAlignmentOptions.MidlineLeft;
         input.textViewport = textArea; input.textComponent = text; input.caretColor = Color.white; input.customCaretColor = true;
+        suggestions = Label("Completions", panel, "", 20);
+        suggestions.color = new Color(.95f, .82f, .54f);
+        Stretch(suggestions.rectTransform, Vector2.zero, new Vector2(1, 0));
+        suggestions.rectTransform.offsetMin = new Vector2(16, 65);
+        suggestions.rectTransform.offsetMax = new Vector2(-16, 100);
+        input.onValueChanged.AddListener(RefreshMatches);
         input.onSubmit.AddListener(_ => SubmitCurrent());
         var run = Button("Run", panel, "Run", SubmitCurrent); var rr = run.GetComponent<RectTransform>();
         rr.anchorMin = rr.anchorMax = rr.pivot = new Vector2(1, 0); rr.sizeDelta = new Vector2(86, 46); rr.anchoredPosition = new Vector2(-14, 14);
