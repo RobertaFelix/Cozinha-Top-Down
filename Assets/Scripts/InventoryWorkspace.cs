@@ -39,10 +39,13 @@ public sealed class InventoryWorkspace : MonoBehaviour
     private Vector3 barScale;
     private bool bagActive, docked;
 
+    private TabController pageTabs;
+
     private void Awake()
     {
         if (current && current != this) return;
         current = this;
+        if (tabs) pageTabs = tabs.GetComponent<TabController>();
         bag = (RectTransform)GetComponent<InventoryController>().inventoryPanel.transform;
         bar = (RectTransform)GetComponent<HotbarController>().hotbarPanel.transform;
         hudScale = bar.localScale;
@@ -191,7 +194,9 @@ public sealed class InventoryWorkspace : MonoBehaviour
         if (tabs && tabs.gameObject.activeInHierarchy)
         {
             PositionOnScreen(recipePage, backpackPosition);
-            SetHudVisible(!recipePage.gameObject.activeInHierarchy);
+            var furniture = pageTabs ? pageTabs.FurniturePage : null;
+            if (furniture) PositionOnScreen(furniture, backpackPosition);
+            SetHudVisible(!recipePage.gameObject.activeInHierarchy && !(furniture && furniture.gameObject.activeInHierarchy));
             // Attach the tab strip to the upper-left of both identically sized pages.
             var size = bag.rect.size;
             PositionOnScreen(tabs, backpackPosition + new Vector2((tabs.rect.width-size.x)*.5f,

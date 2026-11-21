@@ -8,9 +8,12 @@ public class TabController : MonoBehaviour
     public Image[] tabImages;
     public GameObject[] pages;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public RectTransform FurniturePage { get; private set; }
+
+    private void Awake()
     {
+        if (pages.Length == 2 && pages[0].name == "InventoryPage")
+            FurniturePage = FurnitureInventoryPage.Install(this);
         ActivateTab(0);
     }
 
