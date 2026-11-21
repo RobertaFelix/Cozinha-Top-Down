@@ -59,8 +59,26 @@ public class CustomerNPC : MonoBehaviour
             iconInitialLocalPosition + Vector3.up * offset;
     }
 
+    internal bool AtTable(Vector2 point)
+    {
+        if (!currentTable) return false;
+        var top = currentTable.transform.Find("table");
+        if (!top || !top.TryGetComponent<SpriteRenderer>(out var sprite)) return false;
+        return sprite.bounds.Contains(new Vector3(point.x, point.y, sprite.bounds.center.z));
+    }
+
+    public bool IsSeated { get; private set; }
+
+    public void SetSeated(bool value)
+    {
+        IsSeated = value;
+        GetComponent<CustomerOrderInteraction>().enabled = value;
+        GetComponent<Collider2D>().enabled = value;
+    }
+
     public void SitAt(Table table, Transform chair)
     {
+        SetSeated(true);
         currentTable = table;
         currentChair = chair;
 
@@ -205,6 +223,6 @@ public class CustomerNPC : MonoBehaviour
             servedFoodObject = null;
         }
 
-        Destroy(gameObject);
+        SetSeated(false);
     }
 }

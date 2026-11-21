@@ -10,20 +10,19 @@ public class Table : MonoBehaviour
     [SerializeField]
     private int availableChairCount = 2;
 
+    public bool HasOccupiedChair => occupied != null && System.Array.IndexOf(occupied, true) >= 0;
+    public int Capacity => gameObject.activeSelf ? Mathf.Clamp(availableChairCount, 0, chairs.Length) : 0;
     private bool[] occupied;
 
     private void Awake()
     {
-        occupied = new bool[chairs.Length];
+        occupied ??= new bool[chairs.Length];
     }
 
     public bool HasFreeChair()
     {
-        int limit =
-            Mathf.Min(
-                availableChairCount,
-                chairs.Length
-            );
+        occupied ??= new bool[chairs.Length];
+        int limit = Capacity;
 
         for (int i = 0; i < limit; i++)
         {
@@ -39,11 +38,8 @@ public class Table : MonoBehaviour
         List<int> freeChairs =
             new List<int>();
 
-        int limit =
-            Mathf.Min(
-                availableChairCount,
-                chairs.Length
-            );
+        occupied ??= new bool[chairs.Length];
+        int limit = Capacity;
 
         for (int i = 0; i < limit; i++)
         {

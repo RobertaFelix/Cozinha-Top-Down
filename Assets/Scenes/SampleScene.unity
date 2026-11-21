@@ -6133,6 +6133,12 @@ MonoBehaviour:
   - {fileID: 1925929490}
   spawnInterval: 8
   advertisedSpawnIntervalMultiplier: 0.75
+  villageStops:
+  - {fileID: 1089171249}
+  - {fileID: 1114689764}
+  - {fileID: 1313418196}
+  restaurantOutside: {fileID: 1394563157}
+  restaurantInside: {fileID: 1743038398}
 --- !u!4 &495892453
 Transform:
   m_ObjectHideFlags: 0
