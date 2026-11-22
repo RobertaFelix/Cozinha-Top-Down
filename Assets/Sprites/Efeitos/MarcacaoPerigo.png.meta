@@ -145,12 +145,12 @@ TextureImporter:
       name: MarcacaoPerigo_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 8
-        width: 7
-        height: 7
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -167,12 +167,12 @@ TextureImporter:
       name: MarcacaoPerigo_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 9
-        height: 9
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -189,19 +189,19 @@ TextureImporter:
       name: MarcacaoPerigo_2
       rect:
         serializedVersion: 2
-        x: 8
-        y: 8
-        width: 7
-        height: 7
+        x: 32
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a204b8a6552a1aeb0800000000000000
+      spriteID: 70b0a815cf5652047bd6a07393923518
       internalID: -4710305247509397462
       vertices: []
       indices: 
@@ -211,152 +211,20 @@ TextureImporter:
       name: MarcacaoPerigo_3
       rect:
         serializedVersion: 2
-        x: 8
-        y: 1
-        width: 7
-        height: 7
+        x: 48
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a6e2cf150758ddec0800000000000000
+      spriteID: fd37d792b09a1324fa672359eb69b8e3
       internalID: -3540527014585029014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MarcacaoPerigo_4
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 8
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9e7c3d13b69c2cb20800000000000000
-      internalID: 3153304151347415017
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MarcacaoPerigo_5
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 1
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ef0617be252cbd1d0800000000000000
-      internalID: -3324850238489796354
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MarcacaoPerigo_6
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 8
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 999f555c8d63a3760800000000000000
-      internalID: 7438318039207377305
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MarcacaoPerigo_7
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 1
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 58367fc8aa3805230800000000000000
-      internalID: 3625542468565951365
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MarcacaoPerigo_8
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 2
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 67e1b9969ce3303b0800000000000000
-      internalID: -5547521281209196938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MarcacaoPerigo_9
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 2
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2a352b733f6e9cb90800000000000000
-      internalID: -7220986595226004574
       vertices: []
       indices: 
       edges: []
@@ -365,7 +233,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 08c16efa529de784eb17095a8c22d0bf
     internalID: 0
     vertices: []
     indices: 
@@ -373,18 +241,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       MarcacaoPerigo_0: -4122717578439138558
       MarcacaoPerigo_1: -1558210501253914968
       MarcacaoPerigo_2: -4710305247509397462
       MarcacaoPerigo_3: -3540527014585029014
-      MarcacaoPerigo_4: 3153304151347415017
-      MarcacaoPerigo_5: -3324850238489796354
-      MarcacaoPerigo_6: 7438318039207377305
-      MarcacaoPerigo_7: 3625542468565951365
-      MarcacaoPerigo_8: -5547521281209196938
-      MarcacaoPerigo_9: -7220986595226004574
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
