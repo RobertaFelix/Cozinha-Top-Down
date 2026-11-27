@@ -1,0 +1,270 @@
+fileFormatVersion: 2
+guid: 8e1f6e8d47a85c341b7717a70b46fd07
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5699242133706741827
+    second: chuva01_0
+  - first:
+      213: -7268279037351713598
+    second: chuva01_1
+  - first:
+      213: 411239875452325095
+    second: chuva01_2
+  - first:
+      213: -2104367243941891151
+    second: chuva01_3
+  - first:
+      213: 4003928689922520775
+    second: chuva01_4
+  - first:
+      213: -2332490272945148353
+    second: chuva01_5
+  - first:
+      213: -7453839853293575130
+    second: chuva01_6
+  - first:
+      213: 3092461662226490495
+    second: chuva01_7
+  - first:
+      213: 3388452110780588194
+    second: chuva01_8
+  - first:
+      213: 4633674099634288686
+    second: chuva01_9
+  - first:
+      213: -5664242106257945005
+    second: chuva01_10
+  - first:
+      213: -4233160580011735640
+    second: chuva01_11
+  - first:
+      213: 6989080580601686566
+    second: chuva01_12
+  - first:
+      213: -5245880675145084564
+    second: chuva01_13
+  - first:
+      213: 6322090729481742054
+    second: chuva01_14
+  - first:
+      213: -6010084495487276479
+    second: chuva01_15
+  - first:
+      213: -7345906816376036299
+    second: chuva01_16
+  - first:
+      213: -3464873987497629344
+    second: chuva01_17
+  - first:
+      213: 1603227538852955275
+    second: chuva01_18
+  - first:
+      213: 4144524909165469214
+    second: chuva01_19
+  - first:
+      213: -3381437008147476768
+    second: chuva01_20
+  - first:
+      213: 917630658661565225
+    second: chuva01_21
+  - first:
+      213: 2949335539889757209
+    second: chuva01_22
+  - first:
+      213: -5571233217410385070
+    second: chuva01_23
+  - first:
+      213: 872416971229511536
+    second: chuva01_24
+  - first:
+      213: 3007168317348949631
+    second: chuva01_25
+  - first:
+      213: 9176440234468188203
+    second: chuva01_26
+  - first:
+      213: -9172126765583908040
+    second: chuva01_27
+  - first:
+      213: 1332156548031799139
+    second: chuva01_28
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: chuva01_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db7687ba97938e0b0800000000000000
+      internalID: -5699242133706741827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1c731deb5f8a0b348971d887265323a5
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      chuva01_0: -5699242133706741827
+      chuva01_1: -7268279037351713598
+      chuva01_10: -5664242106257945005
+      chuva01_11: -4233160580011735640
+      chuva01_12: 6989080580601686566
+      chuva01_13: -5245880675145084564
+      chuva01_14: 6322090729481742054
+      chuva01_15: -6010084495487276479
+      chuva01_16: -7345906816376036299
+      chuva01_17: -3464873987497629344
+      chuva01_18: 1603227538852955275
+      chuva01_19: 4144524909165469214
+      chuva01_2: 411239875452325095
+      chuva01_20: -3381437008147476768
+      chuva01_21: 917630658661565225
+      chuva01_22: 2949335539889757209
+      chuva01_23: -5571233217410385070
+      chuva01_24: 872416971229511536
+      chuva01_25: 3007168317348949631
+      chuva01_26: 9176440234468188203
+      chuva01_27: -9172126765583908040
+      chuva01_28: 1332156548031799139
+      chuva01_3: -2104367243941891151
+      chuva01_4: 4003928689922520775
+      chuva01_5: -2332490272945148353
+      chuva01_6: -7453839853293575130
+      chuva01_7: 3092461662226490495
+      chuva01_8: 3388452110780588194
+      chuva01_9: 4633674099634288686
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
